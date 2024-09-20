@@ -11,7 +11,7 @@
   <link rel="apple-touch-icon" sizes="76x76" href="/img/kenan.png">
   <link rel="icon" href="/img/kenan.png">
   
-    <link rel="canonical" href="https://serendipity565.github.io/2024/09/20/hello-world/"/>
+    <link rel="canonical" href="https://serendipity565.github.io/2024/01/20/Python爬虫/"/>
   
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
@@ -21,22 +21,25 @@
   <meta name="author" content="Serendipity">
   <meta name="keywords" content="Serendipity,Blog">
   
-    <meta name="description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+    <meta name="description" content="HTTP网页结构 一个网页有三大技术要素，分别为HTML，CSS和JavaScript，其中HTML定义了网页的结构和信息，CSS定义网页的样式，JavaScript定义用户和网页的交互逻辑。其中我们爬虫最关心的就是HTML。 1234567&lt;!DOCTYPE html&gt;&lt;html&gt;    &lt;body&gt;        &lt;h1&gt;这是一个一级标题&lt;">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hello World">
-<meta property="og:url" content="https://serendipity565.github.io/2024/09/20/hello-world/index.html">
+<meta property="og:title" content="Python爬虫入门">
+<meta property="og:url" content="https://serendipity565.github.io/2024/01/20/Python%E7%88%AC%E8%99%AB/index.html">
 <meta property="og:site_name" content="Serendipity&#39;s Blog">
-<meta property="og:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+<meta property="og:description" content="HTTP网页结构 一个网页有三大技术要素，分别为HTML，CSS和JavaScript，其中HTML定义了网页的结构和信息，CSS定义网页的样式，JavaScript定义用户和网页的交互逻辑。其中我们爬虫最关心的就是HTML。 1234567&lt;!DOCTYPE html&gt;&lt;html&gt;    &lt;body&gt;        &lt;h1&gt;这是一个一级标题&lt;">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2024-09-20T08:06:55.000Z">
-<meta property="article:modified_time" content="2024-09-20T08:06:55.000Z">
+<meta property="og:image" content="https://serendipity565.github.io/img/blog/pypc/1.png">
+<meta property="og:image" content="https://serendipity565.github.io/img/blog/pypc/2.png">
+<meta property="article:published_time" content="2024-01-20T12:01:21.000Z">
+<meta property="article:modified_time" content="2024-09-20T10:07:05.299Z">
 <meta property="article:author" content="Serendipity">
-<meta property="article:tag" content="Serendipity,Blog">
+<meta property="article:tag" content="Python">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://serendipity565.github.io/img/blog/pypc/1.png">
   
   
   
-  <title>Hello World - Serendipity&#39;s Blog</title>
+  <title>Python爬虫入门 - Serendipity&#39;s Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -238,7 +241,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="Hello World"></span>
+            <span id="subtitle" data-typed-text="Python爬虫入门"></span>
           
         </div>
 
@@ -254,8 +257,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2024-09-20 16:06" pubdate>
-          2024年9月20日 下午
+        <time datetime="2024-01-20 20:01" pubdate>
+          2024年1月20日 晚上
         </time>
       </span>
     
@@ -266,7 +269,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          18 字
+          906 字
         
       </span>
     
@@ -277,7 +280,7 @@
         
         
         
-          1 分钟
+          11 分钟
         
       </span>
     
@@ -316,6 +319,67 @@
   <div class="row nomargin-x">
     <div class="side-col d-none d-lg-block col-lg-2">
       
+  <aside class="sidebar category-bar" style="margin-right: -1rem">
+    
+
+
+
+
+
+<div class="category-list">
+  
+  
+    
+    
+    
+    <div class="category row nomargin-x">
+      <a class="category-item 
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="开发"
+        id="heading-3ff3c3e26a68112c11c3e80f2a26896e" role="tab" data-toggle="collapse" href="#collapse-3ff3c3e26a68112c11c3e80f2a26896e"
+        aria-expanded="true"
+      >
+        开发
+        <span class="list-group-count">(2)</span>
+        <i class="iconfont icon-arrowright"></i>
+      </a>
+      
+      <div class="category-collapse collapse show" id="collapse-3ff3c3e26a68112c11c3e80f2a26896e"
+           role="tabpanel" aria-labelledby="heading-3ff3c3e26a68112c11c3e80f2a26896e">
+        
+        
+          
+  <div class="category-post-list">
+    
+    
+      
+      
+        <a href="/2024/03/15/Go%E6%8E%A5%E5%8F%A3%E6%96%AD%E8%A8%80/" title="Go接口断言"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Go接口断言</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2024/01/20/Python%E7%88%AC%E8%99%AB/" title="Python爬虫入门"
+           class="list-group-item list-group-item-action
+           active">
+          <span class="category-post">Python爬虫入门</span>
+        </a>
+      
+    
+  </div>
+
+        
+      </div>
+    </div>
+  
+</div>
+
+
+  </aside>
+
 
     </div>
 
@@ -323,25 +387,29 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">Hello World</h1>
+            <h1 id="seo-header">Python爬虫入门</h1>
             
             
               <div class="markdown-body">
                 
-                <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start">Quick Start</h2>
-<h3 id="Create-a-new-post">Create a new post</h3>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ hexo new <span class="hljs-string">&quot;My New Post&quot;</span><br></code></pre></td></tr></table></figure>
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server">Run server</h3>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ hexo server<br></code></pre></td></tr></table></figure>
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files">Generate static files</h3>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ hexo generate<br></code></pre></td></tr></table></figure>
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites">Deploy to remote sites</h3>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ hexo deploy<br></code></pre></td></tr></table></figure>
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+                <h1>HTTP网页结构</h1>
+<p>一个网页有三大技术要素，分别为HTML，CSS和JavaScript，其中HTML定义了网页的结构和信息，CSS定义网页的样式，JavaScript定义用户和网页的交互逻辑。其中我们爬虫最关心的就是HTML。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-meta">&lt;!DOCTYPE <span class="hljs-keyword">html</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">html</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">h1</span>&gt;</span>这是一个一级标题<span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>这是一段文字这是一段文字这是一段文字<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">html</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<h1>HTTP请求和响应</h1>
+<p>HTTP请求的方法类型主要的有两种，GET方法和POST方法，其中前者用于获得数据，后者用于创建数据（例如注册账号时提交数据）。</p>
+<p>一个完整的HTTP请求包括请求行，请求头和请求体。请求行会包含方法类型，资源路径（查询参数）和协议版本。请求头包含Host（主机域名），User-Agent（服务器客户端相关信息）和Accept（客户端像接收的数据，接收多种数据类型可以用逗号进行分割；*/*则表示任意数据类型）。请求体可以放客户端传给服务器的任意数据，但是GET方法的请求体一般是空的。</p>
+<p><img src="/img/blog/pypc/1.png" srcset="/img/loading.gif" lazyload alt=""></p>
+<p>HTTP响应也由三个部分组成，分别是状态行，响应头和响应体。状态行还包含协议版本，状态码和状态消息，状态码和状态消息一一对应：状态码2开头表示成功，，请求已处理完成；3开头表示表示重定向，需要进一步的操作；4开头表示客户端错误，比如请求里面有错误，或者请求的资源无效，等等；5开头表示服务器错误，比如出现问题或者正在维护。响应头会包含一些告知客户端的信息，比如Date：生产响应的日期和时间；Content-Type：返回内容的类型及编码格式。响应体就是服务器想给客户端的数据内容，通常与Content-Type的类型相对应。</p>
+<p><img src="/img/blog/pypc/2.png" srcset="/img/loading.gif" lazyload alt=""></p>
+<h1><strong>requests 模块</strong></h1>
+<p>Python requests 是一个常用的 HTTP 请求库，可以方便地向网站发送 HTTP 请求，并获取响应结果。requests 模块比urllib模块更简洁。</p>
+<p>使用 requests 发送 HTTP 请求需要先导入 requests 模块。导入后就可以发送 HTTP 请求，使用 requests 提供的方法向指定 URL 发送 HTTP 请求。</p>
+<p>我们使用requests函数时的User-Agent时自动生成的，服务器可以轻松的分辨出是否是浏览器发出的请求，不过我们可以通过手动传入一个headers的参数帮我们模拟出浏览器发出的请求。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> requests<br><br>head = &#123;<span class="hljs-string">&quot;User-Agent&quot;</span>: <span class="hljs-string">&quot;Mozilla/5.0 (Windows NT 10.0; Win64; X64)&quot;</span>&#125;<br>response = requests.get(<span class="hljs-string">&quot;https://www.baidu.com/&quot;</span>, headers=head)<br><span class="hljs-keyword">if</span> response.ok:  <span class="hljs-comment"># 或者用response.status_code&gt;=200 and response.status_code&lt;400</span><br>    <span class="hljs-built_in">print</span>(response.text)<br><span class="hljs-keyword">else</span>:<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;请求失败&quot;</span>)<br></code></pre></td></tr></table></figure>
+<h1>Beautiful Soup 模块</h1>
+<p>爬到了网页信息之后，我们要提取出我们想要的不分，Beautiful Soup 可以帮我们解析网页内容Beautiful Soup自动将输入文档转换为Unicode编码，输出文档转换为utf-8编码。你不需要考虑编码方式，除非文档没有指定一个编码方式。</p>
+<p>例如用requests和Beautiful Soup爬取豆瓣电影前250名单:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> requests<br><span class="hljs-keyword">from</span> bs4 <span class="hljs-keyword">import</span> BeautifulSoup<br><br>head = &#123;<span class="hljs-string">&quot;User-Agent&quot;</span>: <span class="hljs-string">&quot;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36&quot;</span>&#125;<br><span class="hljs-keyword">for</span> start_num <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">0</span>,<span class="hljs-number">250</span>,<span class="hljs-number">25</span>):<br>    response = requests.get(<span class="hljs-string">f&quot;https://movie.douban.com/top250?start=<span class="hljs-subst">&#123;start_num&#125;</span>&quot;</span>, headers=head)<br>    html=response.text<br>    soup=BeautifulSoup(html,<span class="hljs-string">&quot;html.parser&quot;</span>)<br>    all_title=soup.find_all(<span class="hljs-string">&quot;span&quot;</span>,attrs=&#123;<span class="hljs-string">&quot;class&quot;</span>:<span class="hljs-string">&quot;title&quot;</span>&#125;)<br>    <span class="hljs-keyword">for</span> title <span class="hljs-keyword">in</span> all_title:<br>        title_string=title.string<br>        <span class="hljs-keyword">if</span> <span class="hljs-string">&quot;/&quot;</span> <span class="hljs-keyword">not</span> <span class="hljs-keyword">in</span> title_string:<br>            <span class="hljs-built_in">print</span>(title_string)<br></code></pre></td></tr></table></figure>
 
                 
               </div>
@@ -350,6 +418,34 @@
             <div>
               <div class="post-metas my-3">
   
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E5%BC%80%E5%8F%91/" class="category-chain-item">开发</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Python/" class="print-no-link">#Python</a>
+      
+    </div>
   
 </div>
 
@@ -359,8 +455,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>Hello World</div>
-      <div>https://serendipity565.github.io/2024/09/20/hello-world/</div>
+      <div>Python爬虫入门</div>
+      <div>https://serendipity565.github.io/2024/01/20/Python爬虫/</div>
     </div>
     <div class="license-meta">
       
@@ -372,7 +468,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2024年9月20日</div>
+          <div>2024年1月20日</div>
         </div>
       
       
@@ -397,9 +493,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2024/09/20/%E5%BF%AB%E9%80%9F%E5%B9%82/" title="">
+                      <a href="/2024/03/08/mutsumi%E7%9A%84%E6%8E%92%E5%88%97%E8%BF%9E%E9%80%9A/" title="mutsumi的排列连通">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile"></span>
+                        <span class="hidden-mobile">mutsumi的排列连通</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -407,8 +503,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2024/07/24/%E6%A0%91%E7%8A%B6%E6%95%B0%E7%BB%84/" title="树状数组">
-                        <span class="hidden-mobile">树状数组</span>
+                      <a href="/2023/12/05/P1088%5BNOIP2004%20%E6%99%AE%E5%8F%8A%E7%BB%84%5D%E7%81%AB%E6%98%9F%E4%BA%BA/" title="P1088 [NOIP2004 普及组] 火星人">
+                        <span class="hidden-mobile">P1088 [NOIP2004 普及组] 火星人</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
