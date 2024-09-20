@@ -11,7 +11,7 @@
   <link rel="apple-touch-icon" sizes="76x76" href="/img/kenan.png">
   <link rel="icon" href="/img/kenan.png">
   
-    <link rel="canonical" href="https://serendipity565.github.io/2024/09/20/快速幂/"/>
+    <link rel="canonical" href="https://serendipity565.github.io/2023/11/29/快速幂/"/>
   
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
@@ -21,22 +21,22 @@
   <meta name="author" content="Serendipity">
   <meta name="keywords" content="Serendipity,Blog">
   
-    <meta name="description" content="快速幂 type: Post status: Published date: 2023&#x2F;11&#x2F;29 slug: 快速幂 tags: 工具, 算法 category: 算法 问题 求出abmod  ca^b\mod cabmodc的值，其中a，b，c是整数，且0&lt;a,c&lt;1090&lt;a,c&lt;10^90&lt;a,c&lt;109，0&lt;b&lt;10180&lt;b&lt;">
+    <meta name="description" content="问题 求出abmod  ca^b\mod cabmodc的值，其中a，b，c是整数，且0&lt;a,c&lt;1090&lt;a,c&lt;10^90&lt;a,c&lt;109，0&lt;b&lt;10180&lt;b&lt;10^{18}0&lt;b&lt;1018 算法设计 暴力算法 考虑用循环直接求出aba^bab的值，最后对ccc取模。 123456long long ans&#x3D;1;for">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Serendipity&#39;s Blog">
-<meta property="og:url" content="https://serendipity565.github.io/2024/09/20/%E5%BF%AB%E9%80%9F%E5%B9%82/index.html">
+<meta property="og:title" content="快速幂">
+<meta property="og:url" content="https://serendipity565.github.io/2023/11/29/%E5%BF%AB%E9%80%9F%E5%B9%82/index.html">
 <meta property="og:site_name" content="Serendipity&#39;s Blog">
-<meta property="og:description" content="快速幂 type: Post status: Published date: 2023&#x2F;11&#x2F;29 slug: 快速幂 tags: 工具, 算法 category: 算法 问题 求出abmod  ca^b\mod cabmodc的值，其中a，b，c是整数，且0&lt;a,c&lt;1090&lt;a,c&lt;10^90&lt;a,c&lt;109，0&lt;b&lt;10180&lt;b&lt;">
+<meta property="og:description" content="问题 求出abmod  ca^b\mod cabmodc的值，其中a，b，c是整数，且0&lt;a,c&lt;1090&lt;a,c&lt;10^90&lt;a,c&lt;109，0&lt;b&lt;10180&lt;b&lt;10^{18}0&lt;b&lt;1018 算法设计 暴力算法 考虑用循环直接求出aba^bab的值，最后对ccc取模。 123456long long ans&#x3D;1;for">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2024-09-20T10:04:25.707Z">
-<meta property="article:modified_time" content="2024-09-20T00:33:26.000Z">
+<meta property="article:published_time" content="2023-11-29T15:21:54.000Z">
+<meta property="article:modified_time" content="2024-09-20T10:29:46.961Z">
 <meta property="article:author" content="Serendipity">
-<meta property="article:tag" content="Serendipity,Blog">
+<meta property="article:tag" content="算法">
 <meta name="twitter:card" content="summary_large_image">
   
   
   
-  <title>Serendipity&#39;s Blog</title>
+  <title>快速幂 - Serendipity&#39;s Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -238,7 +238,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text=""></span>
+            <span id="subtitle" data-typed-text="快速幂"></span>
           
         </div>
 
@@ -254,8 +254,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2024-09-20 18:04" pubdate>
-          2024年9月20日 晚上
+        <time datetime="2023-11-29 23:21" pubdate>
+          2023年11月29日 晚上
         </time>
       </span>
     
@@ -266,7 +266,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          448 字
+          428 字
         
       </span>
     
@@ -316,6 +316,103 @@
   <div class="row nomargin-x">
     <div class="side-col d-none d-lg-block col-lg-2">
       
+  <aside class="sidebar category-bar" style="margin-right: -1rem">
+    
+
+
+
+
+
+<div class="category-list">
+  
+  
+    
+    
+    
+    <div class="category row nomargin-x">
+      <a class="category-item 
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="算法"
+        id="heading-046a899ee7a6ec88d370211a518c9e80" role="tab" data-toggle="collapse" href="#collapse-046a899ee7a6ec88d370211a518c9e80"
+        aria-expanded="true"
+      >
+        算法
+        <span class="list-group-count">(6)</span>
+        <i class="iconfont icon-arrowright"></i>
+      </a>
+      
+      <div class="category-collapse collapse show" id="collapse-046a899ee7a6ec88d370211a518c9e80"
+           role="tabpanel" aria-labelledby="heading-046a899ee7a6ec88d370211a518c9e80">
+        
+        
+          
+  <div class="category-post-list">
+    
+    
+      
+      
+        <a href="/2023/12/05/P1088%5BNOIP2004%20%E6%99%AE%E5%8F%8A%E7%BB%84%5D%E7%81%AB%E6%98%9F%E4%BA%BA/" title="P1088 [NOIP2004 普及组] 火星人"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">P1088 [NOIP2004 普及组] 火星人</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2024/03/08/mutsumi%E7%9A%84%E6%8E%92%E5%88%97%E8%BF%9E%E9%80%9A/" title="mutsumi的排列连通"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">mutsumi的排列连通</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2023/11/29/%E5%BF%AB%E9%80%9F%E5%B9%82/" title="快速幂"
+           class="list-group-item list-group-item-action
+           active">
+          <span class="category-post">快速幂</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2024/07/24/%E6%A0%91%E7%8A%B6%E6%95%B0%E7%BB%84/" title="树状数组"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">树状数组</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2023/11/18/%E6%AC%A7%E5%87%A0%E9%87%8C%E5%BE%97%E7%AE%97%E6%B3%95/" title="欧几里得算法"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">欧几里得算法</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2023/11/11/%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95/" title="贪心算法"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">贪心算法</span>
+        </a>
+      
+    
+  </div>
+
+        
+      </div>
+    </div>
+  
+</div>
+
+
+  </aside>
+
 
     </div>
 
@@ -323,24 +420,17 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header"></h1>
+            <h1 id="seo-header">快速幂</h1>
             
             
               <div class="markdown-body">
                 
-                <h1>快速幂</h1>
-<p>type: Post<br>
-status: Published<br>
-date: 2023/11/29<br>
-slug: 快速幂<br>
-tags: 工具, 算法<br>
-category: 算法</p>
-<h1>问题</h1>
+                <h1>问题</h1>
 <p>求出<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>a</mi><mi>b</mi></msup><mspace></mspace><mspace width="0.6667em"/><mrow><mi mathvariant="normal">m</mi><mi mathvariant="normal">o</mi><mi mathvariant="normal">d</mi></mrow><mtext> </mtext><mtext> </mtext><mi>c</mi></mrow><annotation encoding="application/x-tex">a^b\mod c</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8491em;"></span><span class="mord"><span class="mord mathnormal">a</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8491em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">b</span></span></span></span></span></span></span></span><span class="mspace allowbreak"></span><span class="mspace" style="margin-right:0.6667em;"></span></span><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord"><span class="mord"><span class="mord mathrm">mod</span></span></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal">c</span></span></span></span>的值，其中a，b，c是整数，且<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>0</mn><mo>&lt;</mo><mi>a</mi><mo separator="true">,</mo><mi>c</mi><mo>&lt;</mo><mn>1</mn><msup><mn>0</mn><mn>9</mn></msup></mrow><annotation encoding="application/x-tex">0&lt;a,c&lt;10^9</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6835em;vertical-align:-0.0391em;"></span><span class="mord">0</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">&lt;</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.7335em;vertical-align:-0.1944em;"></span><span class="mord mathnormal">a</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal">c</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">&lt;</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.8141em;"></span><span class="mord">1</span><span class="mord"><span class="mord">0</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">9</span></span></span></span></span></span></span></span></span></span></span>，<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>0</mn><mo>&lt;</mo><mi>b</mi><mo>&lt;</mo><mn>1</mn><msup><mn>0</mn><mn>18</mn></msup></mrow><annotation encoding="application/x-tex">0&lt;b&lt;10^{18}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6835em;vertical-align:-0.0391em;"></span><span class="mord">0</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">&lt;</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.7335em;vertical-align:-0.0391em;"></span><span class="mord mathnormal">b</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">&lt;</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.8141em;"></span><span class="mord">1</span><span class="mord"><span class="mord">0</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">18</span></span></span></span></span></span></span></span></span></span></span></span></p>
 <h1>算法设计</h1>
 <h2 id="暴力算法">暴力算法</h2>
 <p>考虑用循环直接求出<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>a</mi><mi>b</mi></msup></mrow><annotation encoding="application/x-tex">a^b</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8491em;"></span><span class="mord"><span class="mord mathnormal">a</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8491em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">b</span></span></span></span></span></span></span></span></span></span></span>的值，最后对<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>c</mi></mrow><annotation encoding="application/x-tex">c</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">c</span></span></span></span>取模。</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-type">long</span> <span class="hljs-type">long</span> ans=<span class="hljs-number">1</span>;<br><span class="hljs-keyword">for</span> (<span class="hljs-type">long</span> <span class="hljs-type">long</span> i=<span class="hljs-number">1</span>;i&lt;=b;i++)<br>&#123;<br>	ans*=a;<br>&#125;<br>ans%=c;<br></code></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-type">long</span> <span class="hljs-type">long</span> ans=<span class="hljs-number">1</span>;<br><span class="hljs-keyword">for</span> (<span class="hljs-type">long</span> <span class="hljs-type">long</span> i=<span class="hljs-number">1</span>;i&lt;=b;i++)<br>&#123;<br>    ans*=a;<br>&#125;<br>ans%=c;<br></code></pre></td></tr></table></figure>
 <p>这个代码其实有两个缺陷。</p>
 <ol>
 <li>时间复杂度为<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>O</mi><mo stretchy="false">(</mo><mi>b</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">O(b)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord mathnormal">b</span><span class="mclose">)</span></span></span></span>，即要进行<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1</mn><msup><mn>0</mn><mn>18</mn></msup></mrow><annotation encoding="application/x-tex">10^{18}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8141em;"></span><span class="mord">1</span><span class="mord"><span class="mord">0</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">18</span></span></span></span></span></span></span></span></span></span></span></span>次运算，一般情况下计算机在1s内无法完成。</li>
@@ -353,7 +443,7 @@ category: 算法</p>
 <p>这样我们就解决了缺陷2。但是时间复杂度并没有优化，还有没有别的办法呢？</p>
 <h2 id="快速幂算法">快速幂算法</h2>
 <p>我们首先考虑一下手算<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>3</mn><mn>10</mn></msup></mrow><annotation encoding="application/x-tex">3^{10}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8141em;"></span><span class="mord"><span class="mord">3</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">10</span></span></span></span></span></span></span></span></span></span></span></span>，<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>3</mn><mn>10</mn></msup><mo>=</mo><mo stretchy="false">(</mo><msup><mn>3</mn><mn>2</mn></msup><msup><mo stretchy="false">)</mo><mn>5</mn></msup><mo>=</mo><msup><mn>9</mn><mn>5</mn></msup><mo>=</mo><mn>9</mn><mo>∗</mo><msup><mn>9</mn><mn>4</mn></msup><mo>=</mo><mn>9</mn><mo>∗</mo><mn>8</mn><msup><mn>1</mn><mn>2</mn></msup><mo>=</mo><mn>9</mn><mo>∗</mo><mo stretchy="false">(</mo><mn>8</mn><msup><mn>1</mn><mn>2</mn></msup><msup><mo stretchy="false">)</mo><mn>1</mn></msup></mrow><annotation encoding="application/x-tex">3^{10}=(3^2)^5=9^5=9*9^4=9*81^2=9*(81^2)^1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8141em;"></span><span class="mord"><span class="mord">3</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">10</span></span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1.0641em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord"><span class="mord">3</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class="mclose"><span class="mclose">)</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">5</span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.8141em;"></span><span class="mord"><span class="mord">9</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">5</span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">9</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">∗</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.8141em;"></span><span class="mord"><span class="mord">9</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">4</span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">9</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">∗</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.8141em;"></span><span class="mord">8</span><span class="mord"><span class="mord">1</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">9</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">∗</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1.0641em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord">8</span><span class="mord"><span class="mord">1</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class="mclose"><span class="mclose">)</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span></span></span></span></span></span></span></span>，很容易发现规律。而且，这个算法时间复杂度为<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>O</mi><mo stretchy="false">(</mo><mi>l</mi><mi>o</mi><msub><mi>g</mi><mn>2</mn></msub><mi>b</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">O(log_2b)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.01968em;">l</span><span class="mord mathnormal">o</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.03588em;">g</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:-0.0359em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord mathnormal">b</span><span class="mclose">)</span></span></span></span>，时间大大减少。</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">typedef</span> <span class="hljs-type">long</span> <span class="hljs-type">long</span> ll;<br><span class="hljs-function">ll <span class="hljs-title">fast_pow</span><span class="hljs-params">(ll a,ll b,ll c)</span></span><br><span class="hljs-function"></span>&#123;<br>	ll ans=<span class="hljs-number">1</span>;<br>	a%=c;<br>	<span class="hljs-keyword">while</span> (b)<span class="hljs-comment">//不能写成b&gt;1，否则会出问题！！！</span><br>	&#123;<br>		<span class="hljs-keyword">if</span> (b%<span class="hljs-number">2</span>==<span class="hljs-number">1</span>)<span class="hljs-comment">//可以用b&amp;1进行更快的判断</span><br>		&#123;<br>			ans=(ans*a)%c;<br>		&#125;<br>		a=(a*a)%c;<br>		b/=<span class="hljs-number">2</span>;<span class="hljs-comment">//可以用b&gt;&gt;=1来代替</span><br>	&#125;<br>	<span class="hljs-keyword">return</span> ans;<br>&#125;<br></code></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">typedef</span> <span class="hljs-type">long</span> <span class="hljs-type">long</span> ll;<br><span class="hljs-function">ll <span class="hljs-title">fast_pow</span><span class="hljs-params">(ll a,ll b,ll c)</span></span><br><span class="hljs-function"></span>&#123;<br>    ll ans=<span class="hljs-number">1</span>;<br>    a%=c;<br>    <span class="hljs-keyword">while</span> (b)<span class="hljs-comment">//不能写成b&gt;1，否则会出问题！！！</span><br>    &#123;<br>        <span class="hljs-keyword">if</span> (b%<span class="hljs-number">2</span>==<span class="hljs-number">1</span>)<span class="hljs-comment">//可以用b&amp;1进行更快的判断</span><br>        &#123;<br>            ans=(ans*a)%c;<br>        &#125;<br>        a=(a*a)%c;<br>        b/=<span class="hljs-number">2</span>;<span class="hljs-comment">//可以用b&gt;&gt;=1来代替</span><br>    &#125;<br>    <span class="hljs-keyword">return</span> ans;<br>&#125;<br></code></pre></td></tr></table></figure>
 <h1>补充：费马小定理</h1>
 <p>若<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>p</mi></mrow><annotation encoding="application/x-tex">p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord mathnormal">p</span></span></span></span>为素数，<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>a</mi></mrow><annotation encoding="application/x-tex">a</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">a</span></span></span></span>为正整数，且<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>p</mi><mtext>，</mtext><mi>a</mi></mrow><annotation encoding="application/x-tex">p，a</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8778em;vertical-align:-0.1944em;"></span><span class="mord mathnormal">p</span><span class="mord cjk_fallback">，</span><span class="mord mathnormal">a</span></span></span></span>互质。则有<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>a</mi><mrow><mi>p</mi><mo>−</mo><mn>1</mn></mrow></msup><mo>=</mo><mn>1</mn><mspace></mspace><mspace width="0.6667em"/><mrow><mi mathvariant="normal">m</mi><mi mathvariant="normal">o</mi><mi mathvariant="normal">d</mi></mrow><mtext> </mtext><mtext> </mtext><mi>p</mi></mrow><annotation encoding="application/x-tex">a^{p-1}=1\mod p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8141em;"></span><span class="mord"><span class="mord mathnormal">a</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">p</span><span class="mbin mtight">−</span><span class="mord mtight">1</span></span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">1</span><span class="mspace allowbreak"></span><span class="mspace" style="margin-right:0.6667em;"></span></span><span class="base"><span class="strut" style="height:0.8889em;vertical-align:-0.1944em;"></span><span class="mord"><span class="mord"><span class="mord mathrm">mod</span></span></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal">p</span></span></span></span>。</p>
 
@@ -364,6 +454,34 @@ category: 算法</p>
             <div>
               <div class="post-metas my-3">
   
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E7%AE%97%E6%B3%95/" class="category-chain-item">算法</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E7%AE%97%E6%B3%95/" class="print-no-link">#算法</a>
+      
+    </div>
   
 </div>
 
@@ -373,8 +491,8 @@ category: 算法</p>
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div></div>
-      <div>https://serendipity565.github.io/2024/09/20/快速幂/</div>
+      <div>快速幂</div>
+      <div>https://serendipity565.github.io/2023/11/29/快速幂/</div>
     </div>
     <div class="license-meta">
       
@@ -386,7 +504,7 @@ category: 算法</p>
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2024年9月20日</div>
+          <div>2023年11月29日</div>
         </div>
       
       
@@ -411,9 +529,9 @@ category: 算法</p>
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2024/09/20/%E6%AC%A7%E5%87%A0%E9%87%8C%E5%BE%97%E7%AE%97%E6%B3%95/" title="">
+                      <a href="/2023/12/05/P1088%5BNOIP2004%20%E6%99%AE%E5%8F%8A%E7%BB%84%5D%E7%81%AB%E6%98%9F%E4%BA%BA/" title="P1088 [NOIP2004 普及组] 火星人">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile"></span>
+                        <span class="hidden-mobile">P1088 [NOIP2004 普及组] 火星人</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -421,8 +539,8 @@ category: 算法</p>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2024/09/20/hello-world/" title="Hello World">
-                        <span class="hidden-mobile">Hello World</span>
+                      <a href="/2023/11/18/%E6%AC%A7%E5%87%A0%E9%87%8C%E5%BE%97%E7%AE%97%E6%B3%95/" title="欧几里得算法">
+                        <span class="hidden-mobile">欧几里得算法</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
