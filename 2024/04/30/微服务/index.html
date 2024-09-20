@@ -1,0 +1,1184 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/kenan.png">
+  <link rel="icon" href="/img/kenan.png">
+  
+    <link rel="canonical" href="https://serendipity565.github.io/2024/04/30/微服务/"/>
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#bebebe">
+  <meta name="author" content="Serendipity">
+  <meta name="keywords" content="Serendipity,Blog">
+  
+    <meta name="description" content="什么是微服务？ 微服务（英语：Microservices）是一种软件架构风格，它是以专注于单一责任与功能的小型功能区块 为基础，利用模块化的方式组合出复杂的大型应用程序，各功能区块使用与语言无关，而且复杂的服务背后是使用简单 URI 来开放接口，任何服务，任何细粒都能被开放。这个设计在 HP 的实验室被实现，具有改变复杂软件系统的强大力量。 要理解微服务，首先需要理解软件架构的演变。 单体式架构">
+<meta property="og:type" content="article">
+<meta property="og:title" content="微服务">
+<meta property="og:url" content="https://serendipity565.github.io/2024/04/30/%E5%BE%AE%E6%9C%8D%E5%8A%A1/index.html">
+<meta property="og:site_name" content="Serendipity&#39;s Blog">
+<meta property="og:description" content="什么是微服务？ 微服务（英语：Microservices）是一种软件架构风格，它是以专注于单一责任与功能的小型功能区块 为基础，利用模块化的方式组合出复杂的大型应用程序，各功能区块使用与语言无关，而且复杂的服务背后是使用简单 URI 来开放接口，任何服务，任何细粒都能被开放。这个设计在 HP 的实验室被实现，具有改变复杂软件系统的强大力量。 要理解微服务，首先需要理解软件架构的演变。 单体式架构">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://serendipity565.github.io/img/blog/wfw/1.png">
+<meta property="og:image" content="https://serendipity565.github.io/img/blog/wfw/1.png">
+<meta property="og:image" content="https://serendipity565.github.io/img/blog/wfw/3.png">
+<meta property="og:image" content="https://serendipity565.github.io/img/blog/wfw/4.png">
+<meta property="article:published_time" content="2024-04-30T13:12:34.000Z">
+<meta property="article:modified_time" content="2024-09-20T11:47:47.924Z">
+<meta property="article:author" content="Serendipity">
+<meta property="article:tag" content="后端">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://serendipity565.github.io/img/blog/wfw/1.png">
+  
+  
+  
+  <title>微服务 - Serendipity&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/KaTeX/0.16.2/katex.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="//cdn.jsdelivr.net/gh/EmoryHuang/BlogBeautify@1.1/scroll.css">
+<link rel="stylesheet" href="/css/test.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"serendipity565.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":7},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":"GG1JTYKMXXAVk1svwXcwLDlE-gzGzoHsz","app_key":"eaWuEy5vj3kI6J1Ut2fFjeUz","server_url":"https://gg1jtykm.lc-cn-n1-shared.com","path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+  
+
+
+
+  
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Serendipity&#39;Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/" target="_self">
+                <i class="iconfont icon-link-fill"></i>
+                <span>友链</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/defbj.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="微服务"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-author" aria-hidden="true"></i>
+        Serendipity
+      </span>
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-04-30 21:12" pubdate>
+          2024年4月30日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          6.4k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          71 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="leancloud-page-views-container" class="post-meta" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="leancloud-page-views"></span> 次
+        </span>
+        
+      
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar category-bar" style="margin-right: -1rem">
+    
+
+
+
+
+
+<div class="category-list">
+  
+  
+    
+    
+    
+    <div class="category row nomargin-x">
+      <a class="category-item 
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="开发"
+        id="heading-3ff3c3e26a68112c11c3e80f2a26896e" role="tab" data-toggle="collapse" href="#collapse-3ff3c3e26a68112c11c3e80f2a26896e"
+        aria-expanded="true"
+      >
+        开发
+        <span class="list-group-count">(6)</span>
+        <i class="iconfont icon-arrowright"></i>
+      </a>
+      
+      <div class="category-collapse collapse show" id="collapse-3ff3c3e26a68112c11c3e80f2a26896e"
+           role="tabpanel" aria-labelledby="heading-3ff3c3e26a68112c11c3e80f2a26896e">
+        
+        
+          
+  <div class="category-post-list">
+    
+    
+      
+      
+        <a href="/2024/04/15/Go%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95%E2%80%94%E7%BD%91%E7%BB%9C%E6%B5%8B%E8%AF%95/" title="Go单元测试—网络测试"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Go单元测试—网络测试</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2024/03/14/Go%E6%8E%A5%E5%8F%A3/" title="Go接口"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Go接口</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2024/03/15/Go%E6%8E%A5%E5%8F%A3%E6%96%AD%E8%A8%80/" title="Go接口断言"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Go接口断言</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2024/01/20/Python%E7%88%AC%E8%99%AB/" title="Python爬虫入门"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Python爬虫入门</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2024/04/30/%E5%BE%AE%E6%9C%8D%E5%8A%A1/" title="微服务"
+           class="list-group-item list-group-item-action
+           active">
+          <span class="category-post">微服务</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2024/06/15/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3C%E8%AF%AD%E8%A8%80%E6%8C%87%E9%92%88/" title="深入理解C语言指针"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">深入理解C语言指针</span>
+        </a>
+      
+    
+  </div>
+
+        
+      </div>
+    </div>
+  
+</div>
+
+
+  </aside>
+
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">微服务</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1><strong>什么是微服务？</strong></h1>
+<p><strong>微服务</strong>（英语：Microservices）是一种<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E8%BD%AF%E4%BB%B6%E6%9E%B6%E6%9E%84">软件架构风格</a>，它是以专注于单一责任与功能的小型功能区块 为基础，利用模块化的方式组合出复杂的大型应用程序，各功能区块使用与语言无关，而且复杂的服务背后是使用简单 <a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/URI">URI</a> 来开放接口，任何服务，任何细粒都能被开放。这个设计在 HP 的实验室被实现，具有改变复杂软件系统的强大力量。</p>
+<p>要理解微服务，首先需要理解软件架构的演变。</p>
+<h2 id="单体式架构">单体式架构</h2>
+<p>微服务的一个对比是<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E5%96%AE%E9%AB%94%E5%BC%8F%E6%87%89%E7%94%A8%E7%A8%8B%E5%BC%8F">单体式应用程序</a>，简单来说，就是把所有的功能都写在一起。单体式应用表示一个应用程序内包含了所有需要的业务功能，并且使用像<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E4%B8%BB%E5%BE%9E%E5%BC%8F%E6%9E%B6%E6%A7%8B">主从式架构</a>（Client/Server）或是<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/w/index.php?title=%E5%A4%9A%E5%B1%A4%E6%AC%A1%E6%9E%B6%E6%A7%8B&amp;action=edit&amp;redlink=1">多层次架构</a>（N-tier）实现，虽然它也是能以分布式应用程序来实现，但是在单体式应用内，每一个业务功能是不可分割的。若要对单体式应用进行扩展则必须将<strong>整个</strong>应用程序都放到新的运算资源（如：虚拟机） 内，但事实上应用程序中最吃耗费资源、需要运算资源的仅有某个业务部分（例如跑分析报表或是数学算法分析），但因为单体式应用无法分割该部分，因此无形中会有大量的资源浪费的现象。</p>
+<p>单体式架构会有一下几个缺点：</p>
+<p>（1）所有功能耦合在一起，互相影响，最终难以管理。</p>
+<p>（2）哪怕只修改一行代码，整个软件就要重新构建和部署，成本非常高。</p>
+<p>（3）因为软件做成了一个整体，不可能每个功能单独开发和测试，只能整体开发和测试，导致必须采用瀑布式开发模型。</p>
+<h2 id="面向服务架构">面向服务架构</h2>
+<p>为了解决上面这些问题，很早就有人提出来，必须打破代码的耦合，拆分单体架构，将软件拆分成一个个独立的功能单元。</p>
+<p>互联网的出现之后，功能单元可以用远程&quot;服务&quot;的形式提供，就诞生出了&quot;面向服务架构&quot;（service-oriented architecture，简称 SOA）。面向服务的体系结构，就是一个组件模型，它将应用程序的不同功能单元（称为服务）通过这些服务之间定义良好的接口和契约联系起来。接口是采用中立的方式进行定义的，它应该独立于实现服务的硬件平台、操作系统和编程语言。这使得构建在各种这样的系统中的服务可以以一种统一和通用的方式进行交互。</p>
+<p><img src="/img/blog/wfw/1.png" srcset="/img/loading.gif" lazyload alt=""></p>
+<p>所谓服务（service），就是在后台不间断运行、提供某种功能的一个程序。最常见的服务就是 Web 服务，通过80端口向外界提供网页访问。</p>
+<p>&quot;面向服务架构&quot;就是把一个大型的单体程序，拆分成一个个独立服务，也就是较小的程序。每个服务都是一个独立的功能单元，承担不同的功能，服务之间通过通信协议连在一起。</p>
+<p>这种架构有很多的优点：</p>
+<p>（1）每种服务功能单一，相当于一个小型软件，便于开发和测试。</p>
+<p>（2）各个服务独立运行，简化了架构，提高了可靠性。</p>
+<p>（3）鼓励和支持代码重用，同一个服务可以用于多种目的。</p>
+<p>（4）不同服务可以单独开发和部署，便于升级。</p>
+<p>（5）扩展性好，可以容易地加机器、加功能，承受高负载。</p>
+<p>（6）不容易出现单点故障。即使一个服务失败了，不会影响到其他服务。</p>
+<p>缺点：</p>
+<p>SOA 早期均使用了总线模式，这种总线模式是与某种技术栈强绑定的，比如：J2EE。这导致很多企业的遗留系统很难对接，切换时间太长，成本太高，新系统稳定性的收敛也需要一些时间，最终 SOA 看起来很美，但却成为了企业级奢侈品，中小公司都望而生畏。</p>
+<p>此外，实施SOA时会遇到很多问题，比如通信协议（例如SOAP)的选择、第三方中间件如何选择、服务粒度如何确定等，目前也存在一些关于如何划分系统的指导性原则，但其中有很多都是错误的。SOA并没有告诉你如何划分单体应用成微服务，所以在实施SOA时会遇到很多问题。</p>
+<h2 id="微服务">微服务</h2>
+<p>2014年，<a target="_blank" rel="noopener" href="https://www.ruanyifeng.com/blog/2018/02/docker-tutorial.html">Docker</a> 出现了，彻底改变了软件开发的面貌。它让程序运行在容器中，每个容器可以分别设定运行环境，并且只占用很少的系统资源。</p>
+<p>显而易见，可以用容器来实现&quot;面向服务架构&quot;，每个服务不再占用一台服务器，而是占用一个容器。</p>
+<p>这样就不需要多台服务器了，最简单的情况下，本机运行多个容器，只用一台服务器就实现了面向服务架构，这在以前是做不到的。这种实现方式就叫做微服务。</p>
+<p><img src="/img/blog/wfw/1.png" srcset="/img/loading.gif" lazyload alt=""></p>
+<p>微服务运用了以业务功能的设计概念，应用程序在设计时就能先以业务功能或流程设计先行分割，将各个业务功能都独立实现成一个能自主执行的个体服务，然后再利用相同的协议将所有应用程序需要的服务都组合起来，形成一个应用程序。若需要针对特定业务功能进行扩展时，只要对该业务功能的服务进行扩展就好，不需要整个应用程序都扩展，同时，由于微服务是以业务功能导向的实现，因此不会受到应用程序的干扰，微服务的管理员可以视运算资源的需要来配置微服务到不同的运算资源内，或是布建新的运算资源并将它配置进去。</p>
+<p>简单说，<strong>微服务就是采用容器技术的面向服务架构</strong>。它依然使用&quot;服务&quot;作为功能单元，但是变成了轻量级实现，不需要新增服务器，只需要新建容器（一个进程），所以才叫做&quot;微服务&quot;。它的特点与面向服务架构是一样的，但因为更轻量级，所以功能的解耦和服务化可以做得更彻底。而且，它可以标准化，同样的容器不管在哪里运行，结果都是一样的。</p>
+<p>一个微服务框架的应用程序有下列特性：</p>
+<ul>
+<li>每个服务都容易被取代。</li>
+<li>服务是以能力来组织的，例如用户界面、前端、推荐系统、账单或是物流等。</li>
+<li>由于功能被拆成多个服务，因此可以由不同的编程语言、数据库实现。</li>
+<li>架构是对称而非分层（即生产者与消费者的关系）。</li>
+</ul>
+<p>一个微服务框架：</p>
+<ul>
+<li>适用于具<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E6%8C%81%E7%BA%8C%E4%BA%A4%E4%BB%98">持续交付</a>（Continuous Delivery）的软件开发流程。</li>
+<li>与<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E6%9C%8D%E5%8B%99%E5%B0%8E%E5%90%91%E6%9E%B6%E6%A7%8B">服务导向架构</a>（Service-Oriented Architecture）不同，后者是集成各种业务的应用程序，但微服务只属于一个应用程序。</li>
+</ul>
+<p>微服务可以用不同的编程语言实现，也可以使用不同的基础设施。因此，最重要的技术选择是微服务之间的通信方式（同步、异步、UI集成）以及用于通信的协议（<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/RESTful">RESTful</a> HTTP、消息、<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/GraphQL">GraphQL</a>……）。而在传统系统中，大多数技术选择，如编程语言，都会影响整个系统。</p>
+<h2 id="SOA和微服务的区别">SOA和微服务的区别</h2>
+<ol>
+<li><strong>规模和粒度</strong>：
+<ul>
+<li>SOA 更倾向于大型、复杂的企业级系统。它通常将系统划分为多个服务，每个服务可能包含多个功能。这些服务通常以较粗的粒度提供，并且可能涵盖多个业务功能。</li>
+<li>微服务更注重小型、独立的服务单元。每个微服务通常专注于一个特定的业务功能，并且以较细的粒度提供。微服务架构更适合于将系统拆分为许多小型、自治的服务。</li>
+</ul>
+</li>
+<li><strong>技术栈</strong>：
+<ul>
+<li>SOA 没有明确规定要使用特定的技术栈。它通常使用诸如SOAP（Simple Object Access Protocol）和WSDL（Web Services Description Language）等标准来定义服务接口，但在实践中也可能使用其他技术。</li>
+<li>微服务通常采用更现代的技术栈，如RESTful API、JSON、HTTP等，以及容器化技术（如Docker）和容器编排工具（如Kubernetes）等来构建和管理服务。</li>
+</ul>
+</li>
+<li><strong>部署和管理</strong>：
+<ul>
+<li>SOA 的服务通常可以以多种方式部署，包括在本地服务器上、私有云中或公有云上。</li>
+<li>微服务更倾向于采用容器化和云原生技术，服务通常以独立的容器运行，并由容器编排工具进行管理和调度。</li>
+</ul>
+</li>
+<li><strong>自治性</strong>：
+<ul>
+<li>SOA 中的服务通常更为集中管理，它们可能受到中央治理机构的监督，并且可能共享基础设施和技术组件。</li>
+<li>微服务架构强调每个服务的自治性，每个微服务都可以独立开发、部署和扩展，服务之间的交互通常通过轻量级的通信机制进行，如HTTP API。</li>
+</ul>
+</li>
+</ol>
+<h1><strong>微服务的优点和缺点</strong></h1>
+<h2 id="1、微服务的优点："><strong>1、微服务的优点：</strong></h2>
+<p>**关键点：**复杂度可控，独立按需扩展，技术选型灵活，容错，可用性高</p>
+<p><strong>①</strong>它解决了复杂性的问题。它会将一种怪异的整体应用程序分解成一组服务。虽然功能总量 不变，但应用程序已分解为可管理的块或服务。每个服务都以RPC或消息驱动的API的形式定义了一个明确的边界。微服务架构模式实现了一个模块化水平。</p>
+<p><strong>②</strong>每个服务都能够由专注于该服务的团队独立开发。开发人员可以自由选择任何有用的技术。然而，这种自由意味着开发人员不再有义务使用在新项目开始时存在的可能过时的技术。在编写新服务时，他们可以选择使用当前的技术。此外，由于服务相对较小，因此使用当前技术重写旧服务变得可行。</p>
+<p><strong>③</strong>微服务架构模式使每个微服务都能独立部署。开发人员不需要协调部署本地服务的变更。这些变化可以在测试后尽快部署。</p>
+<p><strong>④</strong>每个服务都可以独立调整。可以仅部署满足其容量和可用性限制的每个服务的实例数。此外，可以使用最符合服务资源要求的硬件。</p>
+<h2 id="2、微服务的缺点"><strong>2、微服务的缺点</strong></h2>
+<p>**关键点：**多服务运维难度，系统部署依赖，服务间通信成本，数据一致性，系统集成测试，重复工作，性能监控等</p>
+<p><strong>①</strong>一个缺点是名称本身。术语microservice过度强调服务规模。但重要的是要记住，这是一种手段，而不是主要目标。微服务的目标是充分分解应用程序，以便于敏捷应用程序开发和部署。</p>
+<p><strong>②</strong>另一个主要缺点是分布式系统而产生的复杂性。开发人员需要选择和实现基于消息传递或RPC的<a target="_blank" rel="noopener" href="https://www.zhihu.com/search?q=%E8%BF%9B%E7%A8%8B%E9%97%B4%E9%80%9A%E4%BF%A1&amp;search_source=Entity&amp;hybrid_search_source=Entity&amp;hybrid_search_extra=%7B%22sourceType%22%3A%22answer%22%2C%22sourceId%22%3A860169294%7D">进程间通信</a>机制。此外，他们还必须编写代码来处理部分故障，因为请求的目的地可能很慢或不可用。</p>
+<p><strong>③</strong>微服务器的另一个挑战是分区数据库架构。更新多个业务实体的业务交易是相当普遍的。但是，在基于微服务器的应用程序中，您需要更新不同服务所拥有的多个数据库。使用分布式事务通常不是一个选择，而不仅仅是因为CAP定理。许多今天高度可扩展的NoSQL数据库都不支持它们。你最终不得不使用最终的一致性方法，这对开发人员来说更具挑战性。</p>
+<p><strong>④</strong>测试微服务应用程序也更复杂。服务类似的测试类将需要启动该服务及其所依赖的任何服务（或至少为这些服务配置存根）。再次，重要的是不要低估这样做的复杂性。</p>
+<p><strong>⑤</strong>另一个主要挑战是实现跨越多个服务的更改。例如，我们假设您正在实施一个需要更改服务A，B和C，其中A取决于B和B取决于C。在单片应用程序中，您可以简单地更改相应的模块，整合更改，并一次性部署。相比之下，在Microservice架构模式中，您需要仔细规划和协调对每个服务的更改。例如，您需要更新服务C，然后更新服务B，然后再维修A。幸运的是，大多数更改通常仅影响一个服务，而需要协调的多服务变更相对较少。</p>
+<p><strong>⑥</strong>部署基于微服务的应用程序也更复杂。单一应用程序简单地部署在传统负载平衡器后面的一组相同的服务器上。每个应用程序实例都配置有基础架构服务（如数据库和消息代理）的位置（主机和端口）。相比之下，微服务应用通常由大量服务组成。例如，每个服务将有多个运行时实例。更多的移动部件需要进行配置，部署，扩展和监控。此外，您还需要实现服务发现机制，使服务能够发现需要与之通信的任何其他服务的位置（主机和端口）。</p>
+<h1>常见的微服务框架</h1>
+<h2 id="Java语言相关微服务框架"><strong>Java语言相关微服务框架</strong></h2>
+<h3 id="Spring-Boot"><strong>Spring Boot</strong></h3>
+<p>Spring Boot的设计目的是简化新Spring应用初始搭建以及开发过程，2017年有64.4%的受访者决定使用Spring Boot，可以说是最受欢迎的微服务开发框架。利用Spring Boot开发的便捷度简化分布式系统基础设施的开发，比如像配置中心、注册、负载均衡等方面都可以做到一键启动和一键部署。</p>
+<ul>
+<li>优点：
+<ul>
+<li>快速启动：Spring Boot 提供了快速启动的能力，可以轻松创建独立的、基于 Spring 的应用程序。</li>
+<li>自动化配置：Spring Boot 提供了自动化配置的功能，简化了开发者对配置的需求，减少了样板代码的编写。</li>
+<li>生态系统：Spring Boot 生态系统庞大，有大量的文档、教程和社区支持。</li>
+</ul>
+</li>
+<li>缺点：
+<ul>
+<li>过度自动化：有时自动化配置可能会导致开发者失去对应用程序的控制，特别是在需要定制化和优化的情况下。</li>
+</ul>
+</li>
+</ul>
+<h3 id="Spring-Cloud"><strong>Spring Cloud</strong></h3>
+<p>Spring Cloud是一个系列框架的合计，基于HTTP（s）的RETS服务构建服务体系，Spring Cloud能够帮助架构师构建一整套完整的微服务架构技术生态链。</p>
+<ul>
+<li>优点：
+<ul>
+<li>微服务支持：Spring Cloud 提供了丰富的微服务功能，如服务发现、负载均衡、断路器等。</li>
+<li>集成性：Spring Cloud 可以与 Spring Boot 很好地集成，为构建分布式系统提供了便利。</li>
+<li>社区支持：Spring Cloud 有一个庞大的活跃社区，提供了大量的文档和示例代码。</li>
+</ul>
+</li>
+<li>缺点：
+<ul>
+<li>
+<p>复杂性：使用 Spring Cloud 构建微服务架构可能会增加系统的复杂性，特别是在涉及大量微服务的情况下。</p>
+<p><img src="/img/blog/wfw/3.png" srcset="/img/loading.gif" lazyload alt=""></p>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="Dubbo"><strong>Dubbo</strong></h3>
+<p>Dubbo是由阿里巴巴开源的分布式服务化治理框架，通过RPC请求方式访问。Dubbo是在阿里巴巴的电商平台中逐渐探索演进所形成的，经历过复杂业务的高并发挑战，比Spring Cloud的开源时间还要早。目前阿里、京东、当当、携程、去哪等一些企业都在使用Dubbo。</p>
+<ul>
+<li>优点：
+<ul>
+<li>高性能：Dubbo 是一个高性能的 RPC 框架，具有低延迟和高吞吐量的特点。</li>
+<li>可靠性：Dubbo 提供了负载均衡、容错、服务治理等功能，可以保证系统的可靠性和稳定性。</li>
+<li>配置管理：Dubbo 提供了丰富的配置管理功能，可以灵活地配置服务的各种参数。</li>
+</ul>
+</li>
+<li>缺点：
+<ul>
+<li>生态较窄：相比于 Spring而言，Dubbo 的生态系统相对较小，可能缺乏一些常见的功能和工具。</li>
+</ul>
+</li>
+</ul>
+<h3 id="Drop-wizard"><strong>Drop wizard</strong></h3>
+<p>Dropwizard将Java生态系统中各个问题域里最好的组建集成于一身，能够快速打造一个Rest风格的后台，还可以整合Dropwizard核心以外的项目。国内现在使用Dropwizard还很少，资源也不多，但是与Spring Boot相比，Dropwizard在轻量化上更有优势，同时如果用过Spring，那么基本也会使用Spring Boot。</p>
+<ul>
+<li>优点：
+<ul>
+<li>简单易用：Dropwizard 提供了简单而直观的方式来构建 RESTful 服务，减少了开发者的工作量。</li>
+<li>生产就绪：Dropwizard 集成了许多常见的库和工具，如Jetty、Jackson、Metrics等，使得构建生产就绪的服务变得更加容易。</li>
+<li>模块化：Dropwizard 的组件是相互独立的，可以根据需要进行定制和扩展。</li>
+</ul>
+</li>
+<li>缺点：
+<ul>
+<li>限制性：Dropwizard 是一个相对轻量级的框架，可能不适用于所有类型的应用程序。</li>
+<li>生态相对较小：相比于 Spring而言，Dropwizard 的生态系统可能较小，可能缺乏一些常见的功能和工具。</li>
+</ul>
+</li>
+</ul>
+<h3 id="Akka"><strong>Akka</strong></h3>
+<p>Akka是一个用Scala编写的库，可以用在有简化编写容错、高可伸缩性的Java和Scala的Actor模型，使用Akka能够实现微服务集群。</p>
+<p>这四种框架主要用于响应式微服务开发，响应式本身和微服务没有关系，更多用于提升性能上，但是可以和微服务相结合，也可以提升性能。</p>
+<ul>
+<li>优点：
+<ul>
+<li>并发性：Akka 是一个基于 Actor 模型的框架，提供了强大的并发支持，能够处理大规模并发的情况。</li>
+<li>弹性和容错性：Akka 提供了弹性和容错的机制，能够自动处理系统中的故障，并进行恢复。</li>
+<li>分布式支持：Akka 支持分布式计算，可以在集群中运行 Actor，并实现分布式系统的构建。</li>
+</ul>
+</li>
+<li>缺点：
+<ul>
+<li>复杂性：Akka 的设计相对复杂，可能不适用于所有类型的应用程序，特别是对于简单的 CRUD 应用程序而言</li>
+</ul>
+</li>
+</ul>
+<h2 id="Net相关微服务框架"><strong>.Net相关微服务框架</strong></h2>
+<h3 id="NET-Core"><strong>.NET Core</strong></h3>
+<p>.NET Core是专门针对模块化微服务架构设计的，是跨平台应用程序开发框架，是微软开发的第一个官方版本。</p>
+<ul>
+<li>优点：
+<ul>
+<li>跨平台：.NET Core 是一个跨平台的开发框架，可以在 Windows、Linux 和 macOS 等多种操作系统上运行。</li>
+<li>性能优化：.NET Core 具有优化的性能，包括更快的启动时间、更高的吞吐量和更低的内存消耗。</li>
+<li>大型社区：.NET Core 拥有庞大的开发者社区和丰富的生态系统，提供了大量的工具、库和文档支持。</li>
+</ul>
+</li>
+<li>缺点：
+<ul>
+<li>生态相对较小：相比于传统的 .NET Framework，.NET Core 的生态系统可能相对较小，某些功能和工具可能不够成熟。</li>
+<li>迁移成本：对于现有的 .NET Framework 应用程序来说，迁移到 .NET Core 可能需要一些工作，并且可能涉及一些不兼容性问题。</li>
+</ul>
+</li>
+</ul>
+<h3 id="Service-Fabric"><strong>Service Fabric</strong></h3>
+<p>Service Fabric是微软开发的一个微服务框架，基于Service Fabric构建的很多云服务被用在了Azure上。</p>
+<ul>
+<li>优点：
+<ul>
+<li>高可用性：Service Fabric 提供了强大的高可用性和容错性能力，可以自动处理节点故障和服务迁移。</li>
+<li>分布式部署：Service Fabric 支持分布式部署，可以轻松部署和管理大规模的分布式系统。</li>
+<li>微服务支持：Service Fabric 提供了对微服务架构的原生支持，包括服务发现、负载均衡等功能。</li>
+</ul>
+</li>
+<li>缺点：
+<ul>
+<li>运维复杂性：虽然 Service Fabric 提供了强大的功能，但它的运维可能相对复杂，特别是对于大规模的分布式系统而言。</li>
+</ul>
+</li>
+</ul>
+<h3 id="Surging"><strong>Surging</strong></h3>
+<p>Surging是基于RPC协议的分布式微服务技术框架，<a target="_blank" rel="noopener" href="http://xn--6kq92u.NET">基于.NET</a> Core而来。</p>
+<ul>
+<li>优点：
+<ul>
+<li>轻量级：Surging 是一个轻量级的微服务框架，具有快速启动和部署的优势。</li>
+<li>支持多种通信协议：Surging 支持多种通信协议，包括 HTTP、TCP、WebSocket 等，具有良好的灵活性和扩展性。</li>
+<li>高性能：Surging 具有优化的性能，能够处理大量的并发请求。</li>
+</ul>
+</li>
+<li>缺点：
+<ul>
+<li>社区支持相对较小：相比于一些主流的框架，Surging 的社区支持可能相对较小，可能缺乏一些成熟的工具和文档支持。</li>
+<li>功能相对有限：虽然 Surging 提供了基本的微服务功能，但其功能相对于一些主流框架来说可能相对有限。</li>
+</ul>
+</li>
+</ul>
+<h3 id="Microdot-Framework"><strong>Microdot Framework</strong></h3>
+<p>Microdot Framework用于编写定义服务逻辑代码，不需要解决开发分布式系统的挑战，能够很方便的进行MicrosoftOrleans集成。</p>
+<ul>
+<li>优点：
+<ul>
+<li>微服务支持：Microdot Framework 是一个专注于微服务的框架，提供了丰富的微服务功能，包括服务发现、负载均衡、断路器等。</li>
+<li>高可扩展性：Microdot Framework 具有高度可扩展性，可以根据需要灵活地扩展和定制。</li>
+<li>高性能：Microdot Framework 具有优化的性能，能够处理大规模的微服务系统。</li>
+</ul>
+</li>
+<li>缺点：
+<ul>
+<li>社区支持相对有限：虽然 Microdot Framework 的社区在不断壮大，但相对于一些主流框架来说，其社区支持可能还有待提升。</li>
+</ul>
+</li>
+</ul>
+<p><img src="/img/blog/wfw/4.png" srcset="/img/loading.gif" lazyload alt=""></p>
+<h2 id="Go相关微服务框架"><strong>Go相关微服务框架</strong></h2>
+<h3 id="Go-Kit">Go-Kit</h3>
+<p>Go-Kit是分布式开发的工具合集，适合用于大型业务场景下构建微服务。</p>
+<ul>
+<li>优点：
+<ul>
+<li>高度可定制：Go-Kit 提供了一系列独立的库，开发者可以根据需要选择和定制所需的功能模块，从而实现高度定制化的微服务。</li>
+<li>适用于分布式系统：Go-Kit 提供了一些有用的功能，如服务发现、负载均衡、熔断器等，适用于构建分布式系统。</li>
+<li>社区支持：Go-Kit 有一个活跃的社区，提供了大量的文档、示例和工具，方便开发者使用和学习。</li>
+</ul>
+</li>
+<li>缺点：
+<ul>
+<li>生态系统相对较小：相比于其他一些框架，Go-Kit 的生态系统可能相对较小，可能缺乏一些常见的功能和工具。</li>
+</ul>
+</li>
+</ul>
+<h3 id="Goa">Goa</h3>
+<p>Goa是用Go语言构建的微服务框架。</p>
+<ul>
+<li>优点：
+<ul>
+<li>设计简洁：Goa 提供了简洁而直观的方式来定义 API 和服务，减少了开发者的工作量。</li>
+<li>自动生成文档：Goa 可以自动生成 API 文档，减少了手动编写文档的工作，提高了开发效率。</li>
+<li>集成测试：Goa 提供了集成测试的支持，可以方便地测试生成的代码，保证代码质量和稳定性。</li>
+</ul>
+</li>
+<li>缺点：
+<ul>
+<li>生态系统相对较小：相比于一些主流的框架，Goa 的生态系统可能相对较小，可能缺乏一些常见的功能和工具。</li>
+<li>定制性受限：Goa 提供了一种特定的设计范式，可能对于一些特定的需求和场景不够灵活。</li>
+</ul>
+</li>
+</ul>
+<h3 id="Dubbo-go">Dubbo-go</h3>
+<p>Dubbo-go是和阿里巴巴开源的Dubbo能够兼容的Golang微服务框架。</p>
+<ul>
+<li>优点：
+<ul>
+<li>高性能：Dubbo-go 是 Dubbo 在 Go 语言上的实现，具有高性能的特点，适用于构建性能要求较高的分布式系统。</li>
+<li>分布式支持：Dubbo-go 提供了丰富的分布式功能，如服务发现、负载均衡、熔断器等，适用于构建复杂的分布式系统。</li>
+<li>生态系统丰富：Dubbo-go 是 Dubbo 生态系统的一部分，可以充分利用 Dubbo 生态系统的功能和工具。</li>
+</ul>
+</li>
+<li>缺点：
+<ul>
+<li>配置复杂：Dubbo-go 的配置相对较复杂，需要对 Dubbo 的各种配置参数和功能有一定的了解</li>
+</ul>
+</li>
+</ul>
+<h2 id="Python相关微服务框架"><strong>Python相关微服务框架</strong></h2>
+<p>Python相关的微服务框架非常少，用的比较多的是Nameko。Nameko让实现微服务变得更简单，同时也提供了很丰富的功能，比如支持负载均衡、服务发现还支持依赖自动注入等，使用起来很方便，但是有限速、超时和权限机制不完善等缺点。</p>
+<ul>
+<li>优点：
+<ul>
+<li>Nameko 是一个基于 Python 的微服务框架，适用于 Python 开发者构建微服务应用。</li>
+<li>简单易用：Nameko 提供了简单而直观的方式来定义和编写微服务，减少了开发者的工作量。</li>
+<li>分布式支持：Nameko 支持分布式计算，可以在集群中运行服务，并实现分布式系统的构建。</li>
+</ul>
+</li>
+<li>缺点：
+<ul>
+<li>生态相对较小：相比于一些主流的微服务框架，Nameko 的生态系统可能相对较小。</li>
+<li>性能问题：由于是基于 Python 的框架，Nameko 可能在处理大规模并发时性能较差。</li>
+</ul>
+</li>
+</ul>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E5%BC%80%E5%8F%91/" class="category-chain-item">开发</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E5%90%8E%E7%AB%AF/" class="print-no-link">#后端</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>微服务</div>
+      <div>https://serendipity565.github.io/2024/04/30/微服务/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Serendipity</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2024年4月30日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              BY-SERENDIPITY565
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2024/06/15/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3C%E8%AF%AD%E8%A8%80%E6%8C%87%E9%92%88/" title="深入理解C语言指针">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">深入理解C语言指针</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2024/04/15/Go%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95%E2%80%94%E7%BD%91%E7%BB%9C%E6%B5%8B%E8%AF%95/" title="Go单元测试—网络测试">
+                        <span class="hidden-mobile">Go单元测试—网络测试</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+    <div id="giscus" class="giscus"></div>
+    <script type="text/javascript">
+      Fluid.utils.loadComments('#giscus', function() {
+        var options = {"repo":"Serendipity565/BlogComment","repo-id":"R_kgDOMwk0XQ","category":"Announcements","category-id":"DIC_kwDOMwk0Xc4CiZ44","theme-light":"light","theme-dark":"dark","mapping":"pathname","reactions-enabled":1,"emit-metadata":0,"input-position":"top","lang":"zh-CN"};
+        var attributes = {};
+        for (let option in options) {
+          if (!option.startsWith('theme-')) {
+            var key = option.startsWith('data-') ? option : 'data-' + option;
+            attributes[key] = options[option];
+          }
+        }
+        var light = 'light';
+        var dark = 'dark';
+        window.GiscusThemeLight = light;
+        window.GiscusThemeDark = dark;
+        attributes['data-theme'] = document.documentElement.getAttribute('data-user-color-scheme') === 'dark' ? dark : light;
+        for (let attribute in attributes) {
+          var value = attributes[attribute];
+          if (value === undefined || value === null || value === '') {
+            delete attributes[attribute];
+          }
+        }
+        var s = document.createElement('script');
+        s.setAttribute('src', 'https://giscus.app/client.js');
+        s.setAttribute('crossorigin', 'anonymous');
+        for (let attribute in attributes) {
+          s.setAttribute(attribute, attributes[attribute]);
+        }
+        var ss = document.getElementsByTagName('script');
+        var e = ss.length > 0 ? ss[ss.length - 1] : document.head || document.documentElement;
+        e.parentNode.insertBefore(s, e.nextSibling);
+      });
+    </script>
+    <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> content: <div> <span id="timeDate">载入天数...</span> <span id="times">载入时分秒...</span> <script src="/js/duration.js"></script> </div> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="leancloud-site-pv-container" style="display: none">
+        总访问量 
+        <span id="leancloud-site-pv"></span>
+         次
+      </span>
+    
+    
+      <span id="leancloud-site-uv-container" style="display: none">
+        总访客数 
+        <span id="leancloud-site-uv"></span>
+         人
+      </span>
+    
+    
+
+  
+
+</div>
+
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script defer src="/js/leancloud.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+  
+<script src="//cdn.jsdelivr.net/gh/EmoryHuang/BlogBeautify@1.1/DynamicLine.js"></script>
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/wanko.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"react":{"opacity":0.7},"log":false});</script></body>
+</html>

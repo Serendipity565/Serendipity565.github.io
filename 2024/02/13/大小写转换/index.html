@@ -11,7 +11,7 @@
   <link rel="apple-touch-icon" sizes="76x76" href="/img/kenan.png">
   <link rel="icon" href="/img/kenan.png">
   
-    <link rel="canonical" href="https://serendipity565.github.io/2024/01/20/Python爬虫/"/>
+    <link rel="canonical" href="https://serendipity565.github.io/2024/02/13/大小写转换/"/>
   
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
@@ -21,25 +21,22 @@
   <meta name="author" content="Serendipity">
   <meta name="keywords" content="Serendipity,Blog">
   
-    <meta name="description" content="HTTP网页结构 一个网页有三大技术要素，分别为HTML，CSS和JavaScript，其中HTML定义了网页的结构和信息，CSS定义网页的样式，JavaScript定义用户和网页的交互逻辑。其中我们爬虫最关心的就是HTML。 1234567&lt;!DOCTYPE html&gt;&lt;html&gt;    &lt;body&gt;        &lt;h1&gt;这是一个一级标题&lt;">
+    <meta name="description" content="在算法竞赛中，我们经常会遇到英文字母大小写转换的问题，下面我们就来具体介绍一下如何解决这个问题。 1.利用ASCII码转换 在python中有直接查看ASCII码的函数ord()，和将ASCII转化位字符的函数chr()，而我们知道大写字母和小写字母的ASCII码的数值相差32。因此我们可以利用这一点完成转化。 123#小写转大写a&#x3D;input(&quot;输入小写字母：&quot;)print(">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Python爬虫入门">
-<meta property="og:url" content="https://serendipity565.github.io/2024/01/20/Python%E7%88%AC%E8%99%AB/index.html">
+<meta property="og:title" content="大小写转换">
+<meta property="og:url" content="https://serendipity565.github.io/2024/02/13/%E5%A4%A7%E5%B0%8F%E5%86%99%E8%BD%AC%E6%8D%A2/index.html">
 <meta property="og:site_name" content="Serendipity&#39;s Blog">
-<meta property="og:description" content="HTTP网页结构 一个网页有三大技术要素，分别为HTML，CSS和JavaScript，其中HTML定义了网页的结构和信息，CSS定义网页的样式，JavaScript定义用户和网页的交互逻辑。其中我们爬虫最关心的就是HTML。 1234567&lt;!DOCTYPE html&gt;&lt;html&gt;    &lt;body&gt;        &lt;h1&gt;这是一个一级标题&lt;">
+<meta property="og:description" content="在算法竞赛中，我们经常会遇到英文字母大小写转换的问题，下面我们就来具体介绍一下如何解决这个问题。 1.利用ASCII码转换 在python中有直接查看ASCII码的函数ord()，和将ASCII转化位字符的函数chr()，而我们知道大写字母和小写字母的ASCII码的数值相差32。因此我们可以利用这一点完成转化。 123#小写转大写a&#x3D;input(&quot;输入小写字母：&quot;)print(">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://serendipity565.github.io/img/blog/pypc/1.png">
-<meta property="og:image" content="https://serendipity565.github.io/img/blog/pypc/2.png">
-<meta property="article:published_time" content="2024-01-20T12:01:21.000Z">
-<meta property="article:modified_time" content="2024-09-20T10:07:05.299Z">
+<meta property="article:published_time" content="2024-02-13T00:32:32.000Z">
+<meta property="article:modified_time" content="2024-09-20T11:20:04.126Z">
 <meta property="article:author" content="Serendipity">
-<meta property="article:tag" content="Python">
+<meta property="article:tag" content="算法">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://serendipity565.github.io/img/blog/pypc/1.png">
   
   
   
-  <title>Python爬虫入门 - Serendipity&#39;s Blog</title>
+  <title>大小写转换 - Serendipity&#39;s Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -241,7 +238,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="Python爬虫入门"></span>
+            <span id="subtitle" data-typed-text="大小写转换"></span>
           
         </div>
 
@@ -257,8 +254,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2024-01-20 20:01" pubdate>
-          2024年1月20日 晚上
+        <time datetime="2024-02-13 08:32" pubdate>
+          2024年2月13日 早上
         </time>
       </span>
     
@@ -269,7 +266,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          906 字
+          542 字
         
       </span>
     
@@ -280,7 +277,7 @@
         
         
         
-          11 分钟
+          7 分钟
         
       </span>
     
@@ -334,17 +331,17 @@
     
     <div class="category row nomargin-x">
       <a class="category-item 
-          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="开发"
-        id="heading-3ff3c3e26a68112c11c3e80f2a26896e" role="tab" data-toggle="collapse" href="#collapse-3ff3c3e26a68112c11c3e80f2a26896e"
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="算法"
+        id="heading-046a899ee7a6ec88d370211a518c9e80" role="tab" data-toggle="collapse" href="#collapse-046a899ee7a6ec88d370211a518c9e80"
         aria-expanded="true"
       >
-        开发
-        <span class="list-group-count">(6)</span>
+        算法
+        <span class="list-group-count">(10)</span>
         <i class="iconfont icon-arrowright"></i>
       </a>
       
-      <div class="category-collapse collapse show" id="collapse-3ff3c3e26a68112c11c3e80f2a26896e"
-           role="tabpanel" aria-labelledby="heading-3ff3c3e26a68112c11c3e80f2a26896e">
+      <div class="category-collapse collapse show" id="collapse-046a899ee7a6ec88d370211a518c9e80"
+           role="tabpanel" aria-labelledby="heading-046a899ee7a6ec88d370211a518c9e80">
         
         
           
@@ -353,55 +350,91 @@
     
       
       
-        <a href="/2024/04/15/Go%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95%E2%80%94%E7%BD%91%E7%BB%9C%E6%B5%8B%E8%AF%95/" title="Go单元测试—网络测试"
+        <a href="/2023/12/05/P1088%5BNOIP2004%20%E6%99%AE%E5%8F%8A%E7%BB%84%5D%E7%81%AB%E6%98%9F%E4%BA%BA/" title="P1088 [NOIP2004 普及组] 火星人"
            class="list-group-item list-group-item-action
            ">
-          <span class="category-post">Go单元测试—网络测试</span>
+          <span class="category-post">P1088 [NOIP2004 普及组] 火星人</span>
         </a>
       
     
       
       
-        <a href="/2024/03/14/Go%E6%8E%A5%E5%8F%A3/" title="Go接口"
+        <a href="/2024/03/08/mutsumi%E7%9A%84%E6%8E%92%E5%88%97%E8%BF%9E%E9%80%9A/" title="mutsumi的排列连通"
            class="list-group-item list-group-item-action
            ">
-          <span class="category-post">Go接口</span>
+          <span class="category-post">mutsumi的排列连通</span>
         </a>
       
     
       
       
-        <a href="/2024/03/15/Go%E6%8E%A5%E5%8F%A3%E6%96%AD%E8%A8%80/" title="Go接口断言"
+        <a href="/2023/12/06/%E5%9B%BE%E5%BD%A2%E7%BB%93%E6%9E%84%E7%AE%97%E6%B3%95/" title="图形结构算法"
            class="list-group-item list-group-item-action
            ">
-          <span class="category-post">Go接口断言</span>
+          <span class="category-post">图形结构算法</span>
         </a>
       
     
       
       
-        <a href="/2024/01/20/Python%E7%88%AC%E8%99%AB/" title="Python爬虫入门"
+        <a href="/2024/02/13/%E5%A4%A7%E5%B0%8F%E5%86%99%E8%BD%AC%E6%8D%A2/" title="大小写转换"
            class="list-group-item list-group-item-action
            active">
-          <span class="category-post">Python爬虫入门</span>
+          <span class="category-post">大小写转换</span>
         </a>
       
     
       
       
-        <a href="/2024/04/30/%E5%BE%AE%E6%9C%8D%E5%8A%A1/" title="微服务"
+        <a href="/2023/11/29/%E5%BF%AB%E9%80%9F%E5%B9%82/" title="快速幂"
            class="list-group-item list-group-item-action
            ">
-          <span class="category-post">微服务</span>
+          <span class="category-post">快速幂</span>
         </a>
       
     
       
       
-        <a href="/2024/06/15/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3C%E8%AF%AD%E8%A8%80%E6%8C%87%E9%92%88/" title="深入理解C语言指针"
+        <a href="/2024/02/09/%E6%97%B6%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6%E4%B8%8E%E5%AF%B9%E6%8B%8D/" title="时间复杂度与对拍"
            class="list-group-item list-group-item-action
            ">
-          <span class="category-post">深入理解C语言指针</span>
+          <span class="category-post">时间复杂度与对拍</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2024/07/24/%E6%A0%91%E7%8A%B6%E6%95%B0%E7%BB%84/" title="树状数组"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">树状数组</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2023/11/18/%E6%AC%A7%E5%87%A0%E9%87%8C%E5%BE%97%E7%AE%97%E6%B3%95/" title="欧几里得算法"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">欧几里得算法</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2024/07/26/%E7%BA%BF%E6%AE%B5%E6%A0%91/" title="线段树"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">线段树</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2023/11/11/%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95/" title="贪心算法"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">贪心算法</span>
         </a>
       
     
@@ -423,29 +456,359 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">Python爬虫入门</h1>
+            <h1 id="seo-header">大小写转换</h1>
             
             
               <div class="markdown-body">
                 
-                <h1>HTTP网页结构</h1>
-<p>一个网页有三大技术要素，分别为HTML，CSS和JavaScript，其中HTML定义了网页的结构和信息，CSS定义网页的样式，JavaScript定义用户和网页的交互逻辑。其中我们爬虫最关心的就是HTML。</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-meta">&lt;!DOCTYPE <span class="hljs-keyword">html</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">html</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">h1</span>&gt;</span>这是一个一级标题<span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>这是一段文字这是一段文字这是一段文字<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">html</span>&gt;</span><br></code></pre></td></tr></table></figure>
-<h1>HTTP请求和响应</h1>
-<p>HTTP请求的方法类型主要的有两种，GET方法和POST方法，其中前者用于获得数据，后者用于创建数据（例如注册账号时提交数据）。</p>
-<p>一个完整的HTTP请求包括请求行，请求头和请求体。请求行会包含方法类型，资源路径（查询参数）和协议版本。请求头包含Host（主机域名），User-Agent（服务器客户端相关信息）和Accept（客户端像接收的数据，接收多种数据类型可以用逗号进行分割；*/*则表示任意数据类型）。请求体可以放客户端传给服务器的任意数据，但是GET方法的请求体一般是空的。</p>
-<p><img src="/img/blog/pypc/1.png" srcset="/img/loading.gif" lazyload alt=""></p>
-<p>HTTP响应也由三个部分组成，分别是状态行，响应头和响应体。状态行还包含协议版本，状态码和状态消息，状态码和状态消息一一对应：状态码2开头表示成功，，请求已处理完成；3开头表示表示重定向，需要进一步的操作；4开头表示客户端错误，比如请求里面有错误，或者请求的资源无效，等等；5开头表示服务器错误，比如出现问题或者正在维护。响应头会包含一些告知客户端的信息，比如Date：生产响应的日期和时间；Content-Type：返回内容的类型及编码格式。响应体就是服务器想给客户端的数据内容，通常与Content-Type的类型相对应。</p>
-<p><img src="/img/blog/pypc/2.png" srcset="/img/loading.gif" lazyload alt=""></p>
-<h1><strong>requests 模块</strong></h1>
-<p>Python requests 是一个常用的 HTTP 请求库，可以方便地向网站发送 HTTP 请求，并获取响应结果。requests 模块比urllib模块更简洁。</p>
-<p>使用 requests 发送 HTTP 请求需要先导入 requests 模块。导入后就可以发送 HTTP 请求，使用 requests 提供的方法向指定 URL 发送 HTTP 请求。</p>
-<p>我们使用requests函数时的User-Agent时自动生成的，服务器可以轻松的分辨出是否是浏览器发出的请求，不过我们可以通过手动传入一个headers的参数帮我们模拟出浏览器发出的请求。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> requests<br><br>head = &#123;<span class="hljs-string">&quot;User-Agent&quot;</span>: <span class="hljs-string">&quot;Mozilla/5.0 (Windows NT 10.0; Win64; X64)&quot;</span>&#125;<br>response = requests.get(<span class="hljs-string">&quot;https://www.baidu.com/&quot;</span>, headers=head)<br><span class="hljs-keyword">if</span> response.ok:  <span class="hljs-comment"># 或者用response.status_code&gt;=200 and response.status_code&lt;400</span><br>    <span class="hljs-built_in">print</span>(response.text)<br><span class="hljs-keyword">else</span>:<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;请求失败&quot;</span>)<br></code></pre></td></tr></table></figure>
-<h1>Beautiful Soup 模块</h1>
-<p>爬到了网页信息之后，我们要提取出我们想要的不分，Beautiful Soup 可以帮我们解析网页内容Beautiful Soup自动将输入文档转换为Unicode编码，输出文档转换为utf-8编码。你不需要考虑编码方式，除非文档没有指定一个编码方式。</p>
-<p>例如用requests和Beautiful Soup爬取豆瓣电影前250名单:</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> requests<br><span class="hljs-keyword">from</span> bs4 <span class="hljs-keyword">import</span> BeautifulSoup<br><br>head = &#123;<span class="hljs-string">&quot;User-Agent&quot;</span>: <span class="hljs-string">&quot;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36&quot;</span>&#125;<br><span class="hljs-keyword">for</span> start_num <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">0</span>,<span class="hljs-number">250</span>,<span class="hljs-number">25</span>):<br>    response = requests.get(<span class="hljs-string">f&quot;https://movie.douban.com/top250?start=<span class="hljs-subst">&#123;start_num&#125;</span>&quot;</span>, headers=head)<br>    html=response.text<br>    soup=BeautifulSoup(html,<span class="hljs-string">&quot;html.parser&quot;</span>)<br>    all_title=soup.find_all(<span class="hljs-string">&quot;span&quot;</span>,attrs=&#123;<span class="hljs-string">&quot;class&quot;</span>:<span class="hljs-string">&quot;title&quot;</span>&#125;)<br>    <span class="hljs-keyword">for</span> title <span class="hljs-keyword">in</span> all_title:<br>        title_string=title.string<br>        <span class="hljs-keyword">if</span> <span class="hljs-string">&quot;/&quot;</span> <span class="hljs-keyword">not</span> <span class="hljs-keyword">in</span> title_string:<br>            <span class="hljs-built_in">print</span>(title_string)<br></code></pre></td></tr></table></figure>
+                <p>在算法竞赛中，我们经常会遇到英文字母大小写转换的问题，下面我们就来具体介绍一下如何解决这个问题。</p>
+<h1>1.利用ASCII码转换</h1>
+<p>在python中有直接查看ASCII码的函数ord()，和将ASCII转化位字符的函数chr()，而我们知道大写字母和小写字母的ASCII码的数值相差32。因此我们可以利用这一点完成转化。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment">#小写转大写</span><br>a=<span class="hljs-built_in">input</span>(<span class="hljs-string">&quot;输入小写字母：&quot;</span>)<br><span class="hljs-built_in">print</span>(<span class="hljs-built_in">chr</span>(<span class="hljs-built_in">ord</span>(a)-<span class="hljs-number">32</span>))<br></code></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment">#大写转小写</span><br>a=<span class="hljs-built_in">input</span>(<span class="hljs-string">&quot;输入大写字母：&quot;</span>)<br><span class="hljs-built_in">print</span>(<span class="hljs-built_in">chr</span>(<span class="hljs-built_in">ord</span>(a)+<span class="hljs-number">32</span>))<br></code></pre></td></tr></table></figure>
+<p>在C++中也有类似的函数，std::tolower和std::toupper。</p>
+<p>此外，字符型变量并不是把字符本身放到内存中存储，而是将对应的ASCII编码放入到储存单元，所以我们可以将字符强转成整形数。我们也可利用这一点完成转换。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;cstdio&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    <br>    <span class="hljs-type">char</span> ch1 = <span class="hljs-string">&#x27;a&#x27;</span>;<br>    <span class="hljs-type">char</span> ch2 = <span class="hljs-string">&#x27;A&#x27;</span>;<br>    <br>    cout &lt;&lt; <span class="hljs-built_in">int</span>(ch1) &lt;&lt; endl;             <span class="hljs-comment">//将字符强转成整形数，也就是我们能看懂的十进制数</span><br>    cout &lt;&lt; <span class="hljs-built_in">char</span>(<span class="hljs-built_in">int</span>(ch1)<span class="hljs-number">-32</span>) &lt;&lt; endl;    <span class="hljs-comment">//转换为相应字符 </span><br>    cout &lt;&lt; <span class="hljs-built_in">int</span>(ch2) &lt;&lt; endl;<br>    cout &lt;&lt; <span class="hljs-built_in">char</span>(<span class="hljs-built_in">int</span>(ch2)<span class="hljs-number">+32</span>) &lt;&lt; endl;<br>    <br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>下面附上ASCII码：</p>
+<table>
+<thead>
+<tr>
+<th><strong>ASCII值</strong></th>
+<th><strong>控制字符</strong></th>
+<th><strong>ASCII值</strong></th>
+<th><strong>控制字符</strong></th>
+<th><strong>ASCII值</strong></th>
+<th><strong>控制字符</strong></th>
+<th><strong>ASCII值</strong></th>
+<th><strong>控制字符</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>NUL</td>
+<td>32</td>
+<td>(space)</td>
+<td>64</td>
+<td>@</td>
+<td>96</td>
+<td>、</td>
+</tr>
+<tr>
+<td>1</td>
+<td>SOH</td>
+<td>33</td>
+<td>!</td>
+<td>65</td>
+<td>A</td>
+<td>97</td>
+<td>a</td>
+</tr>
+<tr>
+<td>2</td>
+<td>STX</td>
+<td>34</td>
+<td>&quot;</td>
+<td>66</td>
+<td>B</td>
+<td>98</td>
+<td>b</td>
+</tr>
+<tr>
+<td>3</td>
+<td>ETX</td>
+<td>35</td>
+<td>#</td>
+<td>67</td>
+<td>C</td>
+<td>99</td>
+<td>c</td>
+</tr>
+<tr>
+<td>4</td>
+<td>EOT</td>
+<td>36</td>
+<td>$</td>
+<td>68</td>
+<td>D</td>
+<td>100</td>
+<td>d</td>
+</tr>
+<tr>
+<td>5</td>
+<td>ENQ</td>
+<td>37</td>
+<td>%</td>
+<td>69</td>
+<td>E</td>
+<td>101</td>
+<td>e</td>
+</tr>
+<tr>
+<td>6</td>
+<td>ACK</td>
+<td>38</td>
+<td>&amp;</td>
+<td>70</td>
+<td>F</td>
+<td>102</td>
+<td>f</td>
+</tr>
+<tr>
+<td>7</td>
+<td>BEL</td>
+<td>39</td>
+<td>,</td>
+<td>71</td>
+<td>G</td>
+<td>103</td>
+<td>g</td>
+</tr>
+<tr>
+<td>8</td>
+<td>BS</td>
+<td>40</td>
+<td>(</td>
+<td>72</td>
+<td>H</td>
+<td>104</td>
+<td>h</td>
+</tr>
+<tr>
+<td>9</td>
+<td>HT</td>
+<td>41</td>
+<td>)</td>
+<td>73</td>
+<td>I</td>
+<td>105</td>
+<td>i</td>
+</tr>
+<tr>
+<td>10</td>
+<td>LF</td>
+<td>42</td>
+<td>*</td>
+<td>74</td>
+<td>J</td>
+<td>106</td>
+<td>j</td>
+</tr>
+<tr>
+<td>11</td>
+<td>VT</td>
+<td>43</td>
+<td>+</td>
+<td>75</td>
+<td>K</td>
+<td>107</td>
+<td>k</td>
+</tr>
+<tr>
+<td>12</td>
+<td>FF</td>
+<td>44</td>
+<td>,</td>
+<td>76</td>
+<td>L</td>
+<td>108</td>
+<td>l</td>
+</tr>
+<tr>
+<td>13</td>
+<td>CR</td>
+<td>45</td>
+<td>-</td>
+<td>77</td>
+<td>M</td>
+<td>109</td>
+<td>m</td>
+</tr>
+<tr>
+<td>14</td>
+<td>SO</td>
+<td>46</td>
+<td>.</td>
+<td>78</td>
+<td>N</td>
+<td>110</td>
+<td>n</td>
+</tr>
+<tr>
+<td>15</td>
+<td>SI</td>
+<td>47</td>
+<td>/</td>
+<td>79</td>
+<td>O</td>
+<td>111</td>
+<td>o</td>
+</tr>
+<tr>
+<td>16</td>
+<td>DLE</td>
+<td>48</td>
+<td>0</td>
+<td>80</td>
+<td>P</td>
+<td>112</td>
+<td>p</td>
+</tr>
+<tr>
+<td>17</td>
+<td>DCI</td>
+<td>49</td>
+<td>1</td>
+<td>81</td>
+<td>Q</td>
+<td>113</td>
+<td>q</td>
+</tr>
+<tr>
+<td>18</td>
+<td>DC2</td>
+<td>50</td>
+<td>2</td>
+<td>82</td>
+<td>R</td>
+<td>114</td>
+<td>r</td>
+</tr>
+<tr>
+<td>19</td>
+<td>DC3</td>
+<td>51</td>
+<td>3</td>
+<td>83</td>
+<td>S</td>
+<td>115</td>
+<td>s</td>
+</tr>
+<tr>
+<td>20</td>
+<td>DC4</td>
+<td>52</td>
+<td>4</td>
+<td>84</td>
+<td>T</td>
+<td>116</td>
+<td>t</td>
+</tr>
+<tr>
+<td>21</td>
+<td>NAK</td>
+<td>53</td>
+<td>5</td>
+<td>85</td>
+<td>U</td>
+<td>117</td>
+<td>u</td>
+</tr>
+<tr>
+<td>22</td>
+<td>SYN</td>
+<td>54</td>
+<td>6</td>
+<td>86</td>
+<td>V</td>
+<td>118</td>
+<td>v</td>
+</tr>
+<tr>
+<td>23</td>
+<td>TB</td>
+<td>55</td>
+<td>7</td>
+<td>87</td>
+<td>W</td>
+<td>119</td>
+<td>w</td>
+</tr>
+<tr>
+<td>24</td>
+<td>CAN</td>
+<td>56</td>
+<td>8</td>
+<td>88</td>
+<td>X</td>
+<td>120</td>
+<td>x</td>
+</tr>
+<tr>
+<td>25</td>
+<td>EM</td>
+<td>57</td>
+<td>9</td>
+<td>89</td>
+<td>Y</td>
+<td>121</td>
+<td>y</td>
+</tr>
+<tr>
+<td>26</td>
+<td>SUB</td>
+<td>58</td>
+<td>:</td>
+<td>90</td>
+<td>Z</td>
+<td>122</td>
+<td>z</td>
+</tr>
+<tr>
+<td>27</td>
+<td>ESC</td>
+<td>59</td>
+<td>;</td>
+<td>91</td>
+<td>[</td>
+<td>123</td>
+<td>{</td>
+</tr>
+<tr>
+<td>28</td>
+<td>FS</td>
+<td>60</td>
+<td>&lt;</td>
+<td>92</td>
+<td>\</td>
+<td>124</td>
+<td></td>
+</tr>
+<tr>
+<td>29</td>
+<td>GS</td>
+<td>61</td>
+<td>=</td>
+<td>93</td>
+<td>]</td>
+<td>125</td>
+<td>}</td>
+</tr>
+<tr>
+<td>30</td>
+<td>RS</td>
+<td>62</td>
+<td>&gt;</td>
+<td>94</td>
+<td>^</td>
+<td>126</td>
+<td>`</td>
+</tr>
+<tr>
+<td>31</td>
+<td>US</td>
+<td>63</td>
+<td>?</td>
+<td>95</td>
+<td>_</td>
+<td>127</td>
+<td>DEL</td>
+</tr>
+</tbody>
+</table>
+<h1>2.利用位运算和空格字符</h1>
+<p>在ASCII码中，英文字母对应的二进制的第六位表示大小写，该位为0时表示大写，为1时表示小写。<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>2</mn><mn>6</mn></msup><mo>=</mo><mn>32</mn></mrow><annotation encoding="application/x-tex">2^6=32</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8141em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">6</span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">32</span></span></span></span>，空格的ASCII码又恰好为32。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;cstdio&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    <br>    <span class="hljs-type">char</span> c = <span class="hljs-string">&#x27;a&#x27;</span>;<br>    <span class="hljs-keyword">if</span>(c&amp;<span class="hljs-string">&#x27; &#x27;</span>)       <span class="hljs-comment">//判断是否为小写</span><br>    <span class="hljs-keyword">if</span>(~c&amp;<span class="hljs-string">&#x27; &#x27;</span>)      <span class="hljs-comment">//判断是否为大写</span><br>    c|=<span class="hljs-string">&#x27; &#x27;</span>;     <span class="hljs-comment">//转换为小写，相当与std::tolower</span><br>    c^=<span class="hljs-string">&#x27; &#x27;</span>;     <span class="hljs-comment">//如果原本是大写，转换为小写，原本是小写转换为大写</span><br>    c=(c|<span class="hljs-string">&#x27; &#x27;</span>)^<span class="hljs-string">&#x27; &#x27;</span>;      <span class="hljs-comment">//转换为大写字母，等价于std::toupper </span><br>    <br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
 
                 
               </div>
@@ -464,7 +827,7 @@
     
       <span class="category-chain">
         
-  <a href="/categories/%E5%BC%80%E5%8F%91/" class="category-chain-item">开发</a>
+  <a href="/categories/%E7%AE%97%E6%B3%95/" class="category-chain-item">算法</a>
   
   
 
@@ -479,7 +842,7 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/Python/" class="print-no-link">#Python</a>
+        <a href="/tags/%E7%AE%97%E6%B3%95/" class="print-no-link">#算法</a>
       
     </div>
   
@@ -491,8 +854,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>Python爬虫入门</div>
-      <div>https://serendipity565.github.io/2024/01/20/Python爬虫/</div>
+      <div>大小写转换</div>
+      <div>https://serendipity565.github.io/2024/02/13/大小写转换/</div>
     </div>
     <div class="license-meta">
       
@@ -504,7 +867,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2024年1月20日</div>
+          <div>2024年2月13日</div>
         </div>
       
       
@@ -529,9 +892,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2024/02/09/%E6%97%B6%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6%E4%B8%8E%E5%AF%B9%E6%8B%8D/" title="时间复杂度与对拍">
+                      <a href="/2024/03/08/mutsumi%E7%9A%84%E6%8E%92%E5%88%97%E8%BF%9E%E9%80%9A/" title="mutsumi的排列连通">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">时间复杂度与对拍</span>
+                        <span class="hidden-mobile">mutsumi的排列连通</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -539,8 +902,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2023/12/06/%E5%9B%BE%E5%BD%A2%E7%BB%93%E6%9E%84%E7%AE%97%E6%B3%95/" title="图形结构算法">
-                        <span class="hidden-mobile">图形结构算法</span>
+                      <a href="/2024/02/09/%E6%97%B6%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6%E4%B8%8E%E5%AF%B9%E6%8B%8D/" title="时间复杂度与对拍">
+                        <span class="hidden-mobile">时间复杂度与对拍</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

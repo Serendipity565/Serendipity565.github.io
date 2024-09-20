@@ -1,0 +1,1086 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/kenan.png">
+  <link rel="icon" href="/img/kenan.png">
+  
+    <link rel="canonical" href="https://serendipity565.github.io/2024/06/15/深入理解C语言指针/"/>
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#bebebe">
+  <meta name="author" content="Serendipity">
+  <meta name="keywords" content="Serendipity,Blog">
+  
+    <meta name="description" content="指针是C语言中一个非常强大且重要的概念，它不仅能够提供直接的内存访问，还能用于实现许多高级的数据结构和算法。然而，指针的概念相对复杂，新手程序员常常感到困惑。本文将深入探讨C语言中的指针，从基本概念到高级应用，帮助你全面理解指针的使用。 引入、什么是内存地址 内存地址是计算机系统用来访问内存中某个特定存储单元的标识符。每个存储单元都有一个唯一的地址，就像每个房子都有一个唯一的门牌号码。 内存地址的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="深入理解C语言指针">
+<meta property="og:url" content="https://serendipity565.github.io/2024/06/15/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3C%E8%AF%AD%E8%A8%80%E6%8C%87%E9%92%88/index.html">
+<meta property="og:site_name" content="Serendipity&#39;s Blog">
+<meta property="og:description" content="指针是C语言中一个非常强大且重要的概念，它不仅能够提供直接的内存访问，还能用于实现许多高级的数据结构和算法。然而，指针的概念相对复杂，新手程序员常常感到困惑。本文将深入探讨C语言中的指针，从基本概念到高级应用，帮助你全面理解指针的使用。 引入、什么是内存地址 内存地址是计算机系统用来访问内存中某个特定存储单元的标识符。每个存储单元都有一个唯一的地址，就像每个房子都有一个唯一的门牌号码。 内存地址的">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://serendipity565.github.io/img/blog/srjlcyyzz/1.png">
+<meta property="og:image" content="https://serendipity565.github.io/img/blog/srjlcyyzz/2.png">
+<meta property="article:published_time" content="2024-06-15T15:23:32.000Z">
+<meta property="article:modified_time" content="2024-09-20T11:59:31.458Z">
+<meta property="article:author" content="Serendipity">
+<meta property="article:tag" content="C&#x2F;C++">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://serendipity565.github.io/img/blog/srjlcyyzz/1.png">
+  
+  
+  
+  <title>深入理解C语言指针 - Serendipity&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/KaTeX/0.16.2/katex.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="//cdn.jsdelivr.net/gh/EmoryHuang/BlogBeautify@1.1/scroll.css">
+<link rel="stylesheet" href="/css/test.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"serendipity565.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":7},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":"GG1JTYKMXXAVk1svwXcwLDlE-gzGzoHsz","app_key":"eaWuEy5vj3kI6J1Ut2fFjeUz","server_url":"https://gg1jtykm.lc-cn-n1-shared.com","path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+  
+
+
+
+  
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Serendipity&#39;Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/" target="_self">
+                <i class="iconfont icon-link-fill"></i>
+                <span>友链</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/defbj.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="深入理解C语言指针"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-author" aria-hidden="true"></i>
+        Serendipity
+      </span>
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-06-15 23:23" pubdate>
+          2024年6月15日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          4.6k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          52 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="leancloud-page-views-container" class="post-meta" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="leancloud-page-views"></span> 次
+        </span>
+        
+      
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar category-bar" style="margin-right: -1rem">
+    
+
+
+
+
+
+<div class="category-list">
+  
+  
+    
+    
+    
+    <div class="category row nomargin-x">
+      <a class="category-item 
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="开发"
+        id="heading-3ff3c3e26a68112c11c3e80f2a26896e" role="tab" data-toggle="collapse" href="#collapse-3ff3c3e26a68112c11c3e80f2a26896e"
+        aria-expanded="true"
+      >
+        开发
+        <span class="list-group-count">(6)</span>
+        <i class="iconfont icon-arrowright"></i>
+      </a>
+      
+      <div class="category-collapse collapse show" id="collapse-3ff3c3e26a68112c11c3e80f2a26896e"
+           role="tabpanel" aria-labelledby="heading-3ff3c3e26a68112c11c3e80f2a26896e">
+        
+        
+          
+  <div class="category-post-list">
+    
+    
+      
+      
+        <a href="/2024/04/15/Go%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95%E2%80%94%E7%BD%91%E7%BB%9C%E6%B5%8B%E8%AF%95/" title="Go单元测试—网络测试"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Go单元测试—网络测试</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2024/03/14/Go%E6%8E%A5%E5%8F%A3/" title="Go接口"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Go接口</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2024/03/15/Go%E6%8E%A5%E5%8F%A3%E6%96%AD%E8%A8%80/" title="Go接口断言"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Go接口断言</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2024/01/20/Python%E7%88%AC%E8%99%AB/" title="Python爬虫入门"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Python爬虫入门</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2024/04/30/%E5%BE%AE%E6%9C%8D%E5%8A%A1/" title="微服务"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">微服务</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2024/06/15/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3C%E8%AF%AD%E8%A8%80%E6%8C%87%E9%92%88/" title="深入理解C语言指针"
+           class="list-group-item list-group-item-action
+           active">
+          <span class="category-post">深入理解C语言指针</span>
+        </a>
+      
+    
+  </div>
+
+        
+      </div>
+    </div>
+  
+</div>
+
+
+  </aside>
+
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">深入理解C语言指针</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p>指针是C语言中一个非常强大且重要的概念，它不仅能够提供直接的内存访问，还能用于实现许多高级的数据结构和算法。然而，指针的概念相对复杂，新手程序员常常感到困惑。本文将深入探讨C语言中的指针，从基本概念到高级应用，帮助你全面理解指针的使用。</p>
+<h1>引入、什么是内存地址</h1>
+<p>内存地址是计算机系统用来访问内存中某个特定存储单元的标识符。每个存储单元都有一个唯一的地址，就像每个房子都有一个唯一的门牌号码。</p>
+<p>内存地址的范围取决于系统的位数：</p>
+<ul>
+<li>在32位系统中，内存地址通常是32位长，地址范围为0到<code>0xFFFFFFFF</code>。</li>
+<li>在64位系统中，内存地址通常是64位长，地址范围为0到<code>0xFFFFFFFFFFFFFFFF</code>。</li>
+</ul>
+<p>一个内存地址代表一个字节（8bit）的存储空间。</p>
+<p>例如：假设’不’的二进制位<code>0010101110011001</code></p>
+<p><img src="/img/blog/srjlcyyzz/1.png" srcset="/img/loading.gif" lazyload alt="&quot;不期而遇&quot;再计算机内存中的地址"></p>
+<p><img src="/img/blog/srjlcyyzz/2.png" srcset="/img/loading.gif" lazyload alt="'不'的真值与地址的关系"></p>
+<h1>一、指针的基本概念</h1>
+<h2 id="1-1-什么是指针">1.1 什么是指针</h2>
+<p>指针是一个变量，它存储另一个变量的内存地址。通过指针，我们可以直接访问和修改内存中的数据。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">int</span> a = <span class="hljs-number">10</span>;<br><span class="hljs-type">int</span> *p = &amp;a; <span class="hljs-comment">// p是一个指向int类型的指针，它存储了变量a的地址</span><br></code></pre></td></tr></table></figure>
+<p>在上面的代码中，<code>&amp;a</code>表示取变量<code>a</code>的地址，<code>p</code>是一个指针变量，它保存了这个地址。</p>
+<h2 id="1-2-指针的声明和初始化">1.2 指针的声明和初始化</h2>
+<p>指针变量的声明需要指定它所指向的数据类型，并使用<code>*</code>符号。例如：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">int</span> *p; <span class="hljs-comment">// 声明一个指向int类型的指针</span><br></code></pre></td></tr></table></figure>
+<p>指针的初始化可以通过将一个变量的地址赋值给它：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">int</span> a = <span class="hljs-number">10</span>;<br><span class="hljs-type">int</span> *p = &amp;a; <span class="hljs-comment">// p现在指向变量a的地址</span><br></code></pre></td></tr></table></figure>
+<h2 id="1-3-指针的解引用">1.3 指针的解引用</h2>
+<p>通过解引用操作，我们可以访问指针所指向的变量。解引用操作符是<code>*</code> ，即取值符，取一个地址下储存的值。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">int</span> a = <span class="hljs-number">10</span>;<br><span class="hljs-type">int</span> *p = &amp;a;<br><span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d\\n&quot;</span>, *p); <span class="hljs-comment">// 输出10</span><br>*p = <span class="hljs-number">20</span>; <span class="hljs-comment">// 修改a的值为20</span><br><span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d\\n&quot;</span>, a); <span class="hljs-comment">// 输出20</span><br></code></pre></td></tr></table></figure>
+<h2 id="1-4-指针的加减运算">1.4 指针的加减运算</h2>
+<p>指针加减运算指的是对指针进行算术运算，从而改变指针所指向的内存地址。这种运算的结果依赖于指针指向的数据类型，因为指针的加减运算是按数据类型的大小来进行的。</p>
+<p>指针加法运算是将一个指针加上一个整数。加法运算后，指针会移动到相应位置。</p>
+<p>例如，如果<code>p</code>是一个指向<code>int</code>类型的指针，则<code>p + 1</code>会使指针向前移动一个<code>int</code>的大小（通常是4个字节）。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">()</span> &#123;<br>    <span class="hljs-type">int</span> arr[<span class="hljs-number">5</span>] = &#123;<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>&#125;;<br>    <span class="hljs-type">int</span> *p = arr; <span class="hljs-comment">// 指向数组的第一个元素</span><br><br>    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Address of p: %p\n&quot;</span>, (<span class="hljs-type">void</span> *)p); <span class="hljs-comment">// 输出p的地址</span><br>    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Value at p: %d\n&quot;</span>, *p); <span class="hljs-comment">// 输出p指向的值，即1</span><br><br>    p = p + <span class="hljs-number">1</span>; <span class="hljs-comment">// 指针加法运算，p移动到下一个元素</span><br>    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Address of p after p + 1: %p\n&quot;</span>, (<span class="hljs-type">void</span> *)p); <span class="hljs-comment">// 输出p的地址</span><br>    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Value at p after p + 1: %d\n&quot;</span>, *p); <span class="hljs-comment">// 输出p指向的值，即2</span><br><br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>在这个例子中，<code>p + 1</code>使指针<code>p</code>移动到数组的下一个元素，即<code>arr[1]</code>。</p>
+<p>指针减法运算是将一个指针减去一个整数。减法运算后，指针会移动到相应位置。与加法类似。</p>
+<p><strong>注意</strong>：指针的加减运算是按指针指向的数据类型大小进行的。即<code>p + 1</code>移动的字节数取决于指针指向的数据类型大小。</p>
+<h2 id="1-5-指针的差值">1.5 指针的差值</h2>
+<p>指针的差值运算可以计算两个指针之间的距离（即它们之间的元素个数）。这种运算通常用于数组操作。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">()</span> &#123;<br>    <span class="hljs-type">int</span> arr[<span class="hljs-number">5</span>] = &#123;<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>&#125;;<br>    <span class="hljs-type">int</span> *p1 = &amp;arr[<span class="hljs-number">0</span>]; <span class="hljs-comment">// 指向数组的第一个元素</span><br>    <span class="hljs-type">int</span> *p2 = &amp;arr[<span class="hljs-number">4</span>]; <span class="hljs-comment">// 指向数组的第五个元素</span><br><br>    <span class="hljs-type">ptrdiff_t</span> diff = p2 - p1; <span class="hljs-comment">// 计算指针之间的距离</span><br>    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Difference between p2 and p1: %td\n&quot;</span>, diff); <span class="hljs-comment">// 输出差值，即4</span><br><br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>在这个例子中，<code>p2 - p1</code>计算两个指针之间的距离，即数组元素的个数。</p>
+<p><strong>注意：指针相减合法性，</strong> 只有指向同一数组或同一块内存区域的指针才能进行差值运算。</p>
+<h1>二、指针的高级用法</h1>
+<h2 id="2-1-指向指针的指针">2.1 指向指针的指针</h2>
+<p>指针不仅可以指向基本数据类型，还可以指向另一个指针。这种指针称为“二级指针”或“指向指针的指针”。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">int</span> a = <span class="hljs-number">10</span>;<br><span class="hljs-type">int</span> *p = &amp;a;<br><span class="hljs-type">int</span> **pp = &amp;p; <span class="hljs-comment">// pp是一个指向指针p的指针</span><br><span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d\\n&quot;</span>, **pp); <span class="hljs-comment">// 输出10</span><br></code></pre></td></tr></table></figure>
+<h2 id="2-2-数组指针">2.2 数组指针</h2>
+<p>数组指针是指向数组的指针。它存储的是数组的起始地址，可以通过该指针访问数组中的元素</p>
+<p>通过数组指针可以访问数组中的元素。由于数组指针指向整个数组，我们需要先解引用指针，然后再访问具体的元素。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">()</span> &#123;<br>    <span class="hljs-type">int</span> arr[<span class="hljs-number">5</span>] = &#123;<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>&#125;;<br>    <span class="hljs-type">int</span> (*p)[<span class="hljs-number">5</span>] = &amp;arr; <span class="hljs-comment">// 声明并初始化数组指针</span><br><br>    <span class="hljs-comment">// 访问数组中的元素</span><br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">5</span>; i++) &#123;<br>        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d &quot;</span>, (*p)[i]); <span class="hljs-comment">// 通过数组指针访问元素</span><br>    &#125;<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>数组指针常用于函数参数，使得函数可以处理多维数组。</p>
+<p>指向多维数组的情况下，指针的声明和使用方式略有不同。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">()</span> &#123;<br>    <span class="hljs-type">int</span> arr[<span class="hljs-number">3</span>][<span class="hljs-number">4</span>] = &#123;<br>        &#123;<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>&#125;,<br>        &#123;<span class="hljs-number">5</span>, <span class="hljs-number">6</span>, <span class="hljs-number">7</span>, <span class="hljs-number">8</span>&#125;,<br>        &#123;<span class="hljs-number">9</span>, <span class="hljs-number">10</span>, <span class="hljs-number">11</span>, <span class="hljs-number">12</span>&#125;<br>    &#125;;<br>    <span class="hljs-type">int</span> (*p)[<span class="hljs-number">4</span>] = arr; <span class="hljs-comment">// 声明并初始化指向二维数组的指针</span><br><br>    <span class="hljs-comment">// 访问二维数组中的元素</span><br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">3</span>; i++) &#123;<br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> j = <span class="hljs-number">0</span>; j &lt; <span class="hljs-number">4</span>; j++) &#123;<br>            <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d &quot;</span>, p[i][j]); <span class="hljs-comment">// 通过数组指针访问元素</span><br>        &#125;<br>        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;\n&quot;</span>);<br>    &#125;<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>在这个示例中，<code>p</code>是一个指向具有4个<code>int</code>元素的数组的指针，<code>p[i][j]</code>用来访问二维数组<code>arr</code>中的元素。</p>
+<h2 id="2-3-指针数组">2.3 指针数组</h2>
+<p>指针数组是一种特殊的数组，它的每个元素都是一个指针。指针数组常用于处理字符串数组或二维数组。</p>
+<p>下面是一个包含三个字符串的指针数组的声明和初始化示例：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">()</span> &#123;<br>    <span class="hljs-type">const</span> <span class="hljs-type">char</span> *arr[<span class="hljs-number">3</span>] = &#123;<span class="hljs-string">&quot;Hello&quot;</span>, <span class="hljs-string">&quot;World&quot;</span>, <span class="hljs-string">&quot;C programming&quot;</span>&#125;;<br><br>    <span class="hljs-comment">// 访问指针数组中的元素</span><br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">3</span>; i++) &#123;<br>        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%s\n&quot;</span>, arr[i]);<br>    &#125;<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>在这个示例中，<code>arr</code>是一个包含三个指向<code>const char</code>字符串的指针数组。每个指针都指向一个字符串字面量。</p>
+<h2 id="2-4-指针函数">2.4 指针函数</h2>
+<p>指针函数是返回指针的函数。它是一个函数，其返回值是一个指针。指针函数可以返回任何类型的指针，比如指向整数、字符、结构体等的指针。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">int</span>* <span class="hljs-title function_">getPointer</span><span class="hljs-params">()</span> &#123;<br>    <span class="hljs-type">static</span> <span class="hljs-type">int</span> value = <span class="hljs-number">10</span>; <span class="hljs-comment">// 使用static确保返回的指针在函数外部有效</span><br>    <span class="hljs-keyword">return</span> &amp;value;<br>&#125;<br><br><span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">()</span> &#123;<br>    <span class="hljs-type">int</span> *ptr = getPointer(); <span class="hljs-comment">// 调用指针函数，获取指向整数的指针</span><br>    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Value: %d\n&quot;</span>, *ptr); <span class="hljs-comment">// 解引用指针，输出值</span><br><br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>指针函数常用于<strong>动态内存分配</strong>和<strong>数据结构操作</strong>（例如返回链表、树等数据结构中的某个节点的指针），将在第三四部分介绍。</p>
+<h2 id="2-5-函数指针">2.5 函数指针</h2>
+<p>函数指针是指向函数的指针，允许我们动态地调用函数。函数指针在实现回调函数和函数表时非常有用。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">void</span> <span class="hljs-title function_">printHello</span><span class="hljs-params">()</span> &#123;<br>    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Hello\\n&quot;</span>);<br>&#125;<br><br><span class="hljs-type">void</span> <span class="hljs-title function_">printWorld</span><span class="hljs-params">()</span> &#123;<br>    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;World\\n&quot;</span>);<br>&#125;<br><br><span class="hljs-type">void</span> (*funcPtr)(); <span class="hljs-comment">// 声明一个函数指针</span><br>funcPtr = printHello; <span class="hljs-comment">// 将函数指针指向printHello</span><br>funcPtr(); <span class="hljs-comment">// 调用printHello函数，输出Hello</span><br>funcPtr = printWorld; <span class="hljs-comment">// 将函数指针指向printWorld</span><br>funcPtr(); <span class="hljs-comment">// 调用printWorld函数，输出World</span><br></code></pre></td></tr></table></figure>
+<p><strong>注意：调用函数时被调用的那个函数不要加括号。</strong><code>funcPtr = printHello;</code>中<code>printHello</code> 不能加括号。<strong>具体原因在第五部分指针的常见错误（野指针问题解决3）中解释。</strong></p>
+<p><strong>上面示例的用法本人认为并没有什么用，硬要说的话只能说应付考试，函数指针关键的用法在于回调函数。</strong></p>
+<h3 id="2-5-1-回调函数">2.5.1 回调函数</h3>
+<p>回调函数是一种通过函数指针传递给另一个函数并在适当时候调用的函数。回调函数广泛用于<strong>事件驱动编程</strong>和<strong>处理异步任务</strong>。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">// 声明一个回调函数类型</span><br><span class="hljs-keyword">typedef</span> <span class="hljs-title function_">void</span> <span class="hljs-params">(*<span class="hljs-type">callback_t</span>)</span><span class="hljs-params">(<span class="hljs-type">int</span>)</span>;<br><br><span class="hljs-comment">// 定义一个使用回调函数的函数</span><br><span class="hljs-type">void</span> <span class="hljs-title function_">process</span><span class="hljs-params">(<span class="hljs-type">callback_t</span> cb, <span class="hljs-type">int</span> value)</span> &#123;<br>    <span class="hljs-comment">// 在适当时候调用回调函数</span><br>    cb(value);<br>&#125;<br><br><span class="hljs-comment">// 定义一些回调函数</span><br><span class="hljs-type">void</span> <span class="hljs-title function_">print_value</span><span class="hljs-params">(<span class="hljs-type">int</span> value)</span> &#123;<br>    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Value: %d\n&quot;</span>, value);<br>&#125;<br><br><span class="hljs-type">void</span> <span class="hljs-title function_">double_value</span><span class="hljs-params">(<span class="hljs-type">int</span> value)</span> &#123;<br>    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Double value: %d\n&quot;</span>, <span class="hljs-number">2</span> * value);<br>&#125;<br><br><span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">()</span> &#123;<br>    <span class="hljs-comment">// 使用不同的回调函数</span><br>    process(print_value, <span class="hljs-number">5</span>);  <span class="hljs-comment">// 输出 Value: 5</span><br>    process(double_value, <span class="hljs-number">5</span>); <span class="hljs-comment">// 输出 Double value: 10</span><br><br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>在这个示例中，<code>callback_t</code> 是一个指向接受一个 <code>int</code> 参数并返回 <code>void</code> 的函数的指针类型。</p>
+<p><code>process</code> 函数接受一个 <code>callback_t</code> 类型的参数 <code>cb</code> 和一个 <code>int</code> 类型的参数 <code>value</code>。在函数内部，<code>cb(value)</code> 调用 <code>cb</code> 指向的函数，并将 <code>value</code> 作为参数传递给该函数。</p>
+<p>之后定义了两个回调函数：</p>
+<ul>
+<li><code>print_value</code>：接收一个 <code>int</code> 参数并打印它的值。</li>
+<li><code>double_value</code>：接收一个 <code>int</code> 参数，计算它的两倍，并打印结果。</li>
+</ul>
+<p>在 <code>main</code> 函数中，通过 <code>process</code> 函数来使用不同的回调函数：</p>
+<ol>
+<li><code>process(print_value, 5);</code>：调用 <code>process</code> 函数，传递 <code>print_value</code> 作为回调函数和 <code>5</code> 作为参数。<code>process</code> 内部调用 <code>print_value(5)</code>，输出 <code>Value: 5</code>。</li>
+<li><code>process(double_value, 5);</code>：调用 <code>process</code> 函数，传递 <code>double_value</code> 作为回调函数和 <code>5</code> 作为参数。<code>process</code> 内部调用 <code>double_value(5)</code>，输出 <code>Double value: 10</code>。</li>
+</ol>
+<h1>三、指针与内存管理</h1>
+<h2 id="3-1-动态内存分配">3.1 动态内存分配</h2>
+<p>C语言提供了<code>malloc</code>、<code>calloc</code>和<code>realloc</code>等函数，用于动态分配内存。分配的内存需要使用<code>free</code>函数释放。</p>
+<h3 id="3-1-2-动态内存分配函数">3.1.2 动态内存分配函数</h3>
+<h3 id="malloc"><code>malloc</code></h3>
+<p><code>malloc</code>（memory allocation）函数分配指定大小的内存，并返回一个指向这块内存的指针。分配的内存未被初始化。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">void</span>* <span class="hljs-title function_">malloc</span><span class="hljs-params">(<span class="hljs-type">size_t</span> size)</span>;<br></code></pre></td></tr></table></figure>
+<ul>
+<li><code>size</code>：要分配的内存块的大小（以字节为单位）。</li>
+<li>返回值：成功时，返回指向已分配内存块的指针；失败时，返回<code>NULL</code>。</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">()</span> &#123;<br>    <span class="hljs-type">int</span> *ptr;<br>    <span class="hljs-type">int</span> n = <span class="hljs-number">5</span>;<br><br>    <span class="hljs-comment">// 分配内存用于存储5个int类型的元素</span><br>    ptr = (<span class="hljs-type">int</span> *)<span class="hljs-built_in">malloc</span>(n * <span class="hljs-keyword">sizeof</span>(<span class="hljs-type">int</span>));<br><br>    <span class="hljs-comment">// 检查内存分配是否成功</span><br>    <span class="hljs-keyword">if</span> (ptr == <span class="hljs-literal">NULL</span>) &#123;<br>        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Memory allocation failed\n&quot;</span>);<br>        <span class="hljs-keyword">return</span> <span class="hljs-number">1</span>;<br>    &#125;<br><br>    <span class="hljs-comment">// 使用分配的内存</span><br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++) &#123;<br>        ptr[i] = i + <span class="hljs-number">1</span>;<br>    &#125;<br><br>    <span class="hljs-comment">// 打印数组元素</span><br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++) &#123;<br>        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d &quot;</span>, ptr[i]);<br>    &#125;<br>    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;\n&quot;</span>);<br><br>    <span class="hljs-comment">// 释放内存</span><br>    <span class="hljs-built_in">free</span>(ptr);<br><br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h3 id="calloc"><code>calloc</code></h3>
+<p><code>calloc</code>（contiguous allocation）函数分配指定数量的内存块，每块大小为指定大小，并初始化所有内存块为零。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">void</span>* <span class="hljs-title function_">calloc</span><span class="hljs-params">(<span class="hljs-type">size_t</span> num, <span class="hljs-type">size_t</span> size)</span>;<br></code></pre></td></tr></table></figure>
+<ul>
+<li><code>num</code>：要分配的元素的数量。</li>
+<li><code>size</code>：每个元素的大小（以字节为单位）。</li>
+<li>返回值：成功时，返回指向已分配并初始化为零的内存块的指针；失败时，返回<code>NULL</code>。</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">()</span> &#123;<br>    <span class="hljs-type">int</span> *ptr;<br>    <span class="hljs-type">int</span> n = <span class="hljs-number">5</span>;<br><br>    <span class="hljs-comment">// 分配内存用于存储5个int类型的元素，并初始化为0</span><br>    ptr = (<span class="hljs-type">int</span> *)<span class="hljs-built_in">calloc</span>(n, <span class="hljs-keyword">sizeof</span>(<span class="hljs-type">int</span>));<br><br>    <span class="hljs-comment">// 检查内存分配是否成功</span><br>    <span class="hljs-keyword">if</span> (ptr == <span class="hljs-literal">NULL</span>) &#123;<br>        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Memory allocation failed\n&quot;</span>);<br>        <span class="hljs-keyword">return</span> <span class="hljs-number">1</span>;<br>    &#125;<br><br>    <span class="hljs-comment">// 打印数组元素</span><br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++) &#123;<br>        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d &quot;</span>, ptr[i]);<br>    &#125;<br>    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;\n&quot;</span>);<br><br>    <span class="hljs-comment">// 释放内存</span><br>    <span class="hljs-built_in">free</span>(ptr);<br><br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h3 id="realloc"><code>realloc</code></h3>
+<p><code>realloc</code>（reallocation）函数调整之前分配的内存块的大小。它可以扩展或缩小内存块的大小，并返回一个指向新内存块的指针。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">void</span>* <span class="hljs-title function_">realloc</span><span class="hljs-params">(<span class="hljs-type">void</span>* ptr, <span class="hljs-type">size_t</span> size)</span>;<br></code></pre></td></tr></table></figure>
+<ul>
+<li><code>ptr</code>：指向要重新分配内存的内存块的指针。如果是<code>NULL</code>，<code>realloc</code> 的行为类似于 <code>malloc</code>。</li>
+<li><code>size</code>：新的内存块的大小（以字节为单位）。</li>
+<li>返回值：成功时，返回指向新内存块的指针；失败时，返回<code>NULL</code>，原内存块保持不变。</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">()</span> &#123;<br>    <span class="hljs-type">int</span> *ptr;<br>    <span class="hljs-type">int</span> n = <span class="hljs-number">5</span>;<br><br>    <span class="hljs-comment">// 分配内存用于存储5个int类型的元素</span><br>    ptr = (<span class="hljs-type">int</span> *)<span class="hljs-built_in">malloc</span>(n * <span class="hljs-keyword">sizeof</span>(<span class="hljs-type">int</span>));<br><br>    <span class="hljs-comment">// 检查内存分配是否成功</span><br>    <span class="hljs-keyword">if</span> (ptr == <span class="hljs-literal">NULL</span>) &#123;<br>        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Memory allocation failed\n&quot;</span>);<br>        <span class="hljs-keyword">return</span> <span class="hljs-number">1</span>;<br>    &#125;<br><br>    <span class="hljs-comment">// 使用分配的内存</span><br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++) &#123;<br>        ptr[i] = i + <span class="hljs-number">1</span>;<br>    &#125;<br><br>    <span class="hljs-comment">// 打印原数组元素</span><br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++) &#123;<br>        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d &quot;</span>, ptr[i]);<br>    &#125;<br>    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;\n&quot;</span>);<br><br>    <span class="hljs-comment">// 重新分配内存块，扩展为10个int类型的元素</span><br>    ptr = (<span class="hljs-type">int</span> *)<span class="hljs-built_in">realloc</span>(ptr, <span class="hljs-number">10</span> * <span class="hljs-keyword">sizeof</span>(<span class="hljs-type">int</span>));<br><br>    <span class="hljs-comment">// 检查内存重新分配是否成功</span><br>    <span class="hljs-keyword">if</span> (ptr == <span class="hljs-literal">NULL</span>) &#123;<br>        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Memory reallocation failed\n&quot;</span>);<br>        <span class="hljs-keyword">return</span> <span class="hljs-number">1</span>;<br>    &#125;<br><br>    <span class="hljs-comment">// 使用扩展的内存</span><br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = n; i &lt; <span class="hljs-number">10</span>; i++) &#123;<br>        ptr[i] = i + <span class="hljs-number">1</span>;<br>    &#125;<br><br>    <span class="hljs-comment">// 打印扩展后的数组元素</span><br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">10</span>; i++) &#123;<br>        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d &quot;</span>, ptr[i]);<br>    &#125;<br>    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;\n&quot;</span>);<br><br>    <span class="hljs-comment">// 释放内存</span><br>    <span class="hljs-built_in">free</span>(ptr);<br><br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h3 id="free"><code>free</code></h3>
+<p><code>free</code>函数释放之前分配的动态内存。释放内存后，指针仍然存在，但它指向的内存不再有效，因此通常将指针设为<code>NULL</code>以避免悬空指针。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">void</span> <span class="hljs-title function_">free</span><span class="hljs-params">(<span class="hljs-type">void</span>* ptr)</span>;<br></code></pre></td></tr></table></figure>
+<ul>
+<li><code>ptr</code>：指向要释放的内存块的指针。如果是<code>NULL</code>，<code>free</code> 不进行任何操作。</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">()</span> &#123;<br>    <span class="hljs-type">int</span> *ptr;<br>    <span class="hljs-type">int</span> n = <span class="hljs-number">5</span>;<br><br>    <span class="hljs-comment">// 分配内存用于存储5个int类型的元素</span><br>    ptr = (<span class="hljs-type">int</span> *)<span class="hljs-built_in">malloc</span>(n * <span class="hljs-keyword">sizeof</span>(<span class="hljs-type">int</span>));<br><br>    <span class="hljs-comment">// 检查内存分配是否成功</span><br>    <span class="hljs-keyword">if</span> (ptr == <span class="hljs-literal">NULL</span>) &#123;<br>        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Memory allocation failed\n&quot;</span>);<br>        <span class="hljs-keyword">return</span> <span class="hljs-number">1</span>;<br>    &#125;<br><br>    <span class="hljs-comment">// 使用分配的内存</span><br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++) &#123;<br>        ptr[i] = i + <span class="hljs-number">1</span>;<br>    &#125;<br><br>    <span class="hljs-comment">// 打印数组元素</span><br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++) &#123;<br>        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d &quot;</span>, ptr[i]);<br>    &#125;<br>    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;\n&quot;</span>);<br><br>    <span class="hljs-comment">// 释放内存</span><br>    <span class="hljs-built_in">free</span>(ptr);<br>    ptr = <span class="hljs-literal">NULL</span>; <span class="hljs-comment">// 避免悬空指针</span><br><br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h3 id="3-1-2-动态内存分配的注意事项">3.1.2 动态内存分配的注意事项</h3>
+<ol>
+<li><strong>检查内存分配是否成功</strong>：动态内存分配函数在分配失败时返回<code>NULL</code>，必须检查返回值以确保内存分配成功。</li>
+<li><strong>避免内存泄漏</strong>：确保每个动态分配的内存都使用<code>free</code>函数释放，否则会导致内存泄漏。</li>
+<li><strong>避免悬空指针</strong>：释放内存后，将指针设为<code>NULL</code>，以避免使用已释放的内存。</li>
+</ol>
+<h1>四、指针在数据结构中的应用</h1>
+<p>指针在实现链表、树、图等数据结构中起着关键作用。以下是一个简单的单链表示例：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdlib.h&gt;</span></span><br><br><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">Node</span> &#123;</span><br>    <span class="hljs-type">int</span> data;<br>    <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">Node</span> *<span class="hljs-title">next</span>;</span><br>&#125;;<br><br><span class="hljs-comment">// 创建一个新节点</span><br><span class="hljs-keyword">struct</span> Node* <span class="hljs-title function_">createNode</span><span class="hljs-params">(<span class="hljs-type">int</span> data)</span> &#123;<br>    <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">Node</span> *<span class="hljs-title">newNode</span> =</span> (<span class="hljs-keyword">struct</span> Node*)<span class="hljs-built_in">malloc</span>(<span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">struct</span> Node));<br>    newNode-&gt;data = data;<br>    newNode-&gt;next = <span class="hljs-literal">NULL</span>;<br>    <span class="hljs-keyword">return</span> newNode;<br>&#125;<br><br><span class="hljs-comment">// 打印链表</span><br><span class="hljs-type">void</span> <span class="hljs-title function_">printList</span><span class="hljs-params">(<span class="hljs-keyword">struct</span> Node *head)</span> &#123;<br>    <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">Node</span> *<span class="hljs-title">temp</span> =</span> head;<br>    <span class="hljs-keyword">while</span> (temp != <span class="hljs-literal">NULL</span>) &#123;<br>        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d -&gt; &quot;</span>, temp-&gt;data);<br>        temp = temp-&gt;next;<br>    &#125;<br>    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;NULL\\n&quot;</span>);<br>&#125;<br><br><span class="hljs-comment">// 主函数</span><br><span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">()</span> &#123;<br>    <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">Node</span> *<span class="hljs-title">head</span> =</span> createNode(<span class="hljs-number">1</span>);<br>    head-&gt;next = createNode(<span class="hljs-number">2</span>);<br>    head-&gt;next-&gt;next = createNode(<span class="hljs-number">3</span>);<br><br>    printList(head);<br><br>    <span class="hljs-comment">// 释放链表内存</span><br>    <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">Node</span> *<span class="hljs-title">temp</span>;</span><br>    <span class="hljs-keyword">while</span> (head != <span class="hljs-literal">NULL</span>) &#123;<br>        temp = head;<br>        head = head-&gt;next;<br>        <span class="hljs-built_in">free</span>(temp);<br>    &#125;<br><br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h1>五、指针的常见错误</h1>
+<h2 id="5-1-野指针">5.1 野指针</h2>
+<p>野指针（Dangling Pointer）是指向已经被释放或未分配的内存的指针。使用野指针会导致不可预测的行为，包括程序崩溃和数据损坏。</p>
+<h3 id="野指针的常见原因：">野指针的常见原因：</h3>
+<ol>
+<li><strong>未初始化的指针</strong>：指针在声明时没有被初始化。</li>
+<li><strong>释放后的指针继续使用</strong>：内存释放后，指针依然被使用。</li>
+<li><strong>超出作用域的指针</strong>：指针指向的内存在作用域结束后被回收。</li>
+</ol>
+<h3 id="1-未初始化的指针">1. 未初始化的指针</h3>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">()</span> &#123;<br>    <span class="hljs-type">int</span> *p; <span class="hljs-comment">// p未初始化</span><br>    *p = <span class="hljs-number">10</span>; <span class="hljs-comment">// 未定义行为，p是野指针</span><br>    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d\n&quot;</span>, *p);<br><br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h3 id="2-释放后的指针继续使用">2. 释放后的指针继续使用</h3>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">()</span> &#123;<br>    <span class="hljs-type">int</span> *p = (<span class="hljs-type">int</span> *)<span class="hljs-built_in">malloc</span>(<span class="hljs-keyword">sizeof</span>(<span class="hljs-type">int</span>));<br>    *p = <span class="hljs-number">10</span>;<br>    <span class="hljs-built_in">free</span>(p); <span class="hljs-comment">// 释放内存</span><br>    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d\n&quot;</span>, *p); <span class="hljs-comment">// 未定义行为，p是野指针</span><br><br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h3 id="3-超出作用域的指针">3. 超出作用域的指针</h3>
+<p>局部变量在函数执行完毕后，其内存会被自动回收。如果在函数中返回局部变量的地址，那么该地址在函数返回后就指向一块已经被回收的内存区域，这就导致了野指针的产生。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">int</span>* <span class="hljs-title function_">getPointer</span><span class="hljs-params">()</span> &#123;<br>    <span class="hljs-type">int</span> x = <span class="hljs-number">10</span>;<br>    <span class="hljs-keyword">return</span> &amp;x; <span class="hljs-comment">// 返回局部变量的地址</span><br>&#125;<br><br><span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">()</span> &#123;<br>    <span class="hljs-type">int</span> *p = getPointer(); <span class="hljs-comment">// p指向一个已经回收的内存</span><br>    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d\n&quot;</span>, *p); <span class="hljs-comment">// 未定义行为，p是野指针</span><br><br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>在上述代码中，函数 <code>getPointer</code> 返回了局部变量 <code>x</code> 的地址。但在 <code>getPointer</code> 函数执行完毕后，局部变量 <code>x</code> 的内存就已经被回收，因此 <code>p</code> 变成了一个野指针。</p>
+<h3 id="如何避免野指针">如何避免野指针</h3>
+<ol>
+<li>
+<p><strong>初始化指针</strong>：声明指针时进行初始化。</p>
+ <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">int</span> *p = <span class="hljs-literal">NULL</span>;<br></code></pre></td></tr></table></figure>
+</li>
+<li>
+<p><strong>释放后置空</strong>：释放内存后，将指针置空。置空之后可以继续使用（解决野指针问题2）。</p>
+ <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-built_in">free</span>(p);<br>p = <span class="hljs-literal">NULL</span>;<br></code></pre></td></tr></table></figure>
+</li>
+<li>
+<p><strong>避免返回局部变量地址（使用动态内存分配）</strong>：函数中不要返回局部变量的地址。（解决野指针问题3）</p>
+ <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">int</span>* <span class="hljs-title function_">getPointer</span><span class="hljs-params">()</span> &#123;<br>    <span class="hljs-type">int</span> *x = (<span class="hljs-type">int</span> *)<span class="hljs-built_in">malloc</span>(<span class="hljs-keyword">sizeof</span>(<span class="hljs-type">int</span>));<br>    *x = <span class="hljs-number">10</span>;<br>    <span class="hljs-keyword">return</span> x;<br>&#125;<br></code></pre></td></tr></table></figure>
+</li>
+<li>
+<p><strong>使用静态变量</strong>：使用静态变量可以确保变量在函数结束后依然存在，但要注意静态变量在全局范围内是共享的。（解决野指针问题3）</p>
+ <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">int</span>* <span class="hljs-title function_">getPointer</span><span class="hljs-params">()</span> &#123;<br>    <span class="hljs-type">static</span> <span class="hljs-type">int</span> x = <span class="hljs-number">10</span>; <span class="hljs-comment">// 使用静态变量</span><br>    <span class="hljs-keyword">return</span> &amp;x; <span class="hljs-comment">// 返回静态变量的地址</span><br>&#125;<br><br><span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">()</span> &#123;<br>    <span class="hljs-type">int</span> *p = getPointer();<br>    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d\n&quot;</span>, *p); <span class="hljs-comment">// 合法使用静态变量的地址</span><br><br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+</li>
+<li>
+<p><strong>使用智能指针</strong>：在C++中使用智能指针（如<code>std::unique_ptr</code>和<code>std::shared_ptr</code>）来管理动态内存。</p>
+</li>
+</ol>
+<h1>六、总结</h1>
+<p>常见指针定义与相关含义速查表</p>
+<table>
+<thead>
+<tr>
+<th>定义</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>int i ;</td>
+<td>定义整型变量i</td>
+</tr>
+<tr>
+<td>int *p ;</td>
+<td>p为指向整型数据的指针变量</td>
+</tr>
+<tr>
+<td>int a[n] ;</td>
+<td>定义含n个元素的整型数组a</td>
+</tr>
+<tr>
+<td>int *p[n] ;</td>
+<td>n个指向整型数据的指针变量组成的指针数组p</td>
+</tr>
+<tr>
+<td>int (*p) [n] ;</td>
+<td>p为指向含n个元素的一维整型数组的指针变量</td>
+</tr>
+<tr>
+<td>int f( ) ;</td>
+<td>f为返回整型数的丽数</td>
+</tr>
+<tr>
+<td>int *p( ) ;</td>
+<td>p为返回指针的函数，该指针指向一个整型数据</td>
+</tr>
+<tr>
+<td>int (*p)( ) ;</td>
+<td>p为指向数的指针变量，该函数返回整型数</td>
+</tr>
+<tr>
+<td>int **p ;</td>
+<td>p为指针变量，它指向一个指向整型数据的指针变量</td>
+</tr>
+</tbody>
+</table>
+<p>指针是C语言中一个强大而复杂的特性，通过学习和理解指针的基本概念和高级用法，我们可以更有效地操作内存和实现复杂的数据结构。尽管指针的使用可能会带来一些问题，如空指针引用和内存泄漏，但通过良好的编程习惯和仔细的代码检查，这些问题是可以避免的。希望本文能帮助你更深入地理解C语言中的指针，并在实际编程中灵活运用它们。</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E5%BC%80%E5%8F%91/" class="category-chain-item">开发</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/C-C/" class="print-no-link">#C/C++</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>深入理解C语言指针</div>
+      <div>https://serendipity565.github.io/2024/06/15/深入理解C语言指针/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Serendipity</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2024年6月15日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              BY-SERENDIPITY565
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2024/07/24/%E6%A0%91%E7%8A%B6%E6%95%B0%E7%BB%84/" title="树状数组">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">树状数组</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2024/04/30/%E5%BE%AE%E6%9C%8D%E5%8A%A1/" title="微服务">
+                        <span class="hidden-mobile">微服务</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+    <div id="giscus" class="giscus"></div>
+    <script type="text/javascript">
+      Fluid.utils.loadComments('#giscus', function() {
+        var options = {"repo":"Serendipity565/BlogComment","repo-id":"R_kgDOMwk0XQ","category":"Announcements","category-id":"DIC_kwDOMwk0Xc4CiZ44","theme-light":"light","theme-dark":"dark","mapping":"pathname","reactions-enabled":1,"emit-metadata":0,"input-position":"top","lang":"zh-CN"};
+        var attributes = {};
+        for (let option in options) {
+          if (!option.startsWith('theme-')) {
+            var key = option.startsWith('data-') ? option : 'data-' + option;
+            attributes[key] = options[option];
+          }
+        }
+        var light = 'light';
+        var dark = 'dark';
+        window.GiscusThemeLight = light;
+        window.GiscusThemeDark = dark;
+        attributes['data-theme'] = document.documentElement.getAttribute('data-user-color-scheme') === 'dark' ? dark : light;
+        for (let attribute in attributes) {
+          var value = attributes[attribute];
+          if (value === undefined || value === null || value === '') {
+            delete attributes[attribute];
+          }
+        }
+        var s = document.createElement('script');
+        s.setAttribute('src', 'https://giscus.app/client.js');
+        s.setAttribute('crossorigin', 'anonymous');
+        for (let attribute in attributes) {
+          s.setAttribute(attribute, attributes[attribute]);
+        }
+        var ss = document.getElementsByTagName('script');
+        var e = ss.length > 0 ? ss[ss.length - 1] : document.head || document.documentElement;
+        e.parentNode.insertBefore(s, e.nextSibling);
+      });
+    </script>
+    <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> content: <div> <span id="timeDate">载入天数...</span> <span id="times">载入时分秒...</span> <script src="/js/duration.js"></script> </div> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="leancloud-site-pv-container" style="display: none">
+        总访问量 
+        <span id="leancloud-site-pv"></span>
+         次
+      </span>
+    
+    
+      <span id="leancloud-site-uv-container" style="display: none">
+        总访客数 
+        <span id="leancloud-site-uv"></span>
+         人
+      </span>
+    
+    
+
+  
+
+</div>
+
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script defer src="/js/leancloud.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+  
+<script src="//cdn.jsdelivr.net/gh/EmoryHuang/BlogBeautify@1.1/DynamicLine.js"></script>
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/wanko.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"react":{"opacity":0.7},"log":false});</script></body>
+</html>
