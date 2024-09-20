@@ -11,7 +11,7 @@
   <link rel="apple-touch-icon" sizes="76x76" href="/img/kenan.png">
   <link rel="icon" href="/img/kenan.png">
   
-    <link rel="canonical" href="https://serendipity565.github.io/2024/03/14/Go接口/"/>
+    <link rel="canonical" href="https://serendipity565.github.io/2024/05/09/怎么理解CAP理论/"/>
   
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
@@ -21,24 +21,31 @@
   <meta name="author" content="Serendipity">
   <meta name="keywords" content="Serendipity,Blog">
   
-    <meta name="description" content="什么是接口 在goland中，接口是一组方法签名。接口把所有的具有共性的方法定义在一起，任何其他类型只要实现了这些方法就是实现了这个接口。它与OOP(面向对象编程)非常相似。 接口可以让我们将不同的类型绑定到一组公共的方法上，从而实现多态和灵活的设计。 Go语言中的接口是隐式实现的，也就是说，如果一个类型实现了一个接口定义的所有方法，那么它就自动地实现了该接口。因此，我们可以通过将接口作为参数来实">
+    <meta name="description" content="分布式系统（distributed system）正变得越来越重要，大型网站几乎都是分布式的。 分布式系统的最大难点，就是各个节点的状态如何保持一致。CAP理论是在设计分布式系统的过程中，处理数据一致性问题时必须考虑的理论。 什么是CAP理论 CAP即：  Consistency（一致性） Availability（可用性） Partition tolerance（分区容忍性）  这三个性质对应了">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Go接口">
-<meta property="og:url" content="https://serendipity565.github.io/2024/03/14/Go%E6%8E%A5%E5%8F%A3/index.html">
+<meta property="og:title" content="怎么理解CAP理论">
+<meta property="og:url" content="https://serendipity565.github.io/2024/05/09/%E6%80%8E%E4%B9%88%E7%90%86%E8%A7%A3CAP%E7%90%86%E8%AE%BA/index.html">
 <meta property="og:site_name" content="Serendipity&#39;s Blog">
-<meta property="og:description" content="什么是接口 在goland中，接口是一组方法签名。接口把所有的具有共性的方法定义在一起，任何其他类型只要实现了这些方法就是实现了这个接口。它与OOP(面向对象编程)非常相似。 接口可以让我们将不同的类型绑定到一组公共的方法上，从而实现多态和灵活的设计。 Go语言中的接口是隐式实现的，也就是说，如果一个类型实现了一个接口定义的所有方法，那么它就自动地实现了该接口。因此，我们可以通过将接口作为参数来实">
+<meta property="og:description" content="分布式系统（distributed system）正变得越来越重要，大型网站几乎都是分布式的。 分布式系统的最大难点，就是各个节点的状态如何保持一致。CAP理论是在设计分布式系统的过程中，处理数据一致性问题时必须考虑的理论。 什么是CAP理论 CAP即：  Consistency（一致性） Availability（可用性） Partition tolerance（分区容忍性）  这三个性质对应了">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://serendipity565.github.io/img/blog/jieko/1.png">
-<meta property="article:published_time" content="2024-03-14T05:12:12.000Z">
-<meta property="article:modified_time" content="2024-09-20T10:19:06.215Z">
+<meta property="og:image" content="https://serendipity565.github.io/img/blog/CAP/1.png">
+<meta property="og:image" content="https://serendipity565.github.io/img/blog/CAP/2.png">
+<meta property="og:image" content="https://serendipity565.github.io/img/blog/CAP/3.png">
+<meta property="og:image" content="https://serendipity565.github.io/img/blog/CAP/4.png">
+<meta property="og:image" content="https://serendipity565.github.io/img/blog/CAP/5.png">
+<meta property="og:image" content="https://serendipity565.github.io/img/blog/CAP/6.png">
+<meta property="og:image" content="https://serendipity565.github.io/img/blog/CAP/7.png">
+<meta property="og:image" content="https://serendipity565.github.io/img/blog/CAP/8.png">
+<meta property="article:published_time" content="2024-05-09T08:23:34.000Z">
+<meta property="article:modified_time" content="2024-09-20T14:41:52.004Z">
 <meta property="article:author" content="Serendipity">
-<meta property="article:tag" content="Go">
+<meta property="article:tag" content="后端">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://serendipity565.github.io/img/blog/jieko/1.png">
+<meta name="twitter:image" content="https://serendipity565.github.io/img/blog/CAP/1.png">
   
   
   
-  <title>Go接口 - Serendipity&#39;s Blog</title>
+  <title>怎么理解CAP理论 - Serendipity&#39;s Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -240,7 +247,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="Go接口"></span>
+            <span id="subtitle" data-typed-text="怎么理解CAP理论"></span>
           
         </div>
 
@@ -256,8 +263,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2024-03-14 13:12" pubdate>
-          2024年3月14日 下午
+        <time datetime="2024-05-09 16:23" pubdate>
+          2024年5月9日 下午
         </time>
       </span>
     
@@ -268,7 +275,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          972 字
+          3.5k 字
         
       </span>
     
@@ -279,7 +286,7 @@
         
         
         
-          11 分钟
+          39 分钟
         
       </span>
     
@@ -372,7 +379,7 @@
       
         <a href="/2024/03/14/Go%E6%8E%A5%E5%8F%A3/" title="Go接口"
            class="list-group-item list-group-item-action
-           active">
+           ">
           <span class="category-post">Go接口</span>
         </a>
       
@@ -417,7 +424,7 @@
       
         <a href="/2024/05/09/%E6%80%8E%E4%B9%88%E7%90%86%E8%A7%A3CAP%E7%90%86%E8%AE%BA/" title="怎么理解CAP理论"
            class="list-group-item list-group-item-action
-           ">
+           active">
           <span class="category-post">怎么理解CAP理论</span>
         </a>
       
@@ -449,58 +456,95 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">Go接口</h1>
+            <h1 id="seo-header">怎么理解CAP理论</h1>
             
             
               <div class="markdown-body">
                 
-                <h1>什么是接口</h1>
-<p>在goland中，接口是一组方法签名。接口把所有的具有共性的方法定义在一起，任何其他类型只要实现了这些方法就是实现了这个接口。它与OOP(面向对象编程)非常相似。</p>
-<p>接口可以让我们将不同的类型绑定到一组公共的方法上，从而实现多态和灵活的设计。</p>
-<p>Go语言中的接口是隐式实现的，也就是说，如果一个类型实现了一个接口定义的所有方法，那么它就自动地实现了该接口。因此，我们可以通过将接口作为参数来实现对不同类型的调用，从而实现多态。</p>
-<h1>接口的定义及实现</h1>
-<h2 id="定于接口">定于接口</h2>
-<p>关键字interface用来定义接口，语法如下：</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">type</span> interface_name <span class="hljs-keyword">interface</span> &#123;<br>    method_name1([args ...arg_type]) [return_type]<br>    method_name2([args ...arg_type]) [return_type]<br>    method_name3([args ...arg_type]) [return_type]<br>    ...<br>    method_namen([args ...arg_type]) [return_type]<br>&#125;<br></code></pre></td></tr></table></figure>
-<p>一个接口中可以定义多个方法，根据逻辑需要，自定义参数和返回值。</p>
-<h2 id="实现接口">实现接口</h2>
-<p>如果一个结构体实现了某个接口的所有方法，则此结构体就实现了该接口。</p>
-<p>我们定义一个sleeper接口，包含两个方法，即sleep()和eat()：</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">type</span> animal <span class="hljs-keyword">interface</span> &#123;<br>    sleep()<br>    eat()<br>&#125;<br></code></pre></td></tr></table></figure>
-<p>声明结构体，用来实现接口：</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">type</span> dog <span class="hljs-keyword">struct</span> &#123;<br>    name <span class="hljs-type">string</span><br>    food <span class="hljs-type">string</span><br>&#125;<br></code></pre></td></tr></table></figure>
-<p>声明了dog这一结构体，包含name和food两个字段。</p>
-<p>接下来实现animal接口，我们先让dog结构体实现该接口的所有方法：</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(mydog dog)</span></span> sleep() &#123;<br>    fmt.Printf(<span class="hljs-string">&quot;%s is sleeping\n&quot;</span>, mydog.name)<br>&#125;<br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(mydog dog)</span></span> eat() &#123;<br>    fmt.Printf(<span class="hljs-string">&quot;%s is eating %s\n&quot;</span>, mydog.name, mydog.food)<br>&#125;<br></code></pre></td></tr></table></figure>
-<p>接下来初始化结构体，输出测试：</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>    xiaobai := dog&#123;<br>        name: <span class="hljs-string">&quot;xiaobai&quot;</span>,<br>        food: <span class="hljs-string">&quot;bone&quot;</span>,<br>    &#125;<br>    xiaobai.sleep()<br>    xiaobai.eat()<br>&#125;<br><br></code></pre></td></tr></table></figure>
-<p>输出：</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs go">xiaobai is sleeping<br>xiaobai is eating bone<br></code></pre></td></tr></table></figure>
-<p>dog结构体实现了animal接口的所有方法，因此我们认为dog实现了animal接口。</p>
-<h3 id="没有实现接口会怎么样？">没有实现接口会怎么样？</h3>
-<p>我们先定义一个结构体cat，cat只实现animal的sleep()方法，我们认为cat并没有实现animal接口：</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(mycat cat)</span></span> sleep() &#123;<br>    fmt.Printf(<span class="hljs-string">&quot;%s is sleeping \n&quot;</span>, mycat.name)<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>    kitty := cat&#123;<br>        name: <span class="hljs-string">&quot;kitty&quot;</span>,<br>        food: <span class="hljs-string">&quot;fish&quot;</span>,<br>    &#125;<br>    kitty.sleep()<br>&#125;<br></code></pre></td></tr></table></figure>
-<p>输出</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs go">kitty is sleeping<br></code></pre></td></tr></table></figure>
-<p>输出结果显示sleep()方法并没有什么问题。</p>
-<p>但是使用接口的方法并不只有一种，我们换一种方法来观察接口有没有实现：</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>    <span class="hljs-keyword">var</span> ani animal<br>    kitty := cat&#123;<br>        name: <span class="hljs-string">&quot;kitty&quot;</span>,<br>        food: <span class="hljs-string">&quot;fish&quot;</span>,<br>    &#125;<br><br>    ani = kitty<br><br>    ani.sleep()<br>&#125;<br></code></pre></td></tr></table></figure>
-<p>结果报错，在终端里提示<code>cannot use kitty (variable of type cat) as animal value in assignment: cat does not implement animal (missing method eat)</code>。编写代码时编译器也会出现红色下划线的错误提示，如图：</p>
-<p><img src="/img/blog/jieko/1.png" srcset="/img/loading.gif" lazyload alt=""></p>
-<h1>接口嵌套</h1>
-<p>接口嵌套就是一个接口中包含了其他接口，如果要实现外部接口，那么就要把内部嵌套的接口对应的所有方法全实现了。</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">type</span> A <span class="hljs-keyword">interface</span> &#123;<br>    test1()<br>&#125;<br><br><span class="hljs-keyword">type</span> B <span class="hljs-keyword">interface</span> &#123;<br>    test2()<br>&#125;<br><br><span class="hljs-comment">// 定义嵌套接口</span><br><span class="hljs-keyword">type</span> C <span class="hljs-keyword">interface</span> &#123;<br>    A<br>    B<br>    test3()<br>&#125;<br></code></pre></td></tr></table></figure>
-<p>如果想实现接口C，那不止要实现接口C的方法，还要实现接口A，B中的方法</p>
-<h1>空接口</h1>
-<p>空接口不包含任何的方法，正因为如此，所有的类型都实现了空接口，因此空接口可以存储任意类型的数值。</p>
-<p>fmt包下的Print系列函数，其参数大多是空接口类型，也可以说支持任意类型：</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">Print</span><span class="hljs-params">(a ...<span class="hljs-keyword">interface</span>&#123;&#125;)</span></span> (n <span class="hljs-type">int</span>, err <span class="hljs-type">error</span>)<br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">Println</span><span class="hljs-params">(format <span class="hljs-type">string</span>, a ...<span class="hljs-keyword">interface</span>&#123;&#125;)</span></span> (n <span class="hljs-type">int</span>, err <span class="hljs-type">error</span>)<br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">Println</span><span class="hljs-params">(a ...<span class="hljs-keyword">interface</span>&#123;&#125;)</span></span> (n <span class="hljs-type">int</span>, err <span class="hljs-type">error</span>)<br></code></pre></td></tr></table></figure>
-<h2 id="示例">示例</h2>
-<p>在需要存储不同类型数据的容器中，可以使用空接口作为容器的元素类型。这样就可以在容器中存储任意类型的值。</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">type</span> empty_interface <span class="hljs-keyword">interface</span> &#123;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">example</span><span class="hljs-params">(empty empty_interface)</span></span> &#123;<br>    fmt.Printf(<span class="hljs-string">&quot;example&quot;</span>, empty)<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>    <span class="hljs-keyword">var</span> data []<span class="hljs-keyword">interface</span>&#123;&#125;<br>    data = <span class="hljs-built_in">append</span>(data, <span class="hljs-number">42</span>)<br>    data = <span class="hljs-built_in">append</span>(data, <span class="hljs-string">&quot;hello&quot;</span>)<br><br>    fmt.Println(<span class="hljs-string">&quot;data...........&quot;</span>, data)<br>&#125;<br><br></code></pre></td></tr></table></figure>
-<p>data是一个空接口类型的切片，可以存储整数、字符串等不同类型的数据。</p>
-<p>下面附上源代码：</p>
-<p><a href="/img/blog/jieko/test.go">test.go</a></p>
+                <p>分布式系统（distributed system）正变得越来越重要，大型网站几乎都是分布式的。</p>
+<p>分布式系统的最大难点，就是各个节点的状态如何保持一致。CAP理论是在设计分布式系统的过程中，处理数据一致性问题时必须考虑的理论。</p>
+<h1><strong>什么是CAP理论</strong></h1>
+<p>CAP即：</p>
+<ul>
+<li>Consistency（一致性）</li>
+<li>Availability（可用性）</li>
+<li>Partition tolerance（分区容忍性）</li>
+</ul>
+<p>这三个性质对应了分布式系统的三个指标：</p>
+<p>而CAP理论说的就是：一个分布式系统，不可能同时做到这三点。如下图：</p>
+<p><img src="/img/blog/CAP/1.png" srcset="/img/loading.gif" lazyload alt=""></p>
+<p>接下来将详细介绍C A P 三个指标的含义，以及三者如何权衡。</p>
+<h1><strong>C、 A、P的含义</strong></h1>
+<p>借用一下维基百科<a href="https://link.zhihu.com/?target=https%3A//en.wikipedia.org/wiki/CAP_theorem">CAP理论</a>一文中关于C、A、P三者的定义：</p>
+<p><strong>一致性：</strong> 对于客户端的每次读操作，要么读到的是最新的数据，要么读取失败。换句话说，一致性是站在分布式系统的角度，对访问本系统的客户端的一种承诺：要么我给您返回一个错误，要么我给你返回绝对一致的最新数据，不难看出，其强调的是数据正确。</p>
+<p><strong>可用性：</strong> 任何客户端的请求都能得到响应数据，不会出现响应错误。换句话说，可用性是站在分布式系统的角度，对访问本系统的客户的另一种承诺：我一定会给您返回数据，不会给你返回错误，但不保证数据最新，强调的是不出错。</p>
+<p><strong>分区容忍性：</strong> 由于分布式系统通过网络进行通信，网络是不可靠的。当任意数量的消息丢失或延迟到达时，系统仍会继续提供服务，不会挂掉。换句话说，分区容忍性是站在分布式系统的角度，对访问本系统的客户端的再一种承诺：我会一直运行，不管我的内部出现何种数据同步问题，强调的是不挂掉。</p>
+<h1><strong>C、A、P三者之间的冲突</strong></h1>
+<h2 id="一致性"><strong>一致性</strong></h2>
+<p>假设，我们的分布式存储系统有两个节点，每个节点都包含了一部分需要被变化的数据。如果经过一次写请求后，两个节点都发生了数据变化。然后，读请求把这些变化后的数据都读取到了，我们就把这次数据修改称为数据发生了一致性变化。</p>
+<p><img src="/img/blog/CAP/2.png" srcset="/img/loading.gif" lazyload alt=""></p>
+<p>但是，这还不是完整的一致性。因为系统不可能永久的正常运行下去。</p>
+<p>如果系统内部发生了问题从而导致系统的节点无法发生一致性变化会怎么样呢？当我们这样做的时候，就意味着想看到最新数据的读请求们，很可能会看到旧数据，或者说获取到不同版本的数据。此时，为了保证分布式系统对外的数据一致性，于是选择不返回任何数据。</p>
+<p><img src="/img/blog/CAP/3.png" srcset="/img/loading.gif" lazyload alt=""></p>
+<p>这里需要注意一下，CAP 定理是在说在某种状态下的选择，和实际工程的理论是有差别的。上面描述的一致性和 ACID 事务中的一致性是两回事。事务中的一致性包含了实际工程对状态的后续处理。但是 CAP 定理并不涉及到状态的后续处理，对于这些问题，后续出现了 BASE 理论等工程结论去处理，目前，只需要明白 CAP 定理主要描述的是状态。</p>
+<h2 id="可用性"><strong>可用性</strong></h2>
+<p>这句话说明了结果的重要性，而可用性在 CAP 里就是对结果的要求。它要求系统内的节点们接收到了无论是写请求还是读请求，都要能处理并给回响应结果。只是它有两点必须满足的条件：</p>
+<p>条件 1：返回结果必须在合理的时间以内，这个合理的时间是根据业务来定的。业务说必须 100 毫秒内返回，合理的时间就是 100 毫秒，需要 1 秒内返回，那就是 1 秒，如果业务定的 100 毫秒，结果却在 1 秒才返回，那么这个系统就不满足可用性。</p>
+<p>条件 2：需要系统内能正常接收请求的所有节点都返回结果。这包含了两重含义：</p>
+<ol>
+<li>如果节点不能正常接收请求了，比如宕机了，系统崩溃了，而其他节点依然能正常接收请求，那么，我们说系统依然是可用的，也就是说，部分宕机没事儿，不影响可用性指标。</li>
+<li>如果节点能正常接收请求，但是发现节点内部数据有问题，那么也必须返回结果，哪怕返回的结果是有问题的。比如，系统有两个节点，其中有一个节点数据是三天前的，另一个节点是两分钟前的，如果，一个读请求跑到了包含了三天前数据的那个节点上，抱歉，这个节点不能拒绝，必须返回这个三天前的数据，即使它可能不太合理。</li>
+</ol>
+<p><img src="/img/blog/CAP/4.png" srcset="/img/loading.gif" lazyload alt=""></p>
+<h2 id="分区容忍性"><strong>分区容忍性</strong></h2>
+<p>分布式的存储系统会有很多的节点，这些节点都是通过网络进行通信。而网络是不可靠的，当节点和节点之间的通信出现了问题，此时，就称当前的分布式存储系统出现了分区。但是，值得一提的是，分区并不一定是由网络故障引起的，也可能是因为机器故障。</p>
+<p>比如，我们的分布式存储系统有 A、B 两个节点。那么，当 A、B 之间由于可能路由器、交换机等底层网络设备出现了故障，A 和 B 通信出现了问题，但是 A、B 依然都在运行，都在对外提供服务。这时候，就说 A 和 B 发生了分区。</p>
+<p>还有一种情况也会发生分区，当 A 出现了宕机，A 和 B 节点之间通信也是出现了问题，那么我们也称 A 和 B 发生了分区。</p>
+<p>综上，我们可以知道，只要在分布式系统中，节点通信出现了问题，那么就出现了分区。</p>
+<p><img src="/img/blog/CAP/5.png" srcset="/img/loading.gif" lazyload alt=""></p>
+<p>那么，分区容忍性是指什么？ 它是说，如果出现了分区问题，我们的分布式存储系统还需要继续运行。不能因为出现了分区问题，整个分布式节点全部就熄火了，罢工了，不做事情了。</p>
+<h1><strong>权衡 C、A、P</strong></h1>
+<p>因为，在分布式系统内，P 是必然的发生的，不选 P，一旦发生分区错误，整个分布式系统就完全无法使用了，这是不符合实际需要的。所以，对于分布式系统，我们只能能考虑当发生分区错误时，如何选择一致性和可用性。</p>
+<p>而根据一致性和可用性的选择不同，开源的分布式系统往往又被分为 CP 系统和 AP 系统。</p>
+<p>当一套系统在发生分区故障后，客户端的任何请求都被卡死或者超时，但是，系统的每个节点总是会返回一致的数据，则这套系统就是 CP 系统，经典的比如 Zookeeper。</p>
+<p>如果一套系统发生分区故障后，客户端依然可以访问系统，但是获取的数据有的是新的数据，有的还是老数据，那么这套系统就是 AP 系统，经典的比如 Eureka。</p>
+<p>简单来说，CAP 就是告诉程序员们当分布式系统出现内部问题了，你要做两种选择：</p>
+<ul>
+<li>要么迁就外部服务</li>
+<li>要么让外部服务迁就你</li>
+</ul>
+<p>迁就外部服务就是我们不能因为我们自己的问题让外部服务的业务运行受到影响，所以要优先可用性。而让外部服务迁就我们，就要优先一致性。</p>
+<h2 id="注意：">注意：</h2>
+<p>很多人在没有对 CAP 做深入了解的情况下，听到很多人说分布式系统必须在 CAP 三个特性里选择两个，就觉得一套分布式系统肯定要么只有可用性要么只有一致性，不存在完整的可用性和一致性功能。</p>
+<p>这种理解是大有问题的。因为，P 这种问题发生的概率非常低，所以：</p>
+<p><strong>当没有出现分区问题的时候，系统就应该有完美的数据一致性和可用性。</strong></p>
+<h1><strong>CAP 理论的一些疑问</strong></h1>
+<h2 id="数据分片和数据副本的分布式系统是否都遵守-CAP-定理？"><strong>数据分片和数据副本的分布式系统是否都遵守 CAP 定理？</strong></h2>
+<p>我们知道，在一套大规模的分布式系统里，一定是既需要把海量数据做切分，存储到不同的机器上，也需要对这些存储了数据的机器做副本备份的。</p>
+<p>那么，如果，一个分布式系统里只有数据分片存储或者只有数据副本存储，他们都会遵守 CAP 定理吗？</p>
+<p>答案是当数据分片时，也是要遵守 CAP 定理，但是，是种非常特殊的遵守。</p>
+<p>比如，我们有个分布式系统，由三个节点 a、b、c 组成。其中节点 a 存放了 A 表的数据，b 存放了 B 表的数据，c 存放了 C 表的数据。</p>
+<p>如果有一个业务，它的意图是想往 A 表插入一条新数据，在 B 表删除一条已有数据，在 C 表更新一条老数据，这个分布式系统该怎么处理这种业务？</p>
+<p>技术上我们对这种一个意图想做多件事的情况往往会包装成一个事务。当我们包装成一个事务以后，我们可能会通过先在 a 节点执行，然后去 b 节点执行，最后去 c 节点执行，等到都成功了，才会返回成功。</p>
+<p>但是，发生了分区以后怎么办？当在 a、b 节点都成功了，到 c 发现发生了通信故障？</p>
+<p>此时，根据 CAP 定理，你有两个选择，要么就直接返回一个部分成功的结果给客户端，要么直接卡死等客户端超时或者返回失败给客户端。当返回部分成功的时候，这就是选择了可用性（A），当卡死或者返回失败给客户端的时候，就是选择了一致性（C）。</p>
+<p>可是，我们将请求包装成了事务，而事务是要求要么都成功，要么都失败……为了遵守这种要求，对于分布式只有分片的情况，迫于客观条件，只能选择C。所以分片的分布式系统，往往都是 CP 的系统。</p>
+<p><img src="/img/blog/CAP/6.png" srcset="/img/loading.gif" lazyload alt=""></p>
+<p>而当分布式系统是多个节点，每个节点存储了完整的一套数据，别的节点只是完整数据的备份的时候，即使事务只在一台机器上成功，当发生分区故障的时候，我们也是可以有充分的余地选择是<strong>单机事务的回退</strong> or <strong>就此认为写成功的</strong>。</p>
+<p>单机事务的回退，就可以对外表现为选择了一致性。</p>
+<p><img src="/img/blog/CAP/7.png" srcset="/img/loading.gif" lazyload alt=""></p>
+<p>就此认为写成功，则可以认为选择了可用性。</p>
+<p><img src="/img/blog/CAP/8.png" srcset="/img/loading.gif" lazyload alt=""></p>
+<h1><strong>CAP 的不足</strong></h1>
+<ol>
+<li>CAP 定理本身是没有考虑网络延迟的问题的，它认为一致性是立即生效的，但是，要保持一致性，是需要时间成本的，这就导致往往分布式系统多选择 AP 方式</li>
+<li>由于时代的演变，CAP 定理在针对所有分布式系统的时候，出现了一些力不从心的情况，导致很多时候它自己会把以前很严谨的数学定义改成了比较松弛的业务定义，类似于我们看到，CAP 定理把一致性、可用性、分区容错都变成了一个范围属性，而这和 CAP 定理本身这种数学定理般的称呼是有冲突的，出现了不符合数学严谨定义的问题。</li>
+<li>在实践中以及后来 CAP 定理的提出者也承认，一致性和可用性并不仅仅是二选一的问题，只是一些重要性的区别，当强调一致性的时候，并不表示可用性是完全不可用的状态。比如，Zookeeper 只是在 master 出现问题的时候，才可能出现几十秒的不可用状态，而别的时候，都会以各种方式保证系统的可用性。而强调可用性的时候，也往往会采用一些技术手段，去保证数据最终是一致的。CAP 定理并没有给出这些情况的具体描述。</li>
+<li>CAP 理论从工程角度来看只是一种状态的描述，它告诉大家当有错的时候，分布式系统可能处在什么状态。但是，状态是可能变化的。状态间如何转换，如何修补，如何恢复是没有提供方向的。</li>
+</ol>
+<h1><strong>引申出来的 BASE</strong></h1>
+<p>正因为 CAP 以上的种种不足，epay 的架构师 Dan Pritchett 根据他自身在大规模分布式系统的实践经验，总结出了 BASE 理论。BASE 理论是对 CAP 理论的延伸，核心思想是即使无法做到强一致性（Strong Consistency），但应用可以采用适合的方式达到最终一致性（Eventual Consitency）。</p>
+<p>BASE 理论是实践工程的理论，它弥补了CAP 理论过于抽象的问题，也同时解决了 AP 系统的总体工程实践思想，是分布式系统的核心理论之一，我们以后再介绍。</p>
 
                 
               </div>
@@ -534,7 +578,7 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/Go/" class="print-no-link">#Go</a>
+        <a href="/tags/%E5%90%8E%E7%AB%AF/" class="print-no-link">#后端</a>
       
     </div>
   
@@ -546,8 +590,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>Go接口</div>
-      <div>https://serendipity565.github.io/2024/03/14/Go接口/</div>
+      <div>怎么理解CAP理论</div>
+      <div>https://serendipity565.github.io/2024/05/09/怎么理解CAP理论/</div>
     </div>
     <div class="license-meta">
       
@@ -559,7 +603,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2024年3月14日</div>
+          <div>2024年5月9日</div>
         </div>
       
       
@@ -584,9 +628,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2024/03/15/Go%E6%8E%A5%E5%8F%A3%E6%96%AD%E8%A8%80/" title="Go接口断言">
+                      <a href="/2024/05/11/Mikeandgcdproblem/" title="Mike and gcd problem">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Go接口断言</span>
+                        <span class="hidden-mobile">Mike and gcd problem</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -594,8 +638,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2024/03/13/Git%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/" title="Git使用教程">
-                        <span class="hidden-mobile">Git使用教程</span>
+                      <a href="/2024/04/30/%E5%BE%AE%E6%9C%8D%E5%8A%A1/" title="微服务">
+                        <span class="hidden-mobile">微服务</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
