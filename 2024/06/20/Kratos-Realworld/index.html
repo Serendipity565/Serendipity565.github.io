@@ -11,7 +11,7 @@
   <link rel="apple-touch-icon" sizes="76x76" href="/img/kenan.png">
   <link rel="icon" href="/img/kenan.png">
   
-    <link rel="canonical" href="https://serendipity565.github.io/2024/03/15/Go接口断言/"/>
+    <link rel="canonical" href="https://serendipity565.github.io/2024/06/20/Kratos-Realworld/"/>
   
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
@@ -21,22 +21,28 @@
   <meta name="author" content="Serendipity">
   <meta name="keywords" content="Serendipity,Blog">
   
-    <meta name="description" content="空接口interface{}没有定义任何函数，因此Golang中所有类型都实现了空接口。当一个函数的形参interface{}，那么在函数中，需要对形参进行断言，从而得到它的真实类型。 在学习接口断言之前，先了解一下类型断言，其实接口断言也是在判断类型。 类型断言 类型断言可以检查i是否为nil或者为某个类型，通常有两中方式 第一种： 1t :&#x3D; i.(T) 这个表达式可以断言一个接口对象i里不是">
+    <meta name="description" content="项目链接： GitHub - serendipity565&#x2F;Kratos-realworld RealWorld有官方文档，并且有不同语言不同架构的实现。    本项目采用的是Go语言的kratos的微服务模式实现后端服务，Kratos微服务采用的是类似DDD的结构，在Kratos的官方文档有说明，下图是官方文档上的结构说明。  在本项目中，结构结构如下：">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Go接口断言">
-<meta property="og:url" content="https://serendipity565.github.io/2024/03/15/Go%E6%8E%A5%E5%8F%A3%E6%96%AD%E8%A8%80/index.html">
+<meta property="og:title" content="Kratos-Realworld">
+<meta property="og:url" content="https://serendipity565.github.io/2024/06/20/Kratos-Realworld/index.html">
 <meta property="og:site_name" content="Serendipity&#39;s Blog">
-<meta property="og:description" content="空接口interface{}没有定义任何函数，因此Golang中所有类型都实现了空接口。当一个函数的形参interface{}，那么在函数中，需要对形参进行断言，从而得到它的真实类型。 在学习接口断言之前，先了解一下类型断言，其实接口断言也是在判断类型。 类型断言 类型断言可以检查i是否为nil或者为某个类型，通常有两中方式 第一种： 1t :&#x3D; i.(T) 这个表达式可以断言一个接口对象i里不是">
+<meta property="og:description" content="项目链接： GitHub - serendipity565&#x2F;Kratos-realworld RealWorld有官方文档，并且有不同语言不同架构的实现。    本项目采用的是Go语言的kratos的微服务模式实现后端服务，Kratos微服务采用的是类似DDD的结构，在Kratos的官方文档有说明，下图是官方文档上的结构说明。  在本项目中，结构结构如下：">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2024-03-15T15:23:42.000Z">
-<meta property="article:modified_time" content="2024-09-20T10:18:27.155Z">
+<meta property="og:image" content="https://serendipity565.github.io/img/blog/Kratos-Realworld/1.png">
+<meta property="og:image" content="https://serendipity565.github.io/img/blog/Kratos-Realworld/2.png">
+<meta property="og:image" content="https://serendipity565.github.io/img/blog/Kratos-Realworld/3.png">
+<meta property="og:image" content="https://serendipity565.github.io/img/blog/Kratos-Realworld/4.png">
+<meta property="og:image" content="https://serendipity565.github.io/img/blog/Kratos-Realworld/5.png">
+<meta property="article:published_time" content="2024-06-19T21:23:23.000Z">
+<meta property="article:modified_time" content="2024-09-20T15:44:03.401Z">
 <meta property="article:author" content="Serendipity">
 <meta property="article:tag" content="Go">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://serendipity565.github.io/img/blog/Kratos-Realworld/1.png">
   
   
   
-  <title>Go接口断言 - Serendipity&#39;s Blog</title>
+  <title>Kratos-Realworld - Serendipity&#39;s Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -238,7 +244,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="Go接口断言"></span>
+            <span id="subtitle" data-typed-text="Kratos-Realworld"></span>
           
         </div>
 
@@ -254,8 +260,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2024-03-15 23:23" pubdate>
-          2024年3月15日 晚上
+        <time datetime="2024-06-20 05:23" pubdate>
+          2024年6月20日 凌晨
         </time>
       </span>
     
@@ -266,7 +272,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.3k 字
+          97 字
         
       </span>
     
@@ -277,7 +283,7 @@
         
         
         
-          15 分钟
+          2 分钟
         
       </span>
     
@@ -379,7 +385,7 @@
       
         <a href="/2024/03/15/Go%E6%8E%A5%E5%8F%A3%E6%96%AD%E8%A8%80/" title="Go接口断言"
            class="list-group-item list-group-item-action
-           active">
+           ">
           <span class="category-post">Go接口断言</span>
         </a>
       
@@ -397,7 +403,7 @@
       
         <a href="/2024/06/20/Kratos-Realworld/" title="Kratos-Realworld"
            class="list-group-item list-group-item-action
-           ">
+           active">
           <span class="category-post">Kratos-Realworld</span>
         </a>
       
@@ -465,38 +471,21 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">Go接口断言</h1>
+            <h1 id="seo-header">Kratos-Realworld</h1>
             
             
               <div class="markdown-body">
                 
-                <p>空接口interface{}没有定义任何函数，因此Golang中所有类型都实现了空接口。当一个函数的形参interface{}，那么在函数中，需要对形参进行断言，从而得到它的真实类型。</p>
-<p>在学习接口断言之前，先了解一下类型断言，其实接口断言也是在判断类型。</p>
-<h1>类型断言</h1>
-<p>类型断言可以检查i是否为nil或者为某个类型，通常有两中方式</p>
-<p>第一种：</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs go">t := i.(T)<br></code></pre></td></tr></table></figure>
-<p>这个表达式可以断言一个接口对象i里不是nil，并且接口对象i存储的值的类型是T，如果断言成功，就会返回值给t，如果断言失败，就会触发 panic。这个方式常用于 switch 结构。</p>
-<p>第二种：</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs go">t, ok:= i.(T)<br></code></pre></td></tr></table></figure>
-<p>这个表达式也是可以断言一个接口对象t里不是nil，并且接口对象t存储的值的类型是T，如果断言成功，就会返回其类型给t，并且此时ok的值为true，表示断言成功。</p>
-<p>如果接口值的类型，并不是我们所断言的T，就会断言失败，但和第一种表达式不同的事，这个不会触发panic，而是将ok的值设为false，表示断言失败，此时t为T的零值。这几种方式常用于if else结构。</p>
-<h1>接口断言</h1>
-<h2 id="if-else结构接口断言">if else结构接口断言</h2>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">package</span> main<br><br><span class="hljs-keyword">import</span> (<br>    <span class="hljs-string">&quot;fmt&quot;</span><br>    <span class="hljs-string">&quot;math&quot;</span><br>)<br><br><span class="hljs-comment">// 定义了一个shape接口</span><br><span class="hljs-keyword">type</span> shape <span class="hljs-keyword">interface</span> &#123;<br>    area() <span class="hljs-type">float64</span><br>    peri() <span class="hljs-type">float64</span><br>&#125;<br><br><span class="hljs-comment">// 定义一个圆形结构体</span><br><span class="hljs-keyword">type</span> circle <span class="hljs-keyword">struct</span> &#123;<br>    r <span class="hljs-type">float64</span><br>&#125;<br><br><span class="hljs-comment">// 定义一个三角形结构体</span><br><span class="hljs-keyword">type</span> triangle <span class="hljs-keyword">struct</span> &#123;<br>    a <span class="hljs-type">float64</span><br>    b <span class="hljs-type">float64</span><br>    c <span class="hljs-type">float64</span><br>&#125;<br><br><span class="hljs-comment">// 圆形接口实现放法</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(c circle)</span></span> area() <span class="hljs-type">float64</span> &#123;<br>    <span class="hljs-keyword">return</span> c.r * c.r * math.Pi<br>&#125;<br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(c circle)</span></span> peri() <span class="hljs-type">float64</span> &#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">2</span> * c.r * math.Pi<br>&#125;<br><br><span class="hljs-comment">// 三角形接口实现方法</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(t triangle)</span></span> peri() <span class="hljs-type">float64</span> &#123;<br>    <span class="hljs-keyword">return</span> t.a + t.b + t.c<br>&#125;<br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(t triangle)</span></span> area() <span class="hljs-type">float64</span> &#123;<br>    p := (t.a + t.b + t.c) / <span class="hljs-number">2</span><br>    <span class="hljs-keyword">return</span> math.Sqrt(p * (p - t.a) * (p - t.b) * (p - t.c))<br>&#125;<br><br><span class="hljs-comment">// 定义断言函数</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">check</span><span class="hljs-params">(s shape)</span></span> &#123;<br>    <span class="hljs-keyword">if</span> i, ok := s.(triangle); ok &#123;<br>        fmt.Printf(<span class="hljs-string">&quot;是三角形，三条边分别为：%f %f %f \n&quot;</span>, i.a, i.b, i.c)<br>    &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> i, ok := s.(circle); ok &#123;<br>        fmt.Printf(<span class="hljs-string">&quot;是圆形，半径为：%f \n&quot;</span>, i.r)<br>    &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> i, ok := s.(*circle); ok &#123;<br>        fmt.Printf(<span class="hljs-string">&quot;是圆形结构体指针，类型为：%T,存储的地址为：%p，指针自身的地址为：%p\n&quot;</span>, i, &amp;i, i)<br>    &#125; <span class="hljs-keyword">else</span> &#123;<br>        fmt.Printf(<span class="hljs-string">&quot;无法判断类型&quot;</span>)<br>    &#125;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>    <span class="hljs-comment">//初始化圆形结构体</span><br>    c1 := circle&#123;r: <span class="hljs-number">5.0</span>&#125;<br>    fmt.Printf(<span class="hljs-string">&quot;\n&quot;</span>)<br>    fmt.Printf(<span class="hljs-string">&quot;下面是圆形结构体：\n&quot;</span>)<br>    fmt.Printf(<span class="hljs-string">&quot;圆的周长为：%f \n&quot;</span>, c1.peri())<br>    fmt.Printf(<span class="hljs-string">&quot;圆的面积为：%f \n&quot;</span>, c1.area())<br><br>    <span class="hljs-comment">//初始化三角形结构体</span><br>    t1 := triangle&#123;a: <span class="hljs-number">2</span>, b: <span class="hljs-number">3</span>, c: <span class="hljs-number">4</span>&#125;<br>    fmt.Printf(<span class="hljs-string">&quot;\n&quot;</span>)<br>    fmt.Printf(<span class="hljs-string">&quot;下面是三角形结构体：\n&quot;</span>)<br>    fmt.Printf(<span class="hljs-string">&quot;三角形的周长为：%f \n&quot;</span>, t1.peri())<br>    fmt.Printf(<span class="hljs-string">&quot;三角形的面积为: %f \n&quot;</span>, t1.area())<br><br>    <span class="hljs-comment">//圆形结构体指针</span><br>    <span class="hljs-keyword">var</span> c2 *circle = &amp;circle&#123;r: <span class="hljs-number">10.0</span>&#125;<br>    fmt.Printf(<span class="hljs-string">&quot;\n&quot;</span>)<br>    fmt.Printf(<span class="hljs-string">&quot;下面是圆形结构体指针：\n&quot;</span>)<br>    fmt.Printf(<span class="hljs-string">&quot;圆的周长为：%f \n&quot;</span>, c2.peri())<br>    fmt.Printf(<span class="hljs-string">&quot;圆的面积为：%f \n&quot;</span>, c2.area())<br><br>    <span class="hljs-comment">//开始接口断言</span><br>    fmt.Printf(<span class="hljs-string">&quot;\n&quot;</span>)<br>    fmt.Printf(<span class="hljs-string">&quot;开始接口断言：\n&quot;</span>)<br>    fmt.Printf(<span class="hljs-string">&quot;c1是&quot;</span>)<br>    check(c1)<br>    fmt.Printf(<span class="hljs-string">&quot;t1是&quot;</span>)<br>    check(t1)<br>    fmt.Printf(<span class="hljs-string">&quot;c2是&quot;</span>)<br>    check(c2)<br>&#125;<br><br></code></pre></td></tr></table></figure>
-<p>输出：</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs go">下面是圆形结构体：<br>圆的周长为：<span class="hljs-number">31.415927</span> <br>圆的面积为：<span class="hljs-number">78.539816</span> <br><br>下面是三角形结构体：<br>三角形的周长为：<span class="hljs-number">9.000000</span><br>三角形的面积为: <span class="hljs-number">2.904738</span><br><br>下面是圆形结构体指针：<br>圆的周长为：<span class="hljs-number">62.831853</span><br>圆的面积为：<span class="hljs-number">314.159265</span><br><br>开始接口断言：<br>c1是是圆形，半径为：<span class="hljs-number">5.000000</span><br>t1是是三角形，三条边分别为：<span class="hljs-number">2.000000</span> <span class="hljs-number">3.000000</span> <span class="hljs-number">4.000000</span><br>c2是是圆形结构体指针，类型为：*main.circle,存储的地址为：<span class="hljs-number">0xc000122020</span>，指针自身的地址为：<span class="hljs-number">0xc0001100b8</span><br></code></pre></td></tr></table></figure>
-<p>可以看到，我们的断言成功了。</p>
-<h2 id="switch结构接口断言">switch结构接口断言</h2>
-<p>断言其实还有另一种形式，就是用在利用switch语句判断接口的类型。</p>
-<p>每一个case会被顺序地考虑。当命中一个case时，就会执行case中的语句，因此case语句的顺序是很重要的，因为很有可能会有多个case匹配的情况。</p>
-<p>我们再封装一个switch逻辑的接口断言函数，逻辑和之前的一模一样，只是条件语句换成了switch…case：</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-comment">// 使用 switch定义接口断言函数</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">check</span><span class="hljs-params">(s shape)</span></span> &#123;<br>    <span class="hljs-keyword">switch</span> i := s.(<span class="hljs-keyword">type</span>) &#123;<br>    <span class="hljs-keyword">case</span> circle:<br>        fmt.Printf(<span class="hljs-string">&quot;是圆形，半径为：%f \n&quot;</span>, i.r)<br>    <span class="hljs-keyword">case</span> triangle:<br>        fmt.Printf(<span class="hljs-string">&quot;是三角形，三条边分别为：%f %f %f \n&quot;</span>, i.a, i.b, i.c)<br>    <span class="hljs-keyword">case</span> *circle:<br>        fmt.Printf(<span class="hljs-string">&quot;是圆形结构体指针，类型为：%T,存储的地址为：%p，指针自身的地址为：%p\n&quot;</span>, i, &amp;i, i)<br>    <span class="hljs-keyword">default</span>:<br>        fmt.Printf(<span class="hljs-string">&quot;无法判断类型&quot;</span>)<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-<p>输出：</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs go">开始接口断言：<br>c1是是圆形，半径为：<span class="hljs-number">5.000000</span><br>t1是是三角形，三条边分别为：<span class="hljs-number">2.000000</span> <span class="hljs-number">3.000000</span> <span class="hljs-number">4.000000</span><br>c2是是圆形结构体指针，类型为：*main.circle,存储的地址为：<span class="hljs-number">0xc00008a028</span>，指针自身的地址为：<span class="hljs-number">0xc00000a118</span><br></code></pre></td></tr></table></figure>
-<p>可以看到switch断言也正常输出了。</p>
-<p>下面附上源代码：</p>
-<p><a href="/img/blog/jieko/check/test.go">test.go</a></p>
+                <p>项目链接：</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/serendipity565/Kratos-realworld">GitHub - serendipity565/Kratos-realworld</a></p>
+<p>RealWorld有官方文档，并且有不同语言不同架构的实现。</p>
+<p><img src="/img/blog/Kratos-Realworld/1.png" srcset="/img/loading.gif" lazyload alt="1.png"></p>
+<p><img src="/img/blog/Kratos-Realworld/2.png" srcset="/img/loading.gif" lazyload alt="2.png"></p>
+<p><img src="/img/blog/Kratos-Realworld/3.png" srcset="/img/loading.gif" lazyload alt="3.png"></p>
+<p>本项目采用的是Go语言的kratos的微服务模式实现后端服务，Kratos微服务采用的是类似DDD的结构，在Kratos的官方文档有说明，下图是官方文档上的结构说明。</p>
+<p><img src="/img/blog/Kratos-Realworld/4.png" srcset="/img/loading.gif" lazyload alt="ddd.png"></p>
+<p>在本项目中，结构结构如下：</p>
+<p><img src="/img/blog/Kratos-Realworld/5.png" srcset="/img/loading.gif" lazyload alt=""></p>
 
                 
               </div>
@@ -542,8 +531,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>Go接口断言</div>
-      <div>https://serendipity565.github.io/2024/03/15/Go接口断言/</div>
+      <div>Kratos-Realworld</div>
+      <div>https://serendipity565.github.io/2024/06/20/Kratos-Realworld/</div>
     </div>
     <div class="license-meta">
       
@@ -555,7 +544,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2024年3月15日</div>
+          <div>2024年6月20日</div>
         </div>
       
       
@@ -580,9 +569,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2024/03/31/Incinerate/" title="Incinerate">
+                      <a href="/2024/07/03/%5BAHOI2018%E5%88%9D%E4%B8%AD%E7%BB%84%5D%E5%88%86%E7%BB%84/" title="[AHOI2018初中组] 分组">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Incinerate</span>
+                        <span class="hidden-mobile">[AHOI2018初中组] 分组</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -590,8 +579,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2024/03/14/Go%E6%8E%A5%E5%8F%A3/" title="Go接口">
-                        <span class="hidden-mobile">Go接口</span>
+                      <a href="/2024/06/15/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3C%E8%AF%AD%E8%A8%80%E6%8C%87%E9%92%88/" title="深入理解C语言指针">
+                        <span class="hidden-mobile">深入理解C语言指针</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
