@@ -11,7 +11,7 @@
   <link rel="apple-touch-icon" sizes="76x76" href="/img/kenan.png">
   <link rel="icon" href="/img/kenan.png">
   
-    <link rel="canonical" href="https://serendipity565.github.io/2024/03/11/并查集/"/>
+    <link rel="canonical" href="https://serendipity565.github.io/2024/03/17/Go语言中结构体与json映射/"/>
   
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
@@ -21,29 +21,22 @@
   <meta name="author" content="Serendipity">
   <meta name="keywords" content="Serendipity,Blog">
   
-    <meta name="description" content="什么是并查集 并查集是一种树型的数据结构，用于处理一些不相交集合的合并及查询问题。 并查集的思想是用一个数组表示了整片森林（parent），树的根节点唯一标识了一个集合，我们只要找到了某个元素的的树根，就能确定它在哪个集合里。 并查集支持两种操作：  合并（Union）：把两个不相交的集合合并为一个集合。 查询（Find）：查询两个元素是否在同一个集合中。  适用条件 并查集用在一些有nnn个元素">
+    <meta name="description" content="结构体与JSON之间的互相转化：json.Marshal和json.Unmarshal函数。 Marshal(v any) ([]byte, error)：将v转成json数据，以[]byte的形式返回。 Unmarshal(data []byte, v any) error：将json解析成指定的结构体。 如果转换成功，则该函数会返回nil，表示没有出现任何错误；如果解析失败，则会返回一个非空的">
 <meta property="og:type" content="article">
-<meta property="og:title" content="并查集">
-<meta property="og:url" content="https://serendipity565.github.io/2024/03/11/%E5%B9%B6%E6%9F%A5%E9%9B%86/index.html">
+<meta property="og:title" content="Go语言中结构体与json映射">
+<meta property="og:url" content="https://serendipity565.github.io/2024/03/17/Go%E8%AF%AD%E8%A8%80%E4%B8%AD%E7%BB%93%E6%9E%84%E4%BD%93%E4%B8%8Ejson%E6%98%A0%E5%B0%84/index.html">
 <meta property="og:site_name" content="Serendipity&#39;s Blog">
-<meta property="og:description" content="什么是并查集 并查集是一种树型的数据结构，用于处理一些不相交集合的合并及查询问题。 并查集的思想是用一个数组表示了整片森林（parent），树的根节点唯一标识了一个集合，我们只要找到了某个元素的的树根，就能确定它在哪个集合里。 并查集支持两种操作：  合并（Union）：把两个不相交的集合合并为一个集合。 查询（Find）：查询两个元素是否在同一个集合中。  适用条件 并查集用在一些有nnn个元素">
+<meta property="og:description" content="结构体与JSON之间的互相转化：json.Marshal和json.Unmarshal函数。 Marshal(v any) ([]byte, error)：将v转成json数据，以[]byte的形式返回。 Unmarshal(data []byte, v any) error：将json解析成指定的结构体。 如果转换成功，则该函数会返回nil，表示没有出现任何错误；如果解析失败，则会返回一个非空的">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://serendipity565.github.io/img/blog/bcj/1.png">
-<meta property="og:image" content="https://serendipity565.github.io/img/blog/bcj/2.png">
-<meta property="og:image" content="https://serendipity565.github.io/img/blog/bcj/3.png">
-<meta property="og:image" content="https://serendipity565.github.io/img/blog/bcj/4.png">
-<meta property="og:image" content="https://serendipity565.github.io/img/blog/bcj/5.png">
-<meta property="og:image" content="https://serendipity565.github.io/img/blog/bcj/6.png">
-<meta property="article:published_time" content="2024-03-11T15:23:39.000Z">
-<meta property="article:modified_time" content="2024-09-20T15:51:11.505Z">
+<meta property="article:published_time" content="2024-03-17T09:23:39.000Z">
+<meta property="article:modified_time" content="2024-09-21T10:54:41.982Z">
 <meta property="article:author" content="Serendipity">
-<meta property="article:tag" content="算法">
+<meta property="article:tag" content="Go">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://serendipity565.github.io/img/blog/bcj/1.png">
   
   
   
-  <title>并查集 - Serendipity&#39;s Blog</title>
+  <title>Go语言中结构体与json映射 - Serendipity&#39;s Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -245,7 +238,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="并查集"></span>
+            <span id="subtitle" data-typed-text="Go语言中结构体与json映射"></span>
           
         </div>
 
@@ -261,8 +254,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2024-03-11 23:23" pubdate>
-          2024年3月11日 晚上
+        <time datetime="2024-03-17 17:23" pubdate>
+          2024年3月17日 下午
         </time>
       </span>
     
@@ -273,7 +266,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.1k 字
+          906 字
         
       </span>
     
@@ -284,7 +277,7 @@
         
         
         
-          13 分钟
+          11 分钟
         
       </span>
     
@@ -338,17 +331,17 @@
     
     <div class="category row nomargin-x">
       <a class="category-item 
-          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="算法"
-        id="heading-046a899ee7a6ec88d370211a518c9e80" role="tab" data-toggle="collapse" href="#collapse-046a899ee7a6ec88d370211a518c9e80"
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="开发"
+        id="heading-3ff3c3e26a68112c11c3e80f2a26896e" role="tab" data-toggle="collapse" href="#collapse-3ff3c3e26a68112c11c3e80f2a26896e"
         aria-expanded="true"
       >
-        算法
-        <span class="list-group-count">(25)</span>
+        开发
+        <span class="list-group-count">(13)</span>
         <i class="iconfont icon-arrowright"></i>
       </a>
       
-      <div class="category-collapse collapse show" id="collapse-046a899ee7a6ec88d370211a518c9e80"
-           role="tabpanel" aria-labelledby="heading-046a899ee7a6ec88d370211a518c9e80">
+      <div class="category-collapse collapse show" id="collapse-3ff3c3e26a68112c11c3e80f2a26896e"
+           role="tabpanel" aria-labelledby="heading-3ff3c3e26a68112c11c3e80f2a26896e">
         
         
           
@@ -357,226 +350,118 @@
     
       
       
-        <a href="/2024/04/11/InaccurateSubsequenceSearch/" title="Inaccurate Subsequence Search"
+        <a href="/2024/04/05/GORM%E5%85%A5%E9%97%A8%E6%8C%87%E5%8D%97/" title="GORM入门指南"
            class="list-group-item list-group-item-action
            ">
-          <span class="category-post">Inaccurate Subsequence Search</span>
+          <span class="category-post">GORM入门指南</span>
         </a>
       
     
       
       
-        <a href="/2024/03/31/Incinerate/" title="Incinerate"
+        <a href="/2024/03/13/Git%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/" title="Git使用教程"
            class="list-group-item list-group-item-action
            ">
-          <span class="category-post">Incinerate</span>
+          <span class="category-post">Git使用教程</span>
         </a>
       
     
       
       
-        <a href="/2024/05/11/Mikeandgcdproblem/" title="Mike and gcd problem"
+        <a href="/2024/04/15/Go%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95%E2%80%94%E7%BD%91%E7%BB%9C%E6%B5%8B%E8%AF%95/" title="Go单元测试—网络测试"
            class="list-group-item list-group-item-action
            ">
-          <span class="category-post">Mike and gcd problem</span>
+          <span class="category-post">Go单元测试—网络测试</span>
         </a>
       
     
       
       
-        <a href="/2023/12/05/P1088%5BNOIP2004%20%E6%99%AE%E5%8F%8A%E7%BB%84%5D%E7%81%AB%E6%98%9F%E4%BA%BA/" title="P1088 [NOIP2004 普及组] 火星人"
+        <a href="/2024/03/14/Go%E6%8E%A5%E5%8F%A3/" title="Go接口"
            class="list-group-item list-group-item-action
            ">
-          <span class="category-post">P1088 [NOIP2004 普及组] 火星人</span>
+          <span class="category-post">Go接口</span>
         </a>
       
     
       
       
-        <a href="/2023/11/29/STL/" title="STL"
+        <a href="/2024/03/15/Go%E6%8E%A5%E5%8F%A3%E6%96%AD%E8%A8%80/" title="Go接口断言"
            class="list-group-item list-group-item-action
            ">
-          <span class="category-post">STL</span>
+          <span class="category-post">Go接口断言</span>
         </a>
       
     
       
       
-        <a href="/2024/07/24/Squaring/" title="Squaring"
-           class="list-group-item list-group-item-action
-           ">
-          <span class="category-post">Squaring</span>
-        </a>
-      
-    
-      
-      
-        <a href="/2024/02/04/T422522k%E8%80%A6%E5%90%88/" title="T422522 k耦合"
-           class="list-group-item list-group-item-action
-           ">
-          <span class="category-post">T422522 k耦合</span>
-        </a>
-      
-    
-      
-      
-        <a href="/2024/04/09/UnfairGame/" title="Unfair Game"
-           class="list-group-item list-group-item-action
-           ">
-          <span class="category-post">Unfair Game</span>
-        </a>
-      
-    
-      
-      
-        <a href="/2024/07/03/%5BAHOI2018%E5%88%9D%E4%B8%AD%E7%BB%84%5D%E5%88%86%E7%BB%84/" title="[AHOI2018初中组] 分组"
-           class="list-group-item list-group-item-action
-           ">
-          <span class="category-post">[AHOI2018初中组] 分组</span>
-        </a>
-      
-    
-      
-      
-        <a href="/2024/03/08/mutsumi%E7%9A%84%E6%8E%92%E5%88%97%E8%BF%9E%E9%80%9A/" title="mutsumi的排列连通"
-           class="list-group-item list-group-item-action
-           ">
-          <span class="category-post">mutsumi的排列连通</span>
-        </a>
-      
-    
-      
-      
-        <a href="/2023/12/06/%E5%9B%BE%E5%BD%A2%E7%BB%93%E6%9E%84%E7%AE%97%E6%B3%95/" title="图形结构算法"
-           class="list-group-item list-group-item-action
-           ">
-          <span class="category-post">图形结构算法</span>
-        </a>
-      
-    
-      
-      
-        <a href="/2024/02/13/%E5%A4%A7%E5%B0%8F%E5%86%99%E8%BD%AC%E6%8D%A2/" title="大小写转换"
-           class="list-group-item list-group-item-action
-           ">
-          <span class="category-post">大小写转换</span>
-        </a>
-      
-    
-      
-      
-        <a href="/2024/03/11/%E5%B9%B6%E6%9F%A5%E9%9B%86/" title="并查集"
+        <a href="/2024/03/17/Go%E8%AF%AD%E8%A8%80%E4%B8%AD%E7%BB%93%E6%9E%84%E4%BD%93%E4%B8%8Ejson%E6%98%A0%E5%B0%84/" title="Go语言中结构体与json映射"
            class="list-group-item list-group-item-action
            active">
-          <span class="category-post">并查集</span>
+          <span class="category-post">Go语言中结构体与json映射</span>
         </a>
       
     
       
       
-        <a href="/2023/11/29/%E5%BF%AB%E9%80%9F%E5%B9%82/" title="快速幂"
+        <a href="/2024/01/29/Go%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B/" title="Go语言教程"
            class="list-group-item list-group-item-action
            ">
-          <span class="category-post">快速幂</span>
+          <span class="category-post">Go语言教程</span>
         </a>
       
     
       
       
-        <a href="/2024/07/04/%E6%89%93%E5%AD%97%E7%BB%83%E4%B9%A0/" title="打字练习"
+        <a href="/2024/06/20/Kratos-Realworld/" title="Kratos-Realworld"
            class="list-group-item list-group-item-action
            ">
-          <span class="category-post">打字练习</span>
+          <span class="category-post">Kratos-Realworld</span>
         </a>
       
     
       
       
-        <a href="/2023/11/25/%E6%8B%93%E5%B1%95%E6%AC%A7%E5%87%A0%E9%87%8C%E5%BE%97%E7%AE%97%E6%B3%95/" title="拓展欧几里得算法"
+        <a href="/2024/01/20/Python%E7%88%AC%E8%99%AB/" title="Python爬虫入门"
            class="list-group-item list-group-item-action
            ">
-          <span class="category-post">拓展欧几里得算法</span>
+          <span class="category-post">Python爬虫入门</span>
         </a>
       
     
       
       
-        <a href="/2023/12/02/%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/" title="排序算法"
+        <a href="/2024/04/07/%E5%9C%A8gin%E6%A1%86%E6%9E%B6%E4%B8%AD%E4%BD%BF%E7%94%A8JWT/" title="在gin框架中使用JWT"
            class="list-group-item list-group-item-action
            ">
-          <span class="category-post">排序算法</span>
+          <span class="category-post">在gin框架中使用JWT</span>
         </a>
       
     
       
       
-        <a href="/2024/02/09/%E6%97%B6%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6%E4%B8%8E%E5%AF%B9%E6%8B%8D/" title="时间复杂度与对拍"
+        <a href="/2024/04/30/%E5%BE%AE%E6%9C%8D%E5%8A%A1/" title="微服务"
            class="list-group-item list-group-item-action
            ">
-          <span class="category-post">时间复杂度与对拍</span>
+          <span class="category-post">微服务</span>
         </a>
       
     
       
       
-        <a href="/2024/07/24/%E6%A0%91%E7%8A%B6%E6%95%B0%E7%BB%84/" title="树状数组"
+        <a href="/2024/05/09/%E6%80%8E%E4%B9%88%E7%90%86%E8%A7%A3CAP%E7%90%86%E8%AE%BA/" title="怎么理解CAP理论"
            class="list-group-item list-group-item-action
            ">
-          <span class="category-post">树状数组</span>
+          <span class="category-post">怎么理解CAP理论</span>
         </a>
       
     
       
       
-        <a href="/2023/11/18/%E6%AC%A7%E5%87%A0%E9%87%8C%E5%BE%97%E7%AE%97%E6%B3%95/" title="欧几里得算法"
+        <a href="/2024/06/15/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3C%E8%AF%AD%E8%A8%80%E6%8C%87%E9%92%88/" title="深入理解C语言指针"
            class="list-group-item list-group-item-action
            ">
-          <span class="category-post">欧几里得算法</span>
-        </a>
-      
-    
-      
-      
-        <a href="/2024/02/20/E%E6%BC%82%E4%BA%AE%E6%95%B0%E7%BB%84/" title="漂亮数组"
-           class="list-group-item list-group-item-action
-           ">
-          <span class="category-post">漂亮数组</span>
-        </a>
-      
-    
-      
-      
-        <a href="/2024/07/26/%E7%BA%BF%E6%AE%B5%E6%A0%91/" title="线段树"
-           class="list-group-item list-group-item-action
-           ">
-          <span class="category-post">线段树</span>
-        </a>
-      
-    
-      
-      
-        <a href="/2024/07/16/%E8%83%8C%E5%8C%85%E9%97%AE%E9%A2%98/" title="背包问题"
-           class="list-group-item list-group-item-action
-           ">
-          <span class="category-post">背包问题</span>
-        </a>
-      
-    
-      
-      
-        <a href="/2024/07/04/%E8%AF%BE%E7%A8%8B%E5%AE%89%E6%8E%92/" title="课程安排"
-           class="list-group-item list-group-item-action
-           ">
-          <span class="category-post">课程安排</span>
-        </a>
-      
-    
-      
-      
-        <a href="/2023/11/11/%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95/" title="贪心算法"
-           class="list-group-item list-group-item-action
-           ">
-          <span class="category-post">贪心算法</span>
+          <span class="category-post">深入理解C语言指针</span>
         </a>
       
     
@@ -598,51 +483,51 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">并查集</h1>
+            <h1 id="seo-header">Go语言中结构体与json映射</h1>
             
             
               <div class="markdown-body">
                 
-                <h1>什么是并查集</h1>
-<p>并查集是一种树型的数据结构，用于处理一些不相交集合的合并及查询问题。</p>
-<p>并查集的思想是用一个数组表示了整片森林（parent），树的根节点唯一标识了一个集合，我们只要找到了某个元素的的树根，就能确定它在哪个集合里。</p>
-<p>并查集支持两种操作：</p>
+                <p>结构体与JSON之间的互相转化：json.Marshal和json.Unmarshal函数。</p>
+<p>Marshal(v any) ([]byte, error)：将v转成json数据，以[]byte的形式返回。</p>
+<p>Unmarshal(data []byte, v any) error：将json解析成指定的结构体。</p>
+<p>如果转换成功，则该函数会返回nil，表示没有出现任何错误；如果解析失败，则会返回一个非空的error对象，表示解析过程中发生了错误，具体的错误信息可以通过该error对象获取。</p>
+<h1>struct转json</h1>
+<p>默认情况下，转化后的json中的key值和结构体中的字段名是一样的，如果我们期望转化后的json字段名和struct里的不一样的话，就得用到tag。tag在这里的用途就是提供json结构中的别名，让两者的转化更加灵活。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">package</span> main<br><br><span class="hljs-keyword">import</span> (<br>    <span class="hljs-string">&quot;encoding/json&quot;</span><br>    <span class="hljs-string">&quot;fmt&quot;</span><br>)<br><br><span class="hljs-keyword">type</span> User <span class="hljs-keyword">struct</span> &#123;<br>    Name           <span class="hljs-type">string</span><br>    Age            <span class="hljs-type">int</span><br>    Height         <span class="hljs-type">float64</span><br>    Weight         *<span class="hljs-type">float64</span><br>    marriageStatus <span class="hljs-type">string</span><br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>    weight := <span class="hljs-number">120.0</span><br>    user := User&#123;<br>        Name:           <span class="hljs-string">&quot;serendipity&quot;</span>,<br>        Age:            <span class="hljs-number">21</span>,<br>        Height:         <span class="hljs-number">172</span>,<br>        Weight:         &amp;weight,<br>        marriageStatus: <span class="hljs-string">&quot;未婚&quot;</span>,<br>    &#125;<br>    jsonBytes, err := json.Marshal(user)<br>    <span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;<br>        fmt.Println(<span class="hljs-string">&quot;error: &quot;</span>, err)<br>        <span class="hljs-keyword">return</span><br>    &#125;<br>    fmt.Println(<span class="hljs-type">string</span>(jsonBytes))<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>输出：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs go">&#123;<span class="hljs-string">&quot;Name&quot;</span>:<span class="hljs-string">&quot;serendipity&quot;</span>,<span class="hljs-string">&quot;Age&quot;</span>:<span class="hljs-number">21</span>,<span class="hljs-string">&quot;Height&quot;</span>:<span class="hljs-number">172</span>,<span class="hljs-string">&quot;Weight&quot;</span>:<span class="hljs-number">120</span>&#125;<br></code></pre></td></tr></table></figure>
+<p>上面的代码中，由于marriageStatus是小写开头，属于private字段，不会转换为为json。</p>
+<p>针对JSON的输出，我们在定义struct tag的时候需要注意的几点是：</p>
 <ul>
-<li><strong>合并</strong>（Union）：把两个不相交的集合合并为一个集合。</li>
-<li><strong>查询</strong>（Find）：查询两个元素是否在同一个集合中。</li>
+<li>首字母为小写时，为private字段，不会转换。这也符合Go的语法规定，以小写字母开头的变量或结构体字段等，不能在包外被访问。</li>
+<li>tag中带有自定义名称，那么这个自定义名称会出现在JSON的字段名中</li>
+<li>字段的tag是&quot;-&quot;，那么这个字段不会输出到JSON</li>
+<li>tag中如果带有&quot;omitempty&quot;选项，那么如果该字段值为空，就不会输出到JSON串中，比如 false、0、nil、长度为0的 array、map、slice和string</li>
+<li>如果字段类型是bool, string、int、int64等，而tag中带有&quot;,string&quot;选项，那么这个字段在输出到JSON的时候会把该字段对应的值转换成JSON字符串</li>
 </ul>
-<h1>适用条件</h1>
-<p>并查集用在一些有<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">n</span></span></span></span>个元素的集合应用问题中，我们通常是在开始时让每个元素构成一个单元素的集合，然后按一定顺序将属于同一组的元素所在的集合合并，其间要反复查找一个元素在哪个集合中。这个过程看似并不复杂，但数据量极大，若用其他的数据结构来描述的话，往往在空间上过大，计算机无法承受，也无法在短时间内计算出结果，所以只能用并查集来处理。</p>
-<h1>初始化</h1>
-<p>每一个祖先都是自己。</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-type">int</span> fa[MAXN];<br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">init</span><span class="hljs-params">(<span class="hljs-type">int</span> n)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; ++i)<br>    &#123;<br>        fa[i] = i;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-<h1>查询操作</h1>
-<p>我们用递归的写法实现对代表元素的查询：一层一层的访问父节点，直至根节点（根节点的标志就是父节点是本身）。要判断两个元素是否属于同一个集合，只需要看它们的根节点是否相同即可。</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">find</span><span class="hljs-params">(<span class="hljs-type">int</span> x)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">if</span>(fa[x] == x)<br>        <span class="hljs-keyword">return</span> x;<br>    <span class="hljs-keyword">else</span><br>        <span class="hljs-keyword">return</span> <span class="hljs-built_in">find</span>(fa[x]);<br>&#125;<br></code></pre></td></tr></table></figure>
-<h1>合并操作</h1>
-<p>先找到两个集合的根节点，然后将前者的父节点设为后者即可。当然也可以将后者的父节点设为前者。</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">merge</span><span class="hljs-params">(<span class="hljs-type">int</span> i, <span class="hljs-type">int</span> j)</span></span><br><span class="hljs-function"></span>&#123;<br>    i=<span class="hljs-built_in">find</span>(i);<br>    j=<span class="hljs-built_in">find</span>(j);<br>    <span class="hljs-keyword">if</span> (i!=j)<br>    &#123;<br>        fa[i]=j;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-<p>下面我们举个例子来具体说明这些操作:</p>
-<p>如图一，开始时我们有一些散乱的无连接的点集，我们将其初始化为7个集合，即每个点的根节点均为自己本身。</p>
-<p><img src="/img/blog/bcj/1.png" srcset="/img/loading.gif" lazyload alt="图一"></p>
-<p>接着我查询1，2号是否在同一个集合下，发现不是。接着我们想要将1，2号合并，于是将2号的父节点设为1号；查询4，6号是否在同一个集合下，发现不是，将4，6号合并，将6号的父节点设为4号，如图二。</p>
-<p><img src="/img/blog/bcj/2.png" srcset="/img/loading.gif" lazyload alt="图二"></p>
-<p>接着我分别查询3，5号以及3，7号是否在同一个集合下，发现不是，于是将3，5号、3，7号合并，将5号，7号的父节点设为3号，如图三。</p>
-<p><img src="/img/blog/bcj/3.png" srcset="/img/loading.gif" lazyload alt="图三"></p>
-<p>同理，将3号的父节点设为1号，如图四。</p>
-<p><img src="/img/blog/bcj/4.png" srcset="/img/loading.gif" lazyload alt="图四"></p>
-<h1>路径压缩</h1>
-<p>随着元素的不断加入，集合会变得越来越大，链子也会越来越长，这会对我们的查询操作产生影响，查询的效率降低。我们可以在每次查询的时候将每个经过的结点的父节点设为根节点，下次在查询时就可以节省很多时间。</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">find</span><span class="hljs-params">(<span class="hljs-type">int</span> x)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">if</span> (x==fa[x])<br>    &#123;<br>        <span class="hljs-keyword">return</span> x;<br>    &#125;<br>    <span class="hljs-keyword">else</span><br>    &#123;<br>        fa[x]=<span class="hljs-built_in">find</span>(fa[x]);<br>        <span class="hljs-keyword">return</span> fa[x];<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-<p><img src="/img/blog/bcj/5.png" srcset="/img/loading.gif" lazyload alt="图五"></p>
-<h1>按秩合并</h1>
-<p>针对合并函数merge()，往往有两种合并方式，即把<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>a</mi></mrow><annotation encoding="application/x-tex">a</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">a</span></span></span></span>节点的父节点设为<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>b</mi></mrow><annotation encoding="application/x-tex">b</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal">b</span></span></span></span>和把<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>b</mi></mrow><annotation encoding="application/x-tex">b</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal">b</span></span></span></span>节点的父节点设为<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>a</mi></mrow><annotation encoding="application/x-tex">a</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">a</span></span></span></span>，很显然，两种合并方式的结果并不同，合并后整体的查询效率也不同。如图六，绿色和黄色对应两棵树，图中的第一种合并方式下只有8号的查询需要多一步，而第二种方式下除了8号的所有元素查询都要增加一步。</p>
-<p><img src="/img/blog/bcj/6.png" srcset="/img/loading.gif" lazyload alt="图六"></p>
-<p>因此，我们需要定义一个判断条件：秩。秩可以是很多因素，比如树高，节点个数，等等。不管选择什么作为秩，合并时都最好要遵循启发式合并的原则，即将小的集合合并到大的集合中。下面以秩为树高来举例。</p>
-<h2 id="初始化">初始化</h2>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-type">int</span> rank[<span class="hljs-number">2000</span>]=&#123;<span class="hljs-number">0</span>&#125;;<br><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">init</span><span class="hljs-params">(<span class="hljs-type">int</span> n)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; ++i)<br>    &#123;<br>        fa[i] = i;<br>        rank[i]=<span class="hljs-number">1</span>;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-<h2 id="按秩合并">按秩合并</h2>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">merge</span><span class="hljs-params">(<span class="hljs-type">int</span> i, <span class="hljs-type">int</span> j)</span></span><br><span class="hljs-function"></span>&#123;<br>    i=<span class="hljs-built_in">find</span>(i);<br>    j=<span class="hljs-built_in">find</span>(j);<br>    <span class="hljs-keyword">if</span> (i!=j)<br>    &#123;<br>        <span class="hljs-keyword">if</span> (ra[i]&lt;=ra[j])<br>        &#123;<br>            fa[i]=j;<br>        &#125;<br>        <span class="hljs-keyword">else</span><br>        &#123;<br>            fa[j]=i;<br>        &#125;<br>        <span class="hljs-keyword">if</span> (ra[i]==ra[j])<br>        &#123;<br>            ra[j]++;<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>例如：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">package</span> main<br><br><span class="hljs-keyword">import</span> (<br>    <span class="hljs-string">&quot;encoding/json&quot;</span><br>    <span class="hljs-string">&quot;fmt&quot;</span><br>)<br><br><span class="hljs-keyword">type</span> User <span class="hljs-keyword">struct</span> &#123;<br>    Name           <span class="hljs-type">string</span>  <span class="hljs-string">`json:&quot;name&quot;`</span><br>    Age            <span class="hljs-type">int</span>     <span class="hljs-string">`json:&quot;,string&quot;`</span><br>    Height         <span class="hljs-type">float64</span> <span class="hljs-string">`json:&quot;weight&quot;`</span><br>    MarriageStatus <span class="hljs-type">string</span>  <span class="hljs-string">`json:&quot;-&quot;`</span><br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>    user := User&#123;<br>        Name:           <span class="hljs-string">&quot;serendipity&quot;</span>,<br>        Age:            <span class="hljs-number">21</span>,<br>        Height:         <span class="hljs-number">172</span>,<br>        MarriageStatus: <span class="hljs-string">&quot;未婚&quot;</span>,<br>    &#125;<br>    jsonBytes, err := json.Marshal(user)<br>    <span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;<br>        fmt.Println(<span class="hljs-string">&quot;error: &quot;</span>, err)<br>        <span class="hljs-keyword">return</span><br>    &#125;<br>    fmt.Println(<span class="hljs-type">string</span>(jsonBytes))<br>&#125;<br><br></code></pre></td></tr></table></figure>
+<p>输出：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs go">&#123;<span class="hljs-string">&quot;name&quot;</span>:<span class="hljs-string">&quot;serendipity&quot;</span>,<span class="hljs-string">&quot;Age&quot;</span>:<span class="hljs-string">&quot;21&quot;</span>,<span class="hljs-string">&quot;weight&quot;</span>:<span class="hljs-number">172</span>&#125;<br></code></pre></td></tr></table></figure>
+<p>在这个例子中，我们忽视了MarriageStatus，在输出时将Height在json中改为weight，并且将int类型的age改为了string类型。</p>
+<h1>json转struct</h1>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">package</span> main<br><br><span class="hljs-keyword">import</span> (<br>    <span class="hljs-string">&quot;encoding/json&quot;</span><br>    <span class="hljs-string">&quot;fmt&quot;</span><br>)<br><br><span class="hljs-keyword">type</span> User <span class="hljs-keyword">struct</span> &#123;<br>    Name           <span class="hljs-type">string</span> <span class="hljs-string">`json:&quot;name&quot;`</span><br>    Age            <span class="hljs-type">int</span>    <span class="hljs-string">`json:&quot;age&quot;`</span><br>    Height         <span class="hljs-type">float64</span><br>    Child          <span class="hljs-type">bool</span> <span class="hljs-string">`json:&quot;-&quot;`</span><br>    marriageStatus <span class="hljs-type">string</span><br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>    userStr := <span class="hljs-string">`</span><br><span class="hljs-string">    &#123;</span><br><span class="hljs-string">      &quot;name&quot;: &quot;gopher&quot;,</span><br><span class="hljs-string">      &quot;age&quot;: 18,</span><br><span class="hljs-string">      &quot;height&quot;: 180.5,</span><br><span class="hljs-string">      &quot;child&quot;: true,</span><br><span class="hljs-string">      &quot;marriageStatus&quot;: &quot;未婚&quot;</span><br><span class="hljs-string">    &#125;</span><br><span class="hljs-string">    `</span><br><br>    user := User&#123;&#125;<br>    err := json.Unmarshal([]<span class="hljs-type">byte</span>(userStr), &amp;user)<br>    <span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;<br>        fmt.Println(<span class="hljs-string">&quot;error: &quot;</span>, err)<br>        <span class="hljs-keyword">return</span><br>    &#125;<br>    fmt.Printf(<span class="hljs-string">&quot;%#v\n&quot;</span>, user)<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>输出：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs go">main.User&#123;Name:<span class="hljs-string">&quot;gopher&quot;</span>, Age:<span class="hljs-number">18</span>, Height:<span class="hljs-number">180.5</span>, Child:<span class="hljs-literal">false</span>, marriageStatus:<span class="hljs-string">&quot;&quot;</span>&#125;<br></code></pre></td></tr></table></figure>
+<ul>
+<li>
+<p>使用Unmarshal函数时，我们需要传入结构体的指针类型，否则结构体字段的值将不会被改变，因为底层是通过指针去修改结构体字段的值。</p>
+</li>
+<li>
+<p>json解析时，json的key与结构体字段的匹配规则是：</p>
+<p>1.优先查找json标签值和key一样的，找到则将value赋值给对应字段。</p>
+<p>2.如果没有json标签值与key相匹配，则根据字段名进行匹配。</p>
+</li>
+<li>
+<p>可以发现，如果结构体字段是非导出字段或json标签的值为”-“，将不会匹配。</p>
+</li>
+</ul>
 
                 
               </div>
@@ -661,7 +546,7 @@
     
       <span class="category-chain">
         
-  <a href="/categories/%E7%AE%97%E6%B3%95/" class="category-chain-item">算法</a>
+  <a href="/categories/%E5%BC%80%E5%8F%91/" class="category-chain-item">开发</a>
   
   
 
@@ -676,7 +561,7 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/%E7%AE%97%E6%B3%95/" class="print-no-link">#算法</a>
+        <a href="/tags/Go/" class="print-no-link">#Go</a>
       
     </div>
   
@@ -688,8 +573,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>并查集</div>
-      <div>https://serendipity565.github.io/2024/03/11/并查集/</div>
+      <div>Go语言中结构体与json映射</div>
+      <div>https://serendipity565.github.io/2024/03/17/Go语言中结构体与json映射/</div>
     </div>
     <div class="license-meta">
       
@@ -701,7 +586,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2024年3月11日</div>
+          <div>2024年3月17日</div>
         </div>
       
       
@@ -726,9 +611,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2024/03/13/Git%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/" title="Git使用教程">
+                      <a href="/2024/03/31/Incinerate/" title="Incinerate">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Git使用教程</span>
+                        <span class="hidden-mobile">Incinerate</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -736,8 +621,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2024/03/08/mutsumi%E7%9A%84%E6%8E%92%E5%88%97%E8%BF%9E%E9%80%9A/" title="mutsumi的排列连通">
-                        <span class="hidden-mobile">mutsumi的排列连通</span>
+                      <a href="/2024/03/15/Go%E6%8E%A5%E5%8F%A3%E6%96%AD%E8%A8%80/" title="Go接口断言">
+                        <span class="hidden-mobile">Go接口断言</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
