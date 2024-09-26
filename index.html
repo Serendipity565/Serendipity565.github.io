@@ -264,6 +264,67 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h2 class="index-header">
         
+        <a href="/2024/09/26/Golang%E5%8D%95%E6%9C%BA%E9%94%81/" target="_blank">
+          Golang单机锁
+        </a>
+      </h2>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2024/09/26/Golang%E5%8D%95%E6%9C%BA%E9%94%81/" target="_blank">
+        <div>
+          sync.Mutex 核心机制  通过 Mutex 内一个状态值标识锁的状态，例如，取 0 表示未加锁，1 表示已加锁；  上锁：把 0 改为 1； 解锁：把 1 置为 0. 上锁时，假若已经是 1，则上锁失败，需要等他人解锁，将状态改为 0.    下面首先拎清两个概念：  饥饿模式：当 Mutex 阻塞队列中存在处于饥饿态的 goroutine 时，会进入模式，将抢锁流程由非公平机制转为公平机
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2024-09-26 23:30" pubdate>
+              2024-09-26
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E5%BC%80%E5%8F%91/" class="category-chain-item">开发</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Go/">#Go</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h2 class="index-header">
+        
         <a href="/2024/08/06/trie%E6%A0%91/" target="_blank">
           trie树
         </a>
@@ -800,67 +861,6 @@
             <i class="iconfont icon-tags"></i>
             
               <a href="/tags/%E9%A2%98%E8%A7%A3/">#题解</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h2 class="index-header">
-        
-        <a href="/2024/06/20/Kratos-Realworld/" target="_blank">
-          Kratos-Realworld
-        </a>
-      </h2>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/2024/06/20/Kratos-Realworld/" target="_blank">
-        <div>
-          项目链接： GitHub - serendipity565/Kratos-realworld RealWorld有官方文档，并且有不同语言不同架构的实现。    本项目采用的是Go语言的kratos的微服务模式实现后端服务，Kratos微服务采用的是类似DDD的结构，在Kratos的官方文档有说明，下图是官方文档上的结构说明。  在本项目中，结构结构如下：
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2024-06-20 05:23" pubdate>
-              2024-06-20
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/%E5%BC%80%E5%8F%91/" class="category-chain-item">开发</a>
-  
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/Go/">#Go</a>
             
           </div>
         
