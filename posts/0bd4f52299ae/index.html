@@ -1,0 +1,1063 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/kenan.png">
+  <link rel="icon" href="/img/kenan.png">
+  
+    <link rel="canonical" href="https://serendipity565.github.io/posts/0bd4f52299ae/"/>
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  
+  <meta name="theme-color" content="#bebebe">
+  <meta name="author" content="Serendipity">
+  <meta name="keywords" content="Serendipity,Blog">
+  
+    <meta name="description" content="空接口interface{}没有定义任何函数，因此Golang中所有类型都实现了空接口。当一个函数的形参interface{}，那么在函数中，需要对形参进行断言，从而得到它的真实类型。 在学习接口断言之前，先了解一下类型断言，其实接口断言也是在判断类型。 类型断言 类型断言可以检查i是否为nil或者为某个类型，通常有两中方式 第一种： 1t :&#x3D; i.(T) 这个表达式可以断言一个接口对象i里不是">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Go接口断言">
+<meta property="og:url" content="https://serendipity565.github.io/posts/0bd4f52299ae/">
+<meta property="og:site_name" content="Serendipity&#39;s Blog">
+<meta property="og:description" content="空接口interface{}没有定义任何函数，因此Golang中所有类型都实现了空接口。当一个函数的形参interface{}，那么在函数中，需要对形参进行断言，从而得到它的真实类型。 在学习接口断言之前，先了解一下类型断言，其实接口断言也是在判断类型。 类型断言 类型断言可以检查i是否为nil或者为某个类型，通常有两中方式 第一种： 1t :&#x3D; i.(T) 这个表达式可以断言一个接口对象i里不是">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-03-15T15:23:42.000Z">
+<meta property="article:modified_time" content="2024-09-20T10:18:27.155Z">
+<meta property="article:author" content="Serendipity">
+<meta property="article:tag" content="Go">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+    <meta name="google-site-verification" content="9xWrChT2kQoJRUZVUqRA8m7yN2r9uDuONIVYE6HrTjA" />
+  
+  <title>Go接口断言 - Serendipity&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/KaTeX/0.16.2/katex.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="//cdn.jsdelivr.net/gh/EmoryHuang/BlogBeautify@1.1/scroll.css">
+<link rel="stylesheet" href="/css/test.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"serendipity565.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":7},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":"GG1JTYKMXXAVk1svwXcwLDlE-gzGzoHsz","app_key":"eaWuEy5vj3kI6J1Ut2fFjeUz","server_url":"https://gg1jtykm.lc-cn-n1-shared.com","path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+  
+
+
+
+  
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Serendipity&#39;Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/" target="_self">
+                <i class="iconfont icon-link-fill"></i>
+                <span>友链</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/defbj.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Go接口断言"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-author" aria-hidden="true"></i>
+        Serendipity
+      </span>
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-03-15 23:23" pubdate>
+          2024年3月15日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          1.3k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          17 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="leancloud-page-views-container" class="post-meta" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="leancloud-page-views"></span> 次
+        </span>
+        
+      
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar category-bar" style="margin-right: -1rem">
+    
+
+
+
+
+
+<div class="category-list">
+  
+  
+    
+    
+    
+    <div class="category row nomargin-x">
+      <a class="category-item 
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="开发"
+        id="heading-3ff3c3e26a68112c11c3e80f2a26896e" role="tab" data-toggle="collapse" href="#collapse-3ff3c3e26a68112c11c3e80f2a26896e"
+        aria-expanded="true"
+      >
+        开发
+        <span class="list-group-count">(24)</span>
+        <i class="iconfont icon-arrowright"></i>
+      </a>
+      
+      <div class="category-collapse collapse show" id="collapse-3ff3c3e26a68112c11c3e80f2a26896e"
+           role="tabpanel" aria-labelledby="heading-3ff3c3e26a68112c11c3e80f2a26896e">
+        
+        
+          
+  <div class="category-post-list">
+    
+    
+      
+      
+        <a href="/posts/df5330af32fe/" title="Golang单机锁"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Golang单机锁</span>
+        </a>
+      
+    
+      
+      
+        <a href="/posts/b77d55501ef5/" title="Kratos-Realworld"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Kratos-Realworld</span>
+        </a>
+      
+    
+      
+      
+        <a href="/posts/8751d1c09fb5/" title="深入理解C语言指针"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">深入理解C语言指针</span>
+        </a>
+      
+    
+      
+      
+        <a href="/posts/606e7ceb23d6/" title="怎么理解CAP理论"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">怎么理解CAP理论</span>
+        </a>
+      
+    
+      
+      
+        <a href="/posts/c80046f0aa89/" title="注册中心"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">注册中心</span>
+        </a>
+      
+    
+      
+      
+        <a href="/posts/ed736206f663/" title="怎么样实现微服务"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">怎么样实现微服务</span>
+        </a>
+      
+    
+      
+      
+        <a href="/posts/6a9379e0fa8c/" title="微服务"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">微服务</span>
+        </a>
+      
+    
+      
+      
+        <a href="/posts/5b80996f595f/" title="Go操作Kafka"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Go操作Kafka</span>
+        </a>
+      
+    
+      
+      
+        <a href="/posts/e687b6bd04e0/" title="Go语言操作Redis"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Go语言操作Redis</span>
+        </a>
+      
+    
+      
+      
+        <a href="/posts/33f50be21ce6/" title="Go单元测试—网络测试"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Go单元测试—网络测试</span>
+        </a>
+      
+    
+      
+      
+        <a href="/posts/4ed0fa7f9aed/" title="Go单元测试基础"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Go单元测试基础</span>
+        </a>
+      
+    
+      
+      
+        <a href="/posts/de25b4b5540f/" title="在gin框架中使用JWT"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">在gin框架中使用JWT</span>
+        </a>
+      
+    
+      
+      
+        <a href="/posts/a8f09b2b7142/" title="GORM入门指南"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">GORM入门指南</span>
+        </a>
+      
+    
+      
+      
+        <a href="/posts/b835ed5d636b/" title="Gin框架介绍及使用"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Gin框架介绍及使用</span>
+        </a>
+      
+    
+      
+      
+        <a href="/posts/fa8e18e8a03b/" title="Go语言并发"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Go语言并发</span>
+        </a>
+      
+    
+      
+      
+        <a href="/posts/b7e1fe555133/" title="Go语言实战数据库"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Go语言实战数据库</span>
+        </a>
+      
+    
+      
+      
+        <a href="/posts/d3de8634e6f0/" title="SQL使用教程"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">SQL使用教程</span>
+        </a>
+      
+    
+      
+      
+        <a href="/posts/a36bf7c764d1/" title="Go语言net/http"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Go语言net/http</span>
+        </a>
+      
+    
+      
+      
+        <a href="/posts/64e658c2bbeb/" title="Go语言中结构体与json映射"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Go语言中结构体与json映射</span>
+        </a>
+      
+    
+      
+      
+        <a href="/posts/0bd4f52299ae/" title="Go接口断言"
+           class="list-group-item list-group-item-action
+           active">
+          <span class="category-post">Go接口断言</span>
+        </a>
+      
+    
+      
+      
+        <a href="/posts/19f5700394bf/" title="Go接口"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Go接口</span>
+        </a>
+      
+    
+      
+      
+        <a href="/posts/b5bfdfa6aa51/" title="Git使用教程"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Git使用教程</span>
+        </a>
+      
+    
+      
+      
+        <a href="/posts/226f1493c53f/" title="Go语言教程"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Go语言教程</span>
+        </a>
+      
+    
+      
+      
+        <a href="/posts/f661c78e1ce2/" title="Python爬虫入门"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Python爬虫入门</span>
+        </a>
+      
+    
+  </div>
+
+        
+      </div>
+    </div>
+  
+</div>
+
+
+  </aside>
+
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">Go接口断言</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p>空接口interface{}没有定义任何函数，因此Golang中所有类型都实现了空接口。当一个函数的形参interface{}，那么在函数中，需要对形参进行断言，从而得到它的真实类型。</p>
+<p>在学习接口断言之前，先了解一下类型断言，其实接口断言也是在判断类型。</p>
+<h1>类型断言</h1>
+<p>类型断言可以检查i是否为nil或者为某个类型，通常有两中方式</p>
+<p>第一种：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs go">t := i.(T)<br></code></pre></td></tr></table></figure>
+<p>这个表达式可以断言一个接口对象i里不是nil，并且接口对象i存储的值的类型是T，如果断言成功，就会返回值给t，如果断言失败，就会触发 panic。这个方式常用于 switch 结构。</p>
+<p>第二种：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs go">t, ok:= i.(T)<br></code></pre></td></tr></table></figure>
+<p>这个表达式也是可以断言一个接口对象t里不是nil，并且接口对象t存储的值的类型是T，如果断言成功，就会返回其类型给t，并且此时ok的值为true，表示断言成功。</p>
+<p>如果接口值的类型，并不是我们所断言的T，就会断言失败，但和第一种表达式不同的事，这个不会触发panic，而是将ok的值设为false，表示断言失败，此时t为T的零值。这几种方式常用于if else结构。</p>
+<h1>接口断言</h1>
+<h2 id="if-else结构接口断言">if else结构接口断言</h2>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">package</span> main<br><br><span class="hljs-keyword">import</span> (<br>    <span class="hljs-string">&quot;fmt&quot;</span><br>    <span class="hljs-string">&quot;math&quot;</span><br>)<br><br><span class="hljs-comment">// 定义了一个shape接口</span><br><span class="hljs-keyword">type</span> shape <span class="hljs-keyword">interface</span> &#123;<br>    area() <span class="hljs-type">float64</span><br>    peri() <span class="hljs-type">float64</span><br>&#125;<br><br><span class="hljs-comment">// 定义一个圆形结构体</span><br><span class="hljs-keyword">type</span> circle <span class="hljs-keyword">struct</span> &#123;<br>    r <span class="hljs-type">float64</span><br>&#125;<br><br><span class="hljs-comment">// 定义一个三角形结构体</span><br><span class="hljs-keyword">type</span> triangle <span class="hljs-keyword">struct</span> &#123;<br>    a <span class="hljs-type">float64</span><br>    b <span class="hljs-type">float64</span><br>    c <span class="hljs-type">float64</span><br>&#125;<br><br><span class="hljs-comment">// 圆形接口实现放法</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(c circle)</span></span> area() <span class="hljs-type">float64</span> &#123;<br>    <span class="hljs-keyword">return</span> c.r * c.r * math.Pi<br>&#125;<br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(c circle)</span></span> peri() <span class="hljs-type">float64</span> &#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">2</span> * c.r * math.Pi<br>&#125;<br><br><span class="hljs-comment">// 三角形接口实现方法</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(t triangle)</span></span> peri() <span class="hljs-type">float64</span> &#123;<br>    <span class="hljs-keyword">return</span> t.a + t.b + t.c<br>&#125;<br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(t triangle)</span></span> area() <span class="hljs-type">float64</span> &#123;<br>    p := (t.a + t.b + t.c) / <span class="hljs-number">2</span><br>    <span class="hljs-keyword">return</span> math.Sqrt(p * (p - t.a) * (p - t.b) * (p - t.c))<br>&#125;<br><br><span class="hljs-comment">// 定义断言函数</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">check</span><span class="hljs-params">(s shape)</span></span> &#123;<br>    <span class="hljs-keyword">if</span> i, ok := s.(triangle); ok &#123;<br>        fmt.Printf(<span class="hljs-string">&quot;是三角形，三条边分别为：%f %f %f \n&quot;</span>, i.a, i.b, i.c)<br>    &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> i, ok := s.(circle); ok &#123;<br>        fmt.Printf(<span class="hljs-string">&quot;是圆形，半径为：%f \n&quot;</span>, i.r)<br>    &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> i, ok := s.(*circle); ok &#123;<br>        fmt.Printf(<span class="hljs-string">&quot;是圆形结构体指针，类型为：%T,存储的地址为：%p，指针自身的地址为：%p\n&quot;</span>, i, &amp;i, i)<br>    &#125; <span class="hljs-keyword">else</span> &#123;<br>        fmt.Printf(<span class="hljs-string">&quot;无法判断类型&quot;</span>)<br>    &#125;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>    <span class="hljs-comment">//初始化圆形结构体</span><br>    c1 := circle&#123;r: <span class="hljs-number">5.0</span>&#125;<br>    fmt.Printf(<span class="hljs-string">&quot;\n&quot;</span>)<br>    fmt.Printf(<span class="hljs-string">&quot;下面是圆形结构体：\n&quot;</span>)<br>    fmt.Printf(<span class="hljs-string">&quot;圆的周长为：%f \n&quot;</span>, c1.peri())<br>    fmt.Printf(<span class="hljs-string">&quot;圆的面积为：%f \n&quot;</span>, c1.area())<br><br>    <span class="hljs-comment">//初始化三角形结构体</span><br>    t1 := triangle&#123;a: <span class="hljs-number">2</span>, b: <span class="hljs-number">3</span>, c: <span class="hljs-number">4</span>&#125;<br>    fmt.Printf(<span class="hljs-string">&quot;\n&quot;</span>)<br>    fmt.Printf(<span class="hljs-string">&quot;下面是三角形结构体：\n&quot;</span>)<br>    fmt.Printf(<span class="hljs-string">&quot;三角形的周长为：%f \n&quot;</span>, t1.peri())<br>    fmt.Printf(<span class="hljs-string">&quot;三角形的面积为: %f \n&quot;</span>, t1.area())<br><br>    <span class="hljs-comment">//圆形结构体指针</span><br>    <span class="hljs-keyword">var</span> c2 *circle = &amp;circle&#123;r: <span class="hljs-number">10.0</span>&#125;<br>    fmt.Printf(<span class="hljs-string">&quot;\n&quot;</span>)<br>    fmt.Printf(<span class="hljs-string">&quot;下面是圆形结构体指针：\n&quot;</span>)<br>    fmt.Printf(<span class="hljs-string">&quot;圆的周长为：%f \n&quot;</span>, c2.peri())<br>    fmt.Printf(<span class="hljs-string">&quot;圆的面积为：%f \n&quot;</span>, c2.area())<br><br>    <span class="hljs-comment">//开始接口断言</span><br>    fmt.Printf(<span class="hljs-string">&quot;\n&quot;</span>)<br>    fmt.Printf(<span class="hljs-string">&quot;开始接口断言：\n&quot;</span>)<br>    fmt.Printf(<span class="hljs-string">&quot;c1是&quot;</span>)<br>    check(c1)<br>    fmt.Printf(<span class="hljs-string">&quot;t1是&quot;</span>)<br>    check(t1)<br>    fmt.Printf(<span class="hljs-string">&quot;c2是&quot;</span>)<br>    check(c2)<br>&#125;<br><br></code></pre></td></tr></table></figure>
+<p>输出：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs go">下面是圆形结构体：<br>圆的周长为：<span class="hljs-number">31.415927</span> <br>圆的面积为：<span class="hljs-number">78.539816</span> <br><br>下面是三角形结构体：<br>三角形的周长为：<span class="hljs-number">9.000000</span><br>三角形的面积为: <span class="hljs-number">2.904738</span><br><br>下面是圆形结构体指针：<br>圆的周长为：<span class="hljs-number">62.831853</span><br>圆的面积为：<span class="hljs-number">314.159265</span><br><br>开始接口断言：<br>c1是是圆形，半径为：<span class="hljs-number">5.000000</span><br>t1是是三角形，三条边分别为：<span class="hljs-number">2.000000</span> <span class="hljs-number">3.000000</span> <span class="hljs-number">4.000000</span><br>c2是是圆形结构体指针，类型为：*main.circle,存储的地址为：<span class="hljs-number">0xc000122020</span>，指针自身的地址为：<span class="hljs-number">0xc0001100b8</span><br></code></pre></td></tr></table></figure>
+<p>可以看到，我们的断言成功了。</p>
+<h2 id="switch结构接口断言">switch结构接口断言</h2>
+<p>断言其实还有另一种形式，就是用在利用switch语句判断接口的类型。</p>
+<p>每一个case会被顺序地考虑。当命中一个case时，就会执行case中的语句，因此case语句的顺序是很重要的，因为很有可能会有多个case匹配的情况。</p>
+<p>我们再封装一个switch逻辑的接口断言函数，逻辑和之前的一模一样，只是条件语句换成了switch…case：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-comment">// 使用 switch定义接口断言函数</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">check</span><span class="hljs-params">(s shape)</span></span> &#123;<br>    <span class="hljs-keyword">switch</span> i := s.(<span class="hljs-keyword">type</span>) &#123;<br>    <span class="hljs-keyword">case</span> circle:<br>        fmt.Printf(<span class="hljs-string">&quot;是圆形，半径为：%f \n&quot;</span>, i.r)<br>    <span class="hljs-keyword">case</span> triangle:<br>        fmt.Printf(<span class="hljs-string">&quot;是三角形，三条边分别为：%f %f %f \n&quot;</span>, i.a, i.b, i.c)<br>    <span class="hljs-keyword">case</span> *circle:<br>        fmt.Printf(<span class="hljs-string">&quot;是圆形结构体指针，类型为：%T,存储的地址为：%p，指针自身的地址为：%p\n&quot;</span>, i, &amp;i, i)<br>    <span class="hljs-keyword">default</span>:<br>        fmt.Printf(<span class="hljs-string">&quot;无法判断类型&quot;</span>)<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>输出：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs go">开始接口断言：<br>c1是是圆形，半径为：<span class="hljs-number">5.000000</span><br>t1是是三角形，三条边分别为：<span class="hljs-number">2.000000</span> <span class="hljs-number">3.000000</span> <span class="hljs-number">4.000000</span><br>c2是是圆形结构体指针，类型为：*main.circle,存储的地址为：<span class="hljs-number">0xc00008a028</span>，指针自身的地址为：<span class="hljs-number">0xc00000a118</span><br></code></pre></td></tr></table></figure>
+<p>可以看到switch断言也正常输出了。</p>
+<p>下面附上源代码：</p>
+<p><a href="/img/blog/jieko/check/test.go">test.go</a></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E5%BC%80%E5%8F%91/" class="category-chain-item">开发</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Go/" class="print-no-link">#Go</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Go接口断言</div>
+      <div>https://serendipity565.github.io/posts/0bd4f52299ae/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Serendipity</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2024年3月15日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              BY-SERENDIPITY565
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/posts/64e658c2bbeb/" title="Go语言中结构体与json映射">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Go语言中结构体与json映射</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/posts/19f5700394bf/" title="Go接口">
+                        <span class="hidden-mobile">Go接口</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+    <div id="giscus" class="giscus"></div>
+    <script type="text/javascript">
+      Fluid.utils.loadComments('#giscus', function() {
+        var options = {"repo":"Serendipity565/BlogComment","repo-id":"R_kgDOMwk0XQ","category":"Announcements","category-id":"DIC_kwDOMwk0Xc4CiZ44","theme-light":"light","theme-dark":"dark","mapping":"pathname","reactions-enabled":1,"emit-metadata":0,"input-position":"top","lang":"zh-CN"};
+        var attributes = {};
+        for (let option in options) {
+          if (!option.startsWith('theme-')) {
+            var key = option.startsWith('data-') ? option : 'data-' + option;
+            attributes[key] = options[option];
+          }
+        }
+        var light = 'light';
+        var dark = 'dark';
+        window.GiscusThemeLight = light;
+        window.GiscusThemeDark = dark;
+        attributes['data-theme'] = document.documentElement.getAttribute('data-user-color-scheme') === 'dark' ? dark : light;
+        for (let attribute in attributes) {
+          var value = attributes[attribute];
+          if (value === undefined || value === null || value === '') {
+            delete attributes[attribute];
+          }
+        }
+        var s = document.createElement('script');
+        s.setAttribute('src', 'https://giscus.app/client.js');
+        s.setAttribute('crossorigin', 'anonymous');
+        for (let attribute in attributes) {
+          s.setAttribute(attribute, attributes[attribute]);
+        }
+        var ss = document.getElementsByTagName('script');
+        var e = ss.length > 0 ? ss[ss.length - 1] : document.head || document.documentElement;
+        e.parentNode.insertBefore(s, e.nextSibling);
+      });
+    </script>
+    <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> content: <div> <span id="timeDate">载入天数...</span> <span id="times">载入时分秒...</span> <script src="/js/duration.js"></script> </div> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="leancloud-site-pv-container" style="display: none">
+        总访问量 
+        <span id="leancloud-site-pv"></span>
+         次
+      </span>
+    
+    
+      <span id="leancloud-site-uv-container" style="display: none">
+        总访客数 
+        <span id="leancloud-site-uv"></span>
+         人
+      </span>
+    
+    
+
+  
+
+</div>
+
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script defer src="/js/leancloud.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+  
+<script src="//cdn.jsdelivr.net/gh/EmoryHuang/BlogBeautify@1.1/DynamicLine.js"></script>
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/wanko.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"react":{"opacity":0.7},"log":false});</script></body>
+</html>
