@@ -1,0 +1,1057 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/kenan.png">
+  <link rel="icon" href="/img/kenan.png">
+  
+    <link rel="canonical" href="https://serendipity565.github.io/2024/01/20/f661c78e1ce2/"/>
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  
+  <meta name="theme-color" content="#bebebe">
+  <meta name="author" content="Serendipity">
+  <meta name="keywords" content="Serendipity,Blog">
+  
+    <meta name="description" content="HTTP网页结构 一个网页有三大技术要素，分别为HTML，CSS和JavaScript，其中HTML定义了网页的结构和信息，CSS定义网页的样式，JavaScript定义用户和网页的交互逻辑。其中我们爬虫最关心的就是HTML。 1234567&lt;!DOCTYPE html&gt;&lt;html&gt;    &lt;body&gt;        &lt;h1&gt;这是一个一级标题&lt;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python爬虫入门">
+<meta property="og:url" content="https://serendipity565.github.io/2024/01/20/f661c78e1ce2/">
+<meta property="og:site_name" content="Serendipity&#39;s Blog">
+<meta property="og:description" content="HTTP网页结构 一个网页有三大技术要素，分别为HTML，CSS和JavaScript，其中HTML定义了网页的结构和信息，CSS定义网页的样式，JavaScript定义用户和网页的交互逻辑。其中我们爬虫最关心的就是HTML。 1234567&lt;!DOCTYPE html&gt;&lt;html&gt;    &lt;body&gt;        &lt;h1&gt;这是一个一级标题&lt;">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://serendipity565.github.io/img/blog/pypc/1.png">
+<meta property="og:image" content="https://serendipity565.github.io/img/blog/pypc/2.png">
+<meta property="article:published_time" content="2024-01-20T12:01:21.000Z">
+<meta property="article:modified_time" content="2024-10-10T06:02:28.542Z">
+<meta property="article:author" content="Serendipity">
+<meta property="article:tag" content="Python">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://serendipity565.github.io/img/blog/pypc/1.png">
+  
+  
+  
+    <meta name="google-site-verification" content="9xWrChT2kQoJRUZVUqRA8m7yN2r9uDuONIVYE6HrTjA" />
+  
+  <title>Python爬虫入门 - Serendipity&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/KaTeX/0.16.2/katex.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="//cdn.jsdelivr.net/gh/EmoryHuang/BlogBeautify@1.1/scroll.css">
+<link rel="stylesheet" href="/css/test.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"serendipity565.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":7},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":"GG1JTYKMXXAVk1svwXcwLDlE-gzGzoHsz","app_key":"eaWuEy5vj3kI6J1Ut2fFjeUz","server_url":"https://gg1jtykm.lc-cn-n1-shared.com","path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+  
+
+
+
+  
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Serendipity&#39;Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/" target="_self">
+                <i class="iconfont icon-link-fill"></i>
+                <span>友链</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/defbj.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Python爬虫入门"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-author" aria-hidden="true"></i>
+        Serendipity
+      </span>
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-01-20 20:01" pubdate>
+          2024年1月20日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          906 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          12 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="leancloud-page-views-container" class="post-meta" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="leancloud-page-views"></span> 次
+        </span>
+        
+      
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar category-bar" style="margin-right: -1rem">
+    
+
+
+
+
+
+<div class="category-list">
+  
+  
+    
+    
+    
+    <div class="category row nomargin-x">
+      <a class="category-item 
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="开发"
+        id="heading-3ff3c3e26a68112c11c3e80f2a26896e" role="tab" data-toggle="collapse" href="#collapse-3ff3c3e26a68112c11c3e80f2a26896e"
+        aria-expanded="true"
+      >
+        开发
+        <span class="list-group-count">(24)</span>
+        <i class="iconfont icon-arrowright"></i>
+      </a>
+      
+      <div class="category-collapse collapse show" id="collapse-3ff3c3e26a68112c11c3e80f2a26896e"
+           role="tabpanel" aria-labelledby="heading-3ff3c3e26a68112c11c3e80f2a26896e">
+        
+        
+          
+  <div class="category-post-list">
+    
+    
+      
+      
+        <a href="/2024/09/26/df5330af32fe/" title="Golang单机锁"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Golang单机锁</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2024/06/20/b77d55501ef5/" title="Kratos-Realworld"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Kratos-Realworld</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2024/06/15/8751d1c09fb5/" title="深入理解C语言指针"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">深入理解C语言指针</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2024/05/09/606e7ceb23d6/" title="怎么理解CAP理论"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">怎么理解CAP理论</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2024/05/09/c80046f0aa89/" title="注册中心"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">注册中心</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2024/05/06/ed736206f663/" title="怎么样实现微服务"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">怎么样实现微服务</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2024/04/30/6a9379e0fa8c/" title="微服务"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">微服务</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2024/04/20/5b80996f595f/" title="Go操作Kafka"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Go操作Kafka</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2024/04/17/e687b6bd04e0/" title="Go语言操作Redis"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Go语言操作Redis</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2024/04/15/33f50be21ce6/" title="Go单元测试—网络测试"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Go单元测试—网络测试</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2024/04/12/4ed0fa7f9aed/" title="Go单元测试基础"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Go单元测试基础</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2024/04/07/de25b4b5540f/" title="在gin框架中使用JWT"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">在gin框架中使用JWT</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2024/04/05/a8f09b2b7142/" title="GORM入门指南"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">GORM入门指南</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2024/04/01/b835ed5d636b/" title="Gin框架介绍及使用"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Gin框架介绍及使用</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2024/03/30/fa8e18e8a03b/" title="Go语言并发"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Go语言并发</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2024/03/23/b7e1fe555133/" title="Go语言实战数据库"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Go语言实战数据库</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2024/03/20/d3de8634e6f0/" title="SQL使用教程"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">SQL使用教程</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2024/03/19/a36bf7c764d1/" title="Go语言net/http"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Go语言net/http</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2024/03/17/64e658c2bbeb/" title="Go语言中结构体与json映射"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Go语言中结构体与json映射</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2024/03/15/0bd4f52299ae/" title="Go接口断言"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Go接口断言</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2024/03/14/19f5700394bf/" title="Go接口"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Go接口</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2024/03/13/b5bfdfa6aa51/" title="Git使用教程"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Git使用教程</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2024/01/29/226f1493c53f/" title="Go语言教程"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Go语言教程</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2024/01/20/f661c78e1ce2/" title="Python爬虫入门"
+           class="list-group-item list-group-item-action
+           active">
+          <span class="category-post">Python爬虫入门</span>
+        </a>
+      
+    
+  </div>
+
+        
+      </div>
+    </div>
+  
+</div>
+
+
+  </aside>
+
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">Python爬虫入门</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1>HTTP网页结构</h1>
+<p>一个网页有三大技术要素，分别为HTML，CSS和JavaScript，其中HTML定义了网页的结构和信息，CSS定义网页的样式，JavaScript定义用户和网页的交互逻辑。其中我们爬虫最关心的就是HTML。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-meta">&lt;!DOCTYPE <span class="hljs-keyword">html</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">html</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">h1</span>&gt;</span>这是一个一级标题<span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>这是一段文字这是一段文字这是一段文字<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">html</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<h1>HTTP请求和响应</h1>
+<p>HTTP请求的方法类型主要的有两种，GET方法和POST方法，其中前者用于获得数据，后者用于创建数据（例如注册账号时提交数据）。</p>
+<p>一个完整的HTTP请求包括请求行，请求头和请求体。请求行会包含方法类型，资源路径（查询参数）和协议版本。请求头包含Host（主机域名），User-Agent（服务器客户端相关信息）和Accept（客户端像接收的数据，接收多种数据类型可以用逗号进行分割；*/*则表示任意数据类型）。请求体可以放客户端传给服务器的任意数据，但是GET方法的请求体一般是空的。</p>
+<p><img src="/img/blog/pypc/1.png" srcset="/img/loading.gif" lazyload alt=""></p>
+<p>HTTP响应也由三个部分组成，分别是状态行，响应头和响应体。状态行还包含协议版本，状态码和状态消息，状态码和状态消息一一对应：状态码2开头表示成功，，请求已处理完成；3开头表示表示重定向，需要进一步的操作；4开头表示客户端错误，比如请求里面有错误，或者请求的资源无效，等等；5开头表示服务器错误，比如出现问题或者正在维护。响应头会包含一些告知客户端的信息，比如Date：生产响应的日期和时间；Content-Type：返回内容的类型及编码格式。响应体就是服务器想给客户端的数据内容，通常与Content-Type的类型相对应。</p>
+<p><img src="/img/blog/pypc/2.png" srcset="/img/loading.gif" lazyload alt=""></p>
+<h1><strong>requests 模块</strong></h1>
+<p>Python requests 是一个常用的 HTTP 请求库，可以方便地向网站发送 HTTP 请求，并获取响应结果。requests 模块比urllib模块更简洁。</p>
+<p>使用 requests 发送 HTTP 请求需要先导入 requests 模块。导入后就可以发送 HTTP 请求，使用 requests 提供的方法向指定 URL 发送 HTTP 请求。</p>
+<p>我们使用requests函数时的User-Agent时自动生成的，服务器可以轻松的分辨出是否是浏览器发出的请求，不过我们可以通过手动传入一个headers的参数帮我们模拟出浏览器发出的请求。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> requests<br><br>head = &#123;<span class="hljs-string">&quot;User-Agent&quot;</span>: <span class="hljs-string">&quot;Mozilla/5.0 (Windows NT 10.0; Win64; X64)&quot;</span>&#125;<br>response = requests.get(<span class="hljs-string">&quot;https://www.baidu.com/&quot;</span>, headers=head)<br><span class="hljs-keyword">if</span> response.ok:  <span class="hljs-comment"># 或者用response.status_code&gt;=200 and response.status_code&lt;400</span><br>    <span class="hljs-built_in">print</span>(response.text)<br><span class="hljs-keyword">else</span>:<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;请求失败&quot;</span>)<br></code></pre></td></tr></table></figure>
+<h1>Beautiful Soup 模块</h1>
+<p>爬到了网页信息之后，我们要提取出我们想要的不分，Beautiful Soup 可以帮我们解析网页内容Beautiful Soup自动将输入文档转换为Unicode编码，输出文档转换为utf-8编码。你不需要考虑编码方式，除非文档没有指定一个编码方式。</p>
+<p>例如用requests和Beautiful Soup爬取豆瓣电影前250名单:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> requests<br><span class="hljs-keyword">from</span> bs4 <span class="hljs-keyword">import</span> BeautifulSoup<br><br>head = &#123;<span class="hljs-string">&quot;User-Agent&quot;</span>: <span class="hljs-string">&quot;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36&quot;</span>&#125;<br><span class="hljs-keyword">for</span> start_num <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">0</span>,<span class="hljs-number">250</span>,<span class="hljs-number">25</span>):<br>    response = requests.get(<span class="hljs-string">f&quot;https://movie.douban.com/top250?start=<span class="hljs-subst">&#123;start_num&#125;</span>&quot;</span>, headers=head)<br>    html=response.text<br>    soup=BeautifulSoup(html,<span class="hljs-string">&quot;html.parser&quot;</span>)<br>    all_title=soup.find_all(<span class="hljs-string">&quot;span&quot;</span>,attrs=&#123;<span class="hljs-string">&quot;class&quot;</span>:<span class="hljs-string">&quot;title&quot;</span>&#125;)<br>    <span class="hljs-keyword">for</span> title <span class="hljs-keyword">in</span> all_title:<br>        title_string=title.string<br>        <span class="hljs-keyword">if</span> <span class="hljs-string">&quot;/&quot;</span> <span class="hljs-keyword">not</span> <span class="hljs-keyword">in</span> title_string:<br>            <span class="hljs-built_in">print</span>(title_string)<br></code></pre></td></tr></table></figure>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E5%BC%80%E5%8F%91/" class="category-chain-item">开发</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Python/" class="print-no-link">#Python</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Python爬虫入门</div>
+      <div>https://serendipity565.github.io/2024/01/20/f661c78e1ce2/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Serendipity</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2024年1月20日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              BY-SERENDIPITY565
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2024/01/29/226f1493c53f/" title="Go语言教程">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Go语言教程</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/12/06/6038f81a7dc7/" title="图形结构算法">
+                        <span class="hidden-mobile">图形结构算法</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+    <div id="giscus" class="giscus"></div>
+    <script type="text/javascript">
+      Fluid.utils.loadComments('#giscus', function() {
+        var options = {"repo":"Serendipity565/BlogComment","repo-id":"R_kgDOMwk0XQ","category":"Announcements","category-id":"DIC_kwDOMwk0Xc4CiZ44","theme-light":"light","theme-dark":"dark","mapping":"pathname","reactions-enabled":1,"emit-metadata":0,"input-position":"top","lang":"zh-CN"};
+        var attributes = {};
+        for (let option in options) {
+          if (!option.startsWith('theme-')) {
+            var key = option.startsWith('data-') ? option : 'data-' + option;
+            attributes[key] = options[option];
+          }
+        }
+        var light = 'light';
+        var dark = 'dark';
+        window.GiscusThemeLight = light;
+        window.GiscusThemeDark = dark;
+        attributes['data-theme'] = document.documentElement.getAttribute('data-user-color-scheme') === 'dark' ? dark : light;
+        for (let attribute in attributes) {
+          var value = attributes[attribute];
+          if (value === undefined || value === null || value === '') {
+            delete attributes[attribute];
+          }
+        }
+        var s = document.createElement('script');
+        s.setAttribute('src', 'https://giscus.app/client.js');
+        s.setAttribute('crossorigin', 'anonymous');
+        for (let attribute in attributes) {
+          s.setAttribute(attribute, attributes[attribute]);
+        }
+        var ss = document.getElementsByTagName('script');
+        var e = ss.length > 0 ? ss[ss.length - 1] : document.head || document.documentElement;
+        e.parentNode.insertBefore(s, e.nextSibling);
+      });
+    </script>
+    <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> content: <div> <span id="timeDate">载入天数...</span> <span id="times">载入时分秒...</span> <script src="/js/duration.js"></script> </div> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="leancloud-site-pv-container" style="display: none">
+        总访问量 
+        <span id="leancloud-site-pv"></span>
+         次
+      </span>
+    
+    
+      <span id="leancloud-site-uv-container" style="display: none">
+        总访客数 
+        <span id="leancloud-site-uv"></span>
+         人
+      </span>
+    
+    
+
+  
+
+</div>
+
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script defer src="/js/leancloud.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+  
+<script src="//cdn.jsdelivr.net/gh/EmoryHuang/BlogBeautify@1.1/DynamicLine.js"></script>
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/wanko.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"react":{"opacity":0.7},"log":false});</script></body>
+</html>
