@@ -25,7 +25,7 @@
   
     <meta name="description" content="SQL (Structured Query Language:结构化查询语言) 是用于管理关系数据库管理系统（RDBMS）。 SQL 的范围包括数据插入、查询、更新和删除，数据库模式创建和修改，以及数据访问控制。 注意：MySQL 在Windows和MacOS系统下不区分大小写，但在Linux 系统下默认区分大小写。但是为了方便使用，我们一般会将关键字全部大写。 创建 创建数据库：CREATE D">
 <meta property="og:type" content="article">
-<meta property="og:title" content="SQL使用教程">
+<meta property="og:title" content="MySql使用教程">
 <meta property="og:url" content="https://serendipity565.github.io/posts/d3de8634e6f0/">
 <meta property="og:site_name" content="Serendipity&#39;s Blog">
 <meta property="og:description" content="SQL (Structured Query Language:结构化查询语言) 是用于管理关系数据库管理系统（RDBMS）。 SQL 的范围包括数据插入、查询、更新和删除，数据库模式创建和修改，以及数据访问控制。 注意：MySQL 在Windows和MacOS系统下不区分大小写，但在Linux 系统下默认区分大小写。但是为了方便使用，我们一般会将关键字全部大写。 创建 创建数据库：CREATE D">
@@ -38,9 +38,9 @@
 <meta property="og:image" content="https://serendipity565.github.io/img/blog/SQL/6.png">
 <meta property="og:image" content="https://serendipity565.github.io/img/blog/SQL/7.png">
 <meta property="article:published_time" content="2024-03-20T13:23:03.000Z">
-<meta property="article:modified_time" content="2024-10-10T06:02:28.544Z">
+<meta property="article:modified_time" content="2024-10-31T08:33:54.783Z">
 <meta property="article:author" content="Serendipity">
-<meta property="article:tag" content="SQL">
+<meta property="article:tag" content="MySql">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://serendipity565.github.io/img/blog/SQL/1.png">
   
@@ -48,7 +48,7 @@
   
     <meta name="google-site-verification" content="9xWrChT2kQoJRUZVUqRA8m7yN2r9uDuONIVYE6HrTjA" />
   
-  <title>SQL使用教程 - Serendipity&#39;s Blog</title>
+  <title>MySql使用教程 - Serendipity&#39;s Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -250,7 +250,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="SQL使用教程"></span>
+            <span id="subtitle" data-typed-text="MySql使用教程"></span>
           
         </div>
 
@@ -348,7 +348,7 @@
         aria-expanded="true"
       >
         开发
-        <span class="list-group-count">(25)</span>
+        <span class="list-group-count">(26)</span>
         <i class="iconfont icon-arrowright"></i>
       </a>
       
@@ -359,6 +359,15 @@
           
   <div class="category-post-list">
     
+    
+      
+      
+        <a href="/posts/8e94af8f2488/" title="MySql事务"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">MySql事务</span>
+        </a>
+      
     
       
       
@@ -515,10 +524,10 @@
     
       
       
-        <a href="/posts/d3de8634e6f0/" title="SQL使用教程"
+        <a href="/posts/d3de8634e6f0/" title="MySql使用教程"
            class="list-group-item list-group-item-action
            active">
-          <span class="category-post">SQL使用教程</span>
+          <span class="category-post">MySql使用教程</span>
         </a>
       
     
@@ -603,7 +612,7 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">SQL使用教程</h1>
+            <h1 id="seo-header">MySql使用教程</h1>
             
             
               <div class="markdown-body">
@@ -807,6 +816,7 @@
 </tbody>
 </table>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">SELECT</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">FROM</span> library.books <span class="hljs-keyword">WHERE</span> author <span class="hljs-keyword">LIKE</span> <span class="hljs-string">&#x27;B%&#x27;</span>;   <span class="hljs-comment">--查找名字以B开头的作者</span><br><span class="hljs-keyword">SELECT</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">FROM</span> library.books <span class="hljs-keyword">WHERE</span> author <span class="hljs-keyword">LIKE</span> <span class="hljs-string">&#x27;%b&#x27;</span>;   <span class="hljs-comment">--查找名字以b开头的作者</span><br><span class="hljs-keyword">SELECT</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">FROM</span> library.books <span class="hljs-keyword">WHERE</span> author <span class="hljs-keyword">LIKE</span> <span class="hljs-string">&#x27;__b%&#x27;</span>;   <span class="hljs-comment">--查找名字第三个字符是b的作者</span><br><span class="hljs-keyword">SELECT</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">FROM</span> library.books <span class="hljs-keyword">WHERE</span> author <span class="hljs-keyword">LIKE</span> <span class="hljs-string">&#x27;^[AB]&#x27;</span>;   <span class="hljs-comment">--查找名字以A或B开头的作者</span><br><span class="hljs-keyword">SELECT</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">FROM</span> library.books <span class="hljs-keyword">WHERE</span> author <span class="hljs-keyword">LIKE</span> <span class="hljs-string">&#x27;^[A-H]&#x27;</span>;   <span class="hljs-comment">--查找名字以A到H开头的作者</span><br></code></pre></td></tr></table></figure>
+
                 
               </div>
             
@@ -839,7 +849,7 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/SQL/" class="print-no-link">#SQL</a>
+        <a href="/tags/MySql/" class="print-no-link">#MySql</a>
       
     </div>
   
@@ -851,7 +861,7 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>SQL使用教程</div>
+      <div>MySql使用教程</div>
       <div>https://serendipity565.github.io/posts/d3de8634e6f0/</div>
     </div>
     <div class="license-meta">
