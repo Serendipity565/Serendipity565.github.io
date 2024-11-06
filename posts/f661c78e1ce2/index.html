@@ -33,7 +33,7 @@
 <meta property="og:image" content="https://serendipity565.github.io/img/blog/pypc/1.png">
 <meta property="og:image" content="https://serendipity565.github.io/img/blog/pypc/2.png">
 <meta property="article:published_time" content="2024-01-20T12:01:21.000Z">
-<meta property="article:modified_time" content="2024-10-10T06:02:28.542Z">
+<meta property="article:modified_time" content="2024-11-06T11:26:04.158Z">
 <meta property="article:author" content="Serendipity">
 <meta property="article:tag" content="Python">
 <meta name="twitter:card" content="summary_large_image">
@@ -612,21 +612,21 @@
             
               <div class="markdown-body">
                 
-                <h1>HTTP网页结构</h1>
+                <h2 id="HTTP网页结构">HTTP网页结构</h2>
 <p>一个网页有三大技术要素，分别为HTML，CSS和JavaScript，其中HTML定义了网页的结构和信息，CSS定义网页的样式，JavaScript定义用户和网页的交互逻辑。其中我们爬虫最关心的就是HTML。</p>
 <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-meta">&lt;!DOCTYPE <span class="hljs-keyword">html</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">html</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">h1</span>&gt;</span>这是一个一级标题<span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>这是一段文字这是一段文字这是一段文字<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">html</span>&gt;</span><br></code></pre></td></tr></table></figure>
-<h1>HTTP请求和响应</h1>
+<h2 id="HTTP请求和响应">HTTP请求和响应</h2>
 <p>HTTP请求的方法类型主要的有两种，GET方法和POST方法，其中前者用于获得数据，后者用于创建数据（例如注册账号时提交数据）。</p>
 <p>一个完整的HTTP请求包括请求行，请求头和请求体。请求行会包含方法类型，资源路径（查询参数）和协议版本。请求头包含Host（主机域名），User-Agent（服务器客户端相关信息）和Accept（客户端像接收的数据，接收多种数据类型可以用逗号进行分割；*/*则表示任意数据类型）。请求体可以放客户端传给服务器的任意数据，但是GET方法的请求体一般是空的。</p>
 <p><img src="/img/blog/pypc/1.png" srcset="/img/loading.gif" lazyload alt=""></p>
 <p>HTTP响应也由三个部分组成，分别是状态行，响应头和响应体。状态行还包含协议版本，状态码和状态消息，状态码和状态消息一一对应：状态码2开头表示成功，，请求已处理完成；3开头表示表示重定向，需要进一步的操作；4开头表示客户端错误，比如请求里面有错误，或者请求的资源无效，等等；5开头表示服务器错误，比如出现问题或者正在维护。响应头会包含一些告知客户端的信息，比如Date：生产响应的日期和时间；Content-Type：返回内容的类型及编码格式。响应体就是服务器想给客户端的数据内容，通常与Content-Type的类型相对应。</p>
 <p><img src="/img/blog/pypc/2.png" srcset="/img/loading.gif" lazyload alt=""></p>
-<h1><strong>requests 模块</strong></h1>
+<h2 id="requests-模块"><strong>requests 模块</strong></h2>
 <p>Python requests 是一个常用的 HTTP 请求库，可以方便地向网站发送 HTTP 请求，并获取响应结果。requests 模块比urllib模块更简洁。</p>
 <p>使用 requests 发送 HTTP 请求需要先导入 requests 模块。导入后就可以发送 HTTP 请求，使用 requests 提供的方法向指定 URL 发送 HTTP 请求。</p>
 <p>我们使用requests函数时的User-Agent时自动生成的，服务器可以轻松的分辨出是否是浏览器发出的请求，不过我们可以通过手动传入一个headers的参数帮我们模拟出浏览器发出的请求。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> requests<br><br>head = &#123;<span class="hljs-string">&quot;User-Agent&quot;</span>: <span class="hljs-string">&quot;Mozilla/5.0 (Windows NT 10.0; Win64; X64)&quot;</span>&#125;<br>response = requests.get(<span class="hljs-string">&quot;https://www.baidu.com/&quot;</span>, headers=head)<br><span class="hljs-keyword">if</span> response.ok:  <span class="hljs-comment"># 或者用response.status_code&gt;=200 and response.status_code&lt;400</span><br>    <span class="hljs-built_in">print</span>(response.text)<br><span class="hljs-keyword">else</span>:<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;请求失败&quot;</span>)<br></code></pre></td></tr></table></figure>
-<h1>Beautiful Soup 模块</h1>
+<h2 id="Beautiful-Soup-模块">Beautiful Soup 模块</h2>
 <p>爬到了网页信息之后，我们要提取出我们想要的不分，Beautiful Soup 可以帮我们解析网页内容Beautiful Soup自动将输入文档转换为Unicode编码，输出文档转换为utf-8编码。你不需要考虑编码方式，除非文档没有指定一个编码方式。</p>
 <p>例如用requests和Beautiful Soup爬取豆瓣电影前250名单:</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> requests<br><span class="hljs-keyword">from</span> bs4 <span class="hljs-keyword">import</span> BeautifulSoup<br><br>head = &#123;<span class="hljs-string">&quot;User-Agent&quot;</span>: <span class="hljs-string">&quot;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36&quot;</span>&#125;<br><span class="hljs-keyword">for</span> start_num <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">0</span>,<span class="hljs-number">250</span>,<span class="hljs-number">25</span>):<br>    response = requests.get(<span class="hljs-string">f&quot;https://movie.douban.com/top250?start=<span class="hljs-subst">&#123;start_num&#125;</span>&quot;</span>, headers=head)<br>    html=response.text<br>    soup=BeautifulSoup(html,<span class="hljs-string">&quot;html.parser&quot;</span>)<br>    all_title=soup.find_all(<span class="hljs-string">&quot;span&quot;</span>,attrs=&#123;<span class="hljs-string">&quot;class&quot;</span>:<span class="hljs-string">&quot;title&quot;</span>&#125;)<br>    <span class="hljs-keyword">for</span> title <span class="hljs-keyword">in</span> all_title:<br>        title_string=title.string<br>        <span class="hljs-keyword">if</span> <span class="hljs-string">&quot;/&quot;</span> <span class="hljs-keyword">not</span> <span class="hljs-keyword">in</span> title_string:<br>            <span class="hljs-built_in">print</span>(title_string)<br></code></pre></td></tr></table></figure>

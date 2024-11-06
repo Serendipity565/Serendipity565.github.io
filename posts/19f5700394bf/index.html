@@ -32,7 +32,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://serendipity565.github.io/img/blog/jieko/1.png">
 <meta property="article:published_time" content="2024-03-14T05:12:12.000Z">
-<meta property="article:modified_time" content="2024-10-10T06:02:28.535Z">
+<meta property="article:modified_time" content="2024-11-06T10:58:29.714Z">
 <meta property="article:author" content="Serendipity">
 <meta property="article:tag" content="Go">
 <meta name="twitter:card" content="summary_large_image">
@@ -611,16 +611,16 @@
             
               <div class="markdown-body">
                 
-                <h1>什么是接口</h1>
+                <h2 id="什么是接口">什么是接口</h2>
 <p>在goland中，接口是一组方法签名。接口把所有的具有共性的方法定义在一起，任何其他类型只要实现了这些方法就是实现了这个接口。它与OOP(面向对象编程)非常相似。</p>
 <p>接口可以让我们将不同的类型绑定到一组公共的方法上，从而实现多态和灵活的设计。</p>
 <p>Go语言中的接口是隐式实现的，也就是说，如果一个类型实现了一个接口定义的所有方法，那么它就自动地实现了该接口。因此，我们可以通过将接口作为参数来实现对不同类型的调用，从而实现多态。</p>
-<h1>接口的定义及实现</h1>
-<h2 id="定于接口">定于接口</h2>
+<h2 id="接口的定义及实现">接口的定义及实现</h2>
+<h3 id="定于接口">定于接口</h3>
 <p>关键字interface用来定义接口，语法如下：</p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">type</span> interface_name <span class="hljs-keyword">interface</span> &#123;<br>    method_name1([args ...arg_type]) [return_type]<br>    method_name2([args ...arg_type]) [return_type]<br>    method_name3([args ...arg_type]) [return_type]<br>    ...<br>    method_namen([args ...arg_type]) [return_type]<br>&#125;<br></code></pre></td></tr></table></figure>
 <p>一个接口中可以定义多个方法，根据逻辑需要，自定义参数和返回值。</p>
-<h2 id="实现接口">实现接口</h2>
+<h3 id="实现接口">实现接口</h3>
 <p>如果一个结构体实现了某个接口的所有方法，则此结构体就实现了该接口。</p>
 <p>我们定义一个sleeper接口，包含两个方法，即sleep()和eat()：</p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">type</span> animal <span class="hljs-keyword">interface</span> &#123;<br>    sleep()<br>    eat()<br>&#125;<br></code></pre></td></tr></table></figure>
@@ -634,7 +634,7 @@
 <p>输出：</p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs go">xiaobai is sleeping<br>xiaobai is eating bone<br></code></pre></td></tr></table></figure>
 <p>dog结构体实现了animal接口的所有方法，因此我们认为dog实现了animal接口。</p>
-<h3 id="没有实现接口会怎么样？">没有实现接口会怎么样？</h3>
+<h4 id="没有实现接口会怎么样？">没有实现接口会怎么样？</h4>
 <p>我们先定义一个结构体cat，cat只实现animal的sleep()方法，我们认为cat并没有实现animal接口：</p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(mycat cat)</span></span> sleep() &#123;<br>    fmt.Printf(<span class="hljs-string">&quot;%s is sleeping \n&quot;</span>, mycat.name)<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>    kitty := cat&#123;<br>        name: <span class="hljs-string">&quot;kitty&quot;</span>,<br>        food: <span class="hljs-string">&quot;fish&quot;</span>,<br>    &#125;<br>    kitty.sleep()<br>&#125;<br></code></pre></td></tr></table></figure>
 <p>输出</p>
@@ -644,15 +644,15 @@
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>    <span class="hljs-keyword">var</span> ani animal<br>    kitty := cat&#123;<br>        name: <span class="hljs-string">&quot;kitty&quot;</span>,<br>        food: <span class="hljs-string">&quot;fish&quot;</span>,<br>    &#125;<br><br>    ani = kitty<br><br>    ani.sleep()<br>&#125;<br></code></pre></td></tr></table></figure>
 <p>结果报错，在终端里提示<code>cannot use kitty (variable of type cat) as animal value in assignment: cat does not implement animal (missing method eat)</code>。编写代码时编译器也会出现红色下划线的错误提示，如图：</p>
 <p><img src="/img/blog/jieko/1.png" srcset="/img/loading.gif" lazyload alt=""></p>
-<h1>接口嵌套</h1>
+<h2 id="接口嵌套">接口嵌套</h2>
 <p>接口嵌套就是一个接口中包含了其他接口，如果要实现外部接口，那么就要把内部嵌套的接口对应的所有方法全实现了。</p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">type</span> A <span class="hljs-keyword">interface</span> &#123;<br>    test1()<br>&#125;<br><br><span class="hljs-keyword">type</span> B <span class="hljs-keyword">interface</span> &#123;<br>    test2()<br>&#125;<br><br><span class="hljs-comment">// 定义嵌套接口</span><br><span class="hljs-keyword">type</span> C <span class="hljs-keyword">interface</span> &#123;<br>    A<br>    B<br>    test3()<br>&#125;<br></code></pre></td></tr></table></figure>
 <p>如果想实现接口C，那不止要实现接口C的方法，还要实现接口A，B中的方法</p>
-<h1>空接口</h1>
+<h2 id="空接口">空接口</h2>
 <p>空接口不包含任何的方法，正因为如此，所有的类型都实现了空接口，因此空接口可以存储任意类型的数值。</p>
 <p>fmt包下的Print系列函数，其参数大多是空接口类型，也可以说支持任意类型：</p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">Print</span><span class="hljs-params">(a ...<span class="hljs-keyword">interface</span>&#123;&#125;)</span></span> (n <span class="hljs-type">int</span>, err <span class="hljs-type">error</span>)<br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">Println</span><span class="hljs-params">(format <span class="hljs-type">string</span>, a ...<span class="hljs-keyword">interface</span>&#123;&#125;)</span></span> (n <span class="hljs-type">int</span>, err <span class="hljs-type">error</span>)<br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">Println</span><span class="hljs-params">(a ...<span class="hljs-keyword">interface</span>&#123;&#125;)</span></span> (n <span class="hljs-type">int</span>, err <span class="hljs-type">error</span>)<br></code></pre></td></tr></table></figure>
-<h2 id="示例">示例</h2>
+<h3 id="示例">示例</h3>
 <p>在需要存储不同类型数据的容器中，可以使用空接口作为容器的元素类型。这样就可以在容器中存储任意类型的值。</p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">type</span> empty_interface <span class="hljs-keyword">interface</span> &#123;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">example</span><span class="hljs-params">(empty empty_interface)</span></span> &#123;<br>    fmt.Printf(<span class="hljs-string">&quot;example&quot;</span>, empty)<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>    <span class="hljs-keyword">var</span> data []<span class="hljs-keyword">interface</span>&#123;&#125;<br>    data = <span class="hljs-built_in">append</span>(data, <span class="hljs-number">42</span>)<br>    data = <span class="hljs-built_in">append</span>(data, <span class="hljs-string">&quot;hello&quot;</span>)<br><br>    fmt.Println(<span class="hljs-string">&quot;data...........&quot;</span>, data)<br>&#125;<br><br></code></pre></td></tr></table></figure>
 <p>data是一个空接口类型的切片，可以存储整数、字符串等不同类型的数据。</p>

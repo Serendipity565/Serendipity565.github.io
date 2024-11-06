@@ -46,7 +46,7 @@
 <meta property="og:image" content="https://serendipity565.github.io/img/blog/MySqlshiwu/52.jpg">
 <meta property="og:image" content="https://serendipity565.github.io/img/blog/MySqlshiwu/53.jpg">
 <meta property="article:published_time" content="2024-10-31T08:34:00.000Z">
-<meta property="article:modified_time" content="2024-10-31T09:05:49.801Z">
+<meta property="article:modified_time" content="2024-11-06T11:25:02.464Z">
 <meta property="article:author" content="Serendipity">
 <meta property="article:tag" content="MySql">
 <meta name="twitter:card" content="summary_large_image">
@@ -625,17 +625,17 @@
             
               <div class="markdown-body">
                 
-                <h1><strong>1. 事务的基础概念及ACID特性</strong></h1>
-<h2 id="1-1-什么是事务"><strong>1.1 什么是事务</strong></h2>
+                <h2 id="1-事务的基础概念及ACID特性"><strong>1. 事务的基础概念及ACID特性</strong></h2>
+<h3 id="1-1-什么是事务"><strong>1.1 什么是事务</strong></h3>
 <p>事务（Transaction）是访问和更新数据库的程序执行单元；事务中可能包含一个或多个sql语句，这些语句要么都执行，要么都不执行。作为一个关系型数据库，MySQL支持事务。</p>
-<h2 id="1-2-事务的四大特性（ACID）"><strong>1.2 事务的四大特性（ACID）</strong></h2>
+<h3 id="1-2-事务的四大特性（ACID）"><strong>1.2 事务的四大特性（ACID）</strong></h3>
 <ul>
 <li><strong>原子性（Atomicity）</strong>：事务是最小的执行单位，不可再分割。事务的操作要么全部成功，要么全部失败回滚。</li>
 <li><strong>一致性（Consistency）</strong>：事务执行前后，数据库始终处于一致的状态。比如资金转账时，两方账户余额的总和不变。</li>
 <li><strong>隔离性（Isolation）</strong>：事务的并发执行不会相互影响，保证每个事务的操作对其他事务不可见。不同的隔离级别会影响事务的隔离性。</li>
 <li><strong>持久性（Durability）</strong>：事务一旦提交，所做的修改会永久保存，即使系统崩溃也能恢复。</li>
 </ul>
-<h2 id="1-3-隐式事务和显式事务"><strong>1.3 隐式事务和显式事务</strong></h2>
+<h3 id="1-3-隐式事务和显式事务"><strong>1.3 隐式事务和显式事务</strong></h3>
 <ul>
 <li>
 <p><strong>隐式事务</strong>：在MySQL中，单条<code>INSERT</code>、<code>UPDATE</code>等语句会自动启动一个事务并在执行完成后提交，这就是隐式事务。适用于简单的操作。</p>
@@ -654,14 +654,14 @@
 </ul>
 </li>
 </ul>
-<h1><strong>2. 事务隔离级别及并发问题</strong></h1>
-<h2 id="2-1-并发问题"><strong>2.1 并发问题</strong></h2>
+<h2 id="2-事务隔离级别及并发问题"><strong>2. 事务隔离级别及并发问题</strong></h2>
+<h3 id="2-1-并发问题"><strong>2.1 并发问题</strong></h3>
 <ul>
 <li><strong>脏读</strong>：事务读取了另一个事务尚未提交的数据，导致数据不一致。</li>
 <li><strong>不可重复读</strong>：同一个事务在两次读取时发现数据不同，主要由其他事务的<code>UPDATE</code>引起。</li>
 <li><strong>幻读</strong>：在一次事务中，多次读取后发现数据的行数变化，通常由<code>INSERT</code>操作引起。</li>
 </ul>
-<h2 id="2-2-事务隔离级别"><strong>2.2 事务隔离级别</strong></h2>
+<h3 id="2-2-事务隔离级别"><strong>2.2 事务隔离级别</strong></h3>
 <p>SQL标准中定义了四种隔离级别，并规定了每种隔离级别下上述几个问题是否存在。一般来说，隔离级别越低，系统开销越低，可支持的并发越高，但隔离性也越差。隔离级别与读问题的关系如下：</p>
 <p><img src="/img/blog/MySqlshiwu/1.png" srcset="/img/loading.gif" lazyload alt=""></p>
 <ul>
@@ -673,7 +673,7 @@
 <p>在实际应用中，<strong>读未提交</strong>在并发时会导致很多问题，而性能相对于其他隔离级别提高却很有限，因此使用较少。<strong>可串行化强制事务串行</strong>，并发效率很低，只有当对数据一致性要求极高且可以接受没有并发时使用，因此使用也较少。因此在大多数数据库系统中，默认的隔离级别是<strong>读已提交(如Oracle)<strong>或</strong>可重复读</strong>。可通过命令<code>transaction_isolation</code>查看全局隔离级别和本次会话隔离级别。</p>
 <p><img src="/img/blog/MySqlshiwu/2.png" srcset="/img/loading.gif" lazyload alt=""></p>
 <p>MySQL 8.0 默认的隔离级别是<strong>可重复读</strong> (<code>REPEATABLE-READ</code>)。</p>
-<h2 id="2-3-实现原理：MVCC（多版本并发控制）"><strong>2.3 实现原理：MVCC（多版本并发控制）</strong></h2>
+<h3 id="2-3-实现原理：MVCC（多版本并发控制）"><strong>2.3 实现原理：MVCC（多版本并发控制）</strong></h3>
 <ul>
 <li>
 <p><strong>概念</strong>: 指的是一种提高并发的技术。最早的数据库系统，只有读读之间可以并发，读写，写读，写写都要阻塞。引入多版本之后，<strong>只有写写之间相互阻塞</strong>，其他三种操作都可以并行，这样大幅度提高了InnoDB的并发度。</p>
@@ -694,9 +694,9 @@
 </ul>
 </li>
 </ul>
-<h3 id="2-3-1-事务版本号"><strong>2.3.1 事务版本号</strong></h3>
+<h4 id="2-3-1-事务版本号"><strong>2.3.1 事务版本号</strong></h4>
 <p>事务每次开启时，都会从数据库获得一个自增长的事务ID，可以从事务ID判断事务的执行先后顺序。这就是事务版本号。每当begin的时候，首先要做的就是从数据库获得一个自增长的事务ID,它也就是当前事务的事务ID。</p>
-<h3 id="2-3-2-隐藏字段"><strong>2.3.2 隐藏字段</strong></h3>
+<h4 id="2-3-2-隐藏字段"><strong>2.3.2 隐藏字段</strong></h4>
 <p>对于InnoDB存储引擎，每一行记录都有两个隐藏列<strong>trx_id</strong>、<strong>roll_pointer</strong>,如果数据表中存在主键或者非NULL的UNIQUE键时不会创建row_id,否则InnoDB会自动生成单调递增的隐藏主键row_id。</p>
 <table>
 <thead>
@@ -725,16 +725,16 @@
 </tbody>
 </table>
 <p>这里的记录操作，指的是insert|update|delete。对于delete操作而言，InnoDB认为是一个update操作，不过会更新一个另外的删除位，将行表示为deleted,并非真正删除。</p>
-<h3 id="2-3-4-版本链"><strong>2.3.4 版本链</strong></h3>
+<h4 id="2-3-3-版本链"><strong>2.3.3 版本链</strong></h4>
 <p>多个事务并行操作某一行数据时，不同事务对该行数据的修改会产生多个版本，然后通过回滚指针（roll_pointer），连成一个链表，这个链表就称为<strong>版本链</strong>（undo log）。</p>
-<h3 id="2-3-5-快照读和当前读"><strong>2.3.5 快照读和当前读</strong></h3>
+<h4 id="2-3-4-快照读和当前读"><strong>2.3.4 快照读和当前读</strong></h4>
 <p><strong>快照读</strong>：读取的是记录数据的可见版本（有旧的版本）。不加锁,普通的select语句都是快照读，如：</p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">select</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">from</span> <span class="hljs-keyword">user</span> <span class="hljs-keyword">where</span> id <span class="hljs-operator">=</span> <span class="hljs-number">1</span>;<br></code></pre></td></tr></table></figure>
 <p><strong>当前读</strong>：读取的是记录数据的最新版本，显式加锁的都是当前读</p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">select</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">from</span> <span class="hljs-keyword">user</span> <span class="hljs-keyword">where</span> id <span class="hljs-operator">=</span> <span class="hljs-number">1</span> <span class="hljs-keyword">for</span> <span class="hljs-keyword">update</span>;<br><span class="hljs-keyword">select</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">from</span> <span class="hljs-keyword">user</span> <span class="hljs-keyword">where</span> id <span class="hljs-operator">=</span> <span class="hljs-number">1</span> lock <span class="hljs-keyword">in</span> share mode;<br></code></pre></td></tr></table></figure>
-<h3 id="2-3-6-ReadView"><strong>2.3.6 ReadView</strong></h3>
+<h4 id="2-3-5-ReadView"><strong>2.3.5 ReadView</strong></h4>
 <p>ReadView 保存了<strong>当前事务开启时所有活跃的事务列表</strong>。可以理解为: <strong>ReadView 保存了不应该让这个事务看到的其他事务 ID 列表。</strong></p>
-<p><strong>ReadView 的几个重要属性</strong></p>
+<h5 id="ReadView-的几个重要属性"><strong>ReadView 的几个重要属性</strong></h5>
 <ul>
 <li><strong>trx_ids</strong>: 当前系统中那些活跃(未提交)的读写事务ID, 它数据结构为一个List。(<code>重点注意</code>:这里的trx_ids中的活跃事务，<strong>不包括当前事务自己</strong>和已提交的事务，这点非常重要)</li>
 <li><strong>low_limit_id</strong>: 目前出现过的最大的事务ID+1，即下一个将被分配的事务ID。</li>
@@ -748,20 +748,20 @@
 <li>如果被访问版本的 <code>事务ID &gt; low_limit_id</code> 值，那么表示生成该版本的事务在当前事务生成 ReadView 后才开启，所以该版本不可以被当前事务访问。</li>
 <li>如果被访问版本的 <code>事务ID在 up_limit_id和m_low_limit_id</code> 之间，那就需要判断一下版本的事务ID是不是在 trx_ids 列表中，如果在，说明创建 ReadView 时生成该版本的事务还是活跃的，该版本不可以被访问；如果不在，说明创建 ReadView 时生成该版本的事务已经被提交，该版本可以被访问。</li>
 </ul>
-<p><strong>何时创建ReadView？</strong></p>
+<h5 id="何时创建ReadView？"><strong>何时创建ReadView？</strong></h5>
 <p>在RC隔离级别下，是每个 select 都会创建最新的 ReadView；而在RR隔离级别下，则是当事务中的第一个 select 请求才创建 ReadView。</p>
 <p>对于 insert，update，delete 这样的操作不会创建ReadView。但是这些操作在事务开启(begin)且其未提交的时候，那么它的事务ID,会存在在其它存在查询事务的ReadView记录中，也就是trx_ids中。</p>
-<h2 id="2-4-锁"><strong>2.4 锁</strong></h2>
+<h3 id="2-4-锁"><strong>2.4 锁</strong></h3>
 <p>在MySQL中，锁机制可以细分为表锁、行锁、全局锁、死锁等，不同的锁类型适用于不同的并发控制场景。</p>
-<h3 id="2-4-1-表锁"><strong>2.4.1 表锁</strong></h3>
+<h4 id="2-4-1-表锁"><strong>2.4.1 表锁</strong></h4>
 <ul>
 <li>使用语法：<code>LOCK TABLE table_name READ/WRITE</code></li>
 <li><code>SELECT</code>操作自动加读锁，<code>UPDATE</code>/<code>DELETE</code>/<code>INSERT</code>操作自动加写锁。</li>
 <li><strong>读锁</strong>：如果表加了读锁，允许其他线程进行读取，但会阻塞写操作。</li>
 <li><strong>写锁</strong>：如果表加了写锁，读和写操作都会被阻塞，直到写锁释放。</li>
 </ul>
-<h3 id="2-4-2-行锁"><strong>2.4.2 行锁</strong></h3>
-<p><strong>锁的类型</strong></p>
+<h4 id="2-4-2-行锁"><strong>2.4.2 行锁</strong></h4>
+<h5 id="锁的类型"><strong>锁的类型</strong></h5>
 <ol>
 <li><strong>间隙锁（Gap Lock）</strong>
 <ul>
@@ -782,7 +782,7 @@
 </ul>
 </li>
 </ol>
-<p><strong>锁的模式</strong></p>
+<h5 id="锁的模式"><strong>锁的模式</strong></h5>
 <ul>
 <li><code>SELECT ... FOR UPDATE</code>：加写锁，其他事务不能加读锁或写锁。</li>
 <li><code>SELECT ... LOCK IN SHARE MODE</code>：加读锁，其他事务可加读锁，但不可加写锁。</li>
@@ -795,24 +795,24 @@
 </li>
 <li><strong>自增锁</strong>：专为自增操作而设置的锁。</li>
 </ul>
-<h3 id="2-4-3-全局锁-全库逻辑备份"><strong>2.4.3 全局锁</strong> - 全库逻辑备份</h3>
+<h4 id="2-4-3-全局锁-全库逻辑备份"><strong>2.4.3 全局锁</strong> - 全库逻辑备份</h4>
 <ul>
 <li>MySQL支持全局锁用于全库级别的操作，常用于逻辑备份，确保数据在备份期间的一致性。</li>
 </ul>
-<h3 id="2-4-4-死锁"><strong>2.4.4 死锁</strong></h3>
+<h4 id="2-4-4-死锁"><strong>2.4.4 死锁</strong></h4>
 <ul>
 <li><strong>定义</strong>：多个事务在相同资源上相互加锁并等待，形成无限的循环等待。</li>
 <li><strong>InnoDB处理</strong>：自动回滚持有最少排他行级锁的事务来解除死锁。</li>
 <li><strong>锁等待超时</strong>：可以设置锁等待时间，避免长时间的死锁。</li>
 </ul>
-<h3 id="2-4-5-乐观锁与悲观锁"><strong>2.4.5 乐观锁与悲观锁</strong></h3>
+<h4 id="2-4-5-乐观锁与悲观锁"><strong>2.4.5 乐观锁与悲观锁</strong></h4>
 <ul>
 <li><strong>悲观锁</strong>：基于数据库的内置锁机制，适用于写多的场景。</li>
 <li><strong>乐观锁</strong>：基于 version 版本号或 CAS（比较并交换）算法，适用于读多写少、冲突较少的情况。</li>
 </ul>
-<h1><strong>3. 三大日志</strong></h1>
+<h2 id="3-三大日志"><strong>3. 三大日志</strong></h2>
 <p><img src="/img/blog/MySqlshiwu/w1.png" srcset="/img/loading.gif" lazyload alt=""></p>
-<h2 id="3-1-redo-log"><strong>3.1 redo log</strong></h2>
+<h3 id="3-1-redo-log"><strong>3.1 redo log</strong></h3>
 <ul>
 <li><strong>作用</strong>：redo log 是物理日志，记录了数据页的变更，用于持久化事务的变更，保障崩溃后数据可恢复。（持久性）</li>
 <li><strong>与binlog的区别</strong>：redo log 是 InnoDB 特有的，用于崩溃恢复；binlog 是逻辑日志，记录 SQL 语句，用于恢复和复制。</li>
@@ -830,22 +830,22 @@
 </ul>
 </li>
 </ul>
-<h3 id="3-1-1-刷盘时机">3.1.1 刷盘时机</h3>
+<h4 id="3-1-1-刷盘时机">3.1.1 刷盘时机</h4>
 <p><code>innodb_flush_log_at_trx_commit</code>参数默认为1，当事务提交的时候会调用 fsync(fsync 是一个系统调用，用于将文件描述符对应的文件数据从内存缓冲区刷新到持久存储设备中)对 redo log 进行刷盘，将 redo log buffer，page cache写入 redo log 文件中。</p>
 <p>另外，Innodb 存储引擎有一个后台线程，每隔1秒，就会把会 redo log buffer 中的内容写入到文件系统缓存 page cache，然后调用 fsync 刷盘。</p>
 <p><img src="/img/blog/MySqlshiwu/w4.png" srcset="/img/loading.gif" lazyload alt=""></p>
 <p>如上图，所以说一个没有提交事务的 redo log 记录，也会被刷盘。</p>
-<p><strong>innodb_flush_log_at_trx_commit = 0</strong></p>
+<h5 id="innodb-flush-log-at-trx-commit-0"><strong>innodb_flush_log_at_trx_commit = 0</strong></h5>
 <p><img src="/img/blog/MySqlshiwu/w5.png" srcset="/img/loading.gif" lazyload alt=""></p>
 <p>如上图，如果宕机了或者 MySQL 挂了可能造成1秒内的数据丢失。</p>
-<p><strong>innodb_flush_log_at_trx_commit = 1</strong></p>
+<h5 id="innodb-flush-log-at-trx-commit-1"><strong>innodb_flush_log_at_trx_commit = 1</strong></h5>
 <p><img src="/img/blog/MySqlshiwu/w6.png" srcset="/img/loading.gif" lazyload alt=""></p>
 <p>如上图，只要事务提交成功，redo log 记录就一定在磁盘里，不会有任务数据丢失。</p>
 <p>如果执行事务的时候 MySQL 挂了或者宕机了，这部分日志丢失了，但是因为事务没有提交，所以日志丢了也不会有损失。</p>
-<p><strong>innodb_flush_log_at_trx_commit = 2</strong></p>
+<h5 id="innodb-flush-log-at-trx-commit-2"><strong>innodb_flush_log_at_trx_commit = 2</strong></h5>
 <p><img src="/img/blog/MySqlshiwu/w8.png" srcset="/img/loading.gif" lazyload alt=""></p>
 <p>如上图，当事务提交成功时，redo log buffer 日志会被写入 page cache，然后后台线程会刷盘写入 redo log，由于后台线程是1秒执行一次所以宕机或者 MySQL 挂了可能造成1秒内的数据丢失。</p>
-<h2 id="3-2-binlog"><strong>3.2 binlog</strong></h2>
+<h3 id="3-2-binlog"><strong>3.2 binlog</strong></h3>
 <ul>
 <li>
 <p><strong>作用</strong>：用于 MySQL 主从复制及数据恢复。记录所有的 DDL 和 DML 语句，可以将数据恢复到指定时间点。</p>
@@ -875,7 +875,7 @@ DML（数据操作语言），主要涉及数据的插入、更新和删除。</
 </ul>
 </li>
 </ul>
-<h3 id="3-2-1-记录格式">3.2.1 记录格式</h3>
+<h4 id="3-2-1-记录格式">3.2.1 记录格式</h4>
 <p>binlog 日志有三种格式，可以通过<code>binlog_format</code>参数设置，有以下三种：</p>
 <ol>
 <li>
@@ -913,7 +913,7 @@ DML（数据操作语言），主要涉及数据的插入、更新和删除。</
 <p><strong>怎么配置</strong></p>
 <p>要设置 <code>binlog_format</code>，可以在 MySQL 配置文件（如 <code>my.cnf</code>）中进行设置，或在运行时通过 SQL 命令进行设置：</p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">SET</span> <span class="hljs-keyword">GLOBAL</span> binlog_format <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;ROW&#x27;</span>;<br></code></pre></td></tr></table></figure>
-<h3 id="3-2-2-写入机制">3.2.2 写入机制</h3>
+<h4 id="3-2-2-写入机制">3.2.2 写入机制</h4>
 <p><img src="/img/blog/MySqlshiwu/w11.png" srcset="/img/loading.gif" lazyload alt=""></p>
 <p>binlog 的写入时机为事务执行过程中，先把日志写到 binlog cache，事务提交的时候再把 binlog cache 写到 binlog 文件中（实际先会写入 page cache，然后再由 fsync 写入 binlog 文件）。</p>
 <p>因为一个事务的 binlog 不能被拆开，无论这个事务多大，也要确保一次性写入，所以系统会给每个线程分配一块内存作为 binlog cache。可以通过<code>binlog_cache_size</code>参数控制单线程 binlog cache 大小，如果存储内容超过了这个参数，就要暂存到磁盘。</p>
@@ -923,7 +923,7 @@ DML（数据操作语言），主要涉及数据的插入、更新和删除。</
 <li>设置成1时：表示每次提交事务都会执行 fsync，就和 redo log 日志刷盘流程一样。</li>
 <li>设置成N时：表示每次提交事务都会 write，但是积累N个事务后才 fsync。</li>
 </ul>
-<h2 id="3-3-undo-log"><strong>3.3 undo log</strong></h2>
+<h3 id="3-3-undo-log"><strong>3.3 undo log</strong></h3>
 <ul>
 <li><strong>作用</strong>：undo log用于事务回滚，同时实现一致性视图。记录了事务操作前的“旧数据”。（原子性）如果当前记录行不可见，可以顺着undo log链找到满足其可见性条件的记录行版本。</li>
 <li><strong>内容</strong>：事务每次对数据进行修改时，会在undo log中记录修改前的数据，用于事务回滚和实现MVCC的读视图（版本链）。</li>
@@ -935,7 +935,7 @@ DML（数据操作语言），主要涉及数据的插入、更新和删除。</
 delete 语句，回滚时会执行 insert;<br>
 update 语句，回滚时便执行相反的 update，把数据改回来。</p>
 </blockquote>
-<h1><strong>4. 二阶段提交</strong></h1>
+<h2 id="4-二阶段提交"><strong>4. 二阶段提交</strong></h2>
 <ul>
 <li>
 <p><strong>目的</strong>：协调 redo log 和 binlog 的一致性问题。MySQL 在事务提交时先写 redo log 再写 binlog，避免部分提交情况。</p>
@@ -952,7 +952,7 @@ update 语句，回滚时便执行相反的 update，把数据改回来。</p>
 <p>将 redo log 日志的写入拆分成两个步骤 prepare 和 commit。MySQL 根据 redo log 日志恢复数据时，发现 redo log 日志处于 prepare 阶段，并且没有对应 binlog 日志（根据事务id对应），所以就会回滚事务。</p>
 </li>
 </ul>
-<h1>5. <strong>经典面试题：MVCC能否解决了幻读问题呢？</strong></h1>
+<h2 id="5-经典面试题：MVCC能否解决了幻读问题呢？">5. <strong>经典面试题：MVCC能否解决了幻读问题呢？</strong></h2>
 <blockquote>
 <p>MVCC能解决不可重复读问题，但是不能解决幻读问题，不论是快照读和当前读都不能解决。RR级别解决幻读靠的是锁机制，而不是MVCC机制。（串行化也可以）</p>
 </blockquote>

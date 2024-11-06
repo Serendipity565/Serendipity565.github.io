@@ -31,7 +31,7 @@
 <meta property="og:description" content="什么是依赖注入 依赖注入 (Dependency Injection，缩写为 DI)，可以理解为一种代码的构造模式（就是写法），按照这样的方式来写，能够让你的代码更加容易维护。 在GO语言中，wire是由 google 开源的一个供 Go 语言使用的依赖注入代码生成工具。它能够根据你的代码，生成相应的依赖注入 go 代码。 而与其它依靠反射实现的依赖注入工具不同的是，wire 能在编译期（准确地说">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2024-10-16T05:31:32.000Z">
-<meta property="article:modified_time" content="2024-10-29T02:35:16.158Z">
+<meta property="article:modified_time" content="2024-11-06T10:38:57.688Z">
 <meta property="article:author" content="Serendipity">
 <meta property="article:tag" content="Go">
 <meta name="twitter:card" content="summary_large_image">
@@ -609,30 +609,31 @@
             
               <div class="markdown-body">
                 
-                <h1>什么是依赖注入</h1>
+                <h2 id="什么是依赖注入">什么是依赖注入</h2>
 <p><a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5">依赖注入</a> (Dependency Injection，缩写为 DI)，可以理解为一种代码的构造模式（就是写法），按照这样的方式来写，能够让你的代码更加容易维护。</p>
 <p>在GO语言中，<a target="_blank" rel="noopener" href="https://github.com/google/wire">wire</a>是由 google 开源的一个供 Go 语言使用的依赖注入代码生成工具。它能够根据你的代码，生成相应的依赖注入 go 代码。</p>
 <p>而与其它依靠反射实现的依赖注入工具不同的是，wire 能在编译期（准确地说是代码生成时）如果依赖注入有问题，在代码生成时即可报出来，不会拖到运行时才报，更便于 debug。</p>
-<h2 id="依赖是什么？">依赖是什么？<a target="_blank" rel="noopener" href="https://go-kratos.dev/blog/go-project-wire/#%E4%BE%9D%E8%B5%96%E6%98%AF%E4%BB%80%E4%B9%88"></a></h2>
+<h2 id="依赖是什么？">依赖是什么？</h2>
 <p>这里的依赖是个名词，不是指软件包的依赖（比如那坨塞在 node_modules 里面的东西），而是指软件中某一个模块（对象/实例）所依赖的其它外部模块（对象/实例）。</p>
-<h2 id="注入到哪里？">注入到哪里？<a target="_blank" rel="noopener" href="https://go-kratos.dev/blog/go-project-wire/#%E6%B3%A8%E5%85%A5%E5%88%B0%E5%93%AA%E9%87%8C"></a></h2>
+<h2 id="注入到哪里？">注入到哪里？</h2>
 <p>被依赖的模块，在创建模块时，被注入到（即当作参数传入）模块的里面。</p>
-<h1>为什么要使用依赖注入</h1>
+<h2 id="为什么要使用依赖注入">为什么要使用依赖注入</h2>
 <p>对于很多软件设计模式和架构的理念，我们都无法理解他们要绕好大一圈做复杂的体操、用奇怪的方式进行实现的意义。他们通常都只是丢出来一段样例，说这样写就很好很优雅，由于省略掉了这种模式是如何发展出来的推导过程，我们只看到了结果，导致理解起来很困难。那么接下来我们来尝试推导还原一下整个过程，看看代码是如何和为什么演进到依赖注入模式的，以便能够更好理解使用依赖注入的意义。</p>
-<h2 id="不-DI-是啥样？DI-了又样子？">不 DI 是啥样？DI 了又样子？<a target="_blank" rel="noopener" href="https://go-kratos.dev/blog/go-project-wire/#%E4%B8%8D-di-%E6%98%AF%E5%95%A5%E6%A0%B7di-%E4%BA%86%E5%8F%88%E6%A0%B7%E5%AD%90"></a></h2>
+<h3 id="不-DI-是啥样？DI-了又样子？">不 DI 是啥样？DI 了又样子？</h3>
 <p>下面用 go <strong>伪代码</strong>来做例子。</p>
 <p>假设个场景，你在打工搞一个 web 应用，它有一个简单接口。最开始的项目代码可能长这个样子：</p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">type</span> App <span class="hljs-keyword">struct</span> &#123;<br>&#125;<br><br># 假设这个方法将会匹配并处理 GET /biu/&lt;id&gt; 这样的请求<br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(a *App)</span></span> GetData(id <span class="hljs-type">string</span>) <span class="hljs-type">string</span> &#123;<br>    # todo: write your data query<br>    <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;some data&quot;</span><br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">NewApp</span><span class="hljs-params">()</span></span> *App &#123;<br>    <span class="hljs-keyword">return</span> &amp;App&#123;&#125;<br>&#125;<br><br>app := App()<br>app.Run()<br></code></pre></td></tr></table></figure>
 <p>你要做的是接一个 mysql，从里面把数据按照 id 查出来，返回。 要连 mysql 的话，假设我们已经有了个<code>NewMySQLClient</code>的方法返回 client 给你，初始化时传个地址进去就能拿到数据库连接，并假设它有个<code>Exec</code>的方法给你执行参数。</p>
-<h2 id="不用-DI，通过全局变量传递依赖实例">不用 DI，通过全局变量传递依赖实例<a target="_blank" rel="noopener" href="https://go-kratos.dev/blog/go-project-wire/#%E4%B8%8D%E7%94%A8-di%E9%80%9A%E8%BF%87%E5%85%A8%E5%B1%80%E5%8F%98%E9%87%8F%E4%BC%A0%E9%80%92%E4%BE%9D%E8%B5%96%E5%AE%9E%E4%BE%8B"></a></h2>
+<h3 id="不用-DI，通过全局变量传递依赖实例">不用 DI，通过全局变量传递依赖实例</h3>
 <p>一种写法是，在外面全局初始化好 client，然后 App 直接拿来调用。</p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">var</span> mysqlUrl = <span class="hljs-string">&quot;mysql://blabla&quot;</span><br><span class="hljs-keyword">var</span> db = NewMySQLClient(mysqlUrl)<br><br><span class="hljs-keyword">type</span> App <span class="hljs-keyword">struct</span> &#123;<br><br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(a *App)</span></span> GetData(id <span class="hljs-type">string</span>) <span class="hljs-type">string</span> &#123;<br>    data := db.Exec(<span class="hljs-string">&quot;select data from biu where id = ? limit 1&quot;</span>, id)<br>    <span class="hljs-keyword">return</span> data<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">NewApp</span><span class="hljs-params">()</span></span> *App &#123;<br>    <span class="hljs-keyword">return</span> &amp;App&#123;&#125;<br>&#125;<br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>    app := App()<br>    app.Run()<br>&#125;<br></code></pre></td></tr></table></figure>
 <p>这就是没用依赖注入，app 依赖了全局变量 db，这是比较糟糕的一种做法。db 这个对象游离在全局作用域，暴露给包下的其他模块，比较危险。（设想如果这个包里其他代码在运行时悄悄把你的这个 db 变量替换掉会发生啥）</p>
-<h2 id="不用-DI，在-App-的初始化方法里创建依赖实例">不用 DI，在 App 的初始化方法里创建依赖实例<a target="_blank" rel="noopener" href="https://go-kratos.dev/blog/go-project-wire/#%E4%B8%8D%E7%94%A8-di%E5%9C%A8-app-%E7%9A%84%E5%88%9D%E5%A7%8B%E5%8C%96%E6%96%B9%E6%B3%95%E9%87%8C%E5%88%9B%E5%BB%BA%E4%BE%9D%E8%B5%96%E5%AE%9E%E4%BE%8B"></a></h2>
+<h3 id="不用-DI，在-App-的初始化方法里创建依赖实例">不用 DI，在 App 的初始化方法里创建依赖实例</h3>
 <p>另一种方式是这样的：</p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">type</span> App <span class="hljs-keyword">struct</span> &#123;<br>    db *MySQLClient<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(a *App)</span></span> GetData(id <span class="hljs-type">string</span>) <span class="hljs-type">string</span> &#123;<br>    data := a.db.Exec(<span class="hljs-string">&quot;select data from biu where id = ? limit 1&quot;</span>, id)<br>    <span class="hljs-keyword">return</span> data<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">NewApp</span><span class="hljs-params">()</span></span> *App &#123;<br>    <span class="hljs-keyword">return</span> &amp;App&#123;db: NewMySQLClient(mysqlUrl)&#125;<br>&#125;<br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>    app := NewApp(<span class="hljs-string">&quot;mysql://blabla&quot;</span>)<br>    app.Run()<br>&#125;<br></code></pre></td></tr></table></figure>
 <p>这种方法稍微好一些，db 被塞到 app 里面了，不会有 app 之外的无关代码碰它，比较安全，但这依然不是依赖注入，而是在内部创建了依赖，接下来你会看到它带来的问题。</p>
-<h3 id="老板：我们的数据要换个地方存-（需要变更实现）">老板：我们的数据要换个地方存 （需要变更实现）<a target="_blank" rel="noopener" href="https://go-kratos.dev/blog/go-project-wire/#%E8%80%81%E6%9D%BF%E6%88%91%E4%BB%AC%E7%9A%84%E6%95%B0%E6%8D%AE%E8%A6%81%E6%8D%A2%E4%B8%AA%E5%9C%B0%E6%96%B9%E5%AD%98-%E9%9C%80%E8%A6%81%E5%8F%98%E6%9B%B4%E5%AE%9E%E7%8E%B0"></a></h3>
+<h3 id="问题">问题</h3>
+<h4 id="老板：我们的数据要换个地方存-（需要变更实现）">老板：我们的数据要换个地方存 （需要变更实现）</h4>
 <p>你的老板不知道从哪听说——Redis 贼特么快，要不我们的数据改从 Redis 里读吧。这个时候你的内心有点崩溃，但毕竟要恰饭的，就硬着头皮改上面的代码。</p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">type</span> App <span class="hljs-keyword">struct</span> &#123;<br>    ds *RedisClient<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(a *App)</span></span> GetData(id <span class="hljs-type">string</span>) <span class="hljs-type">string</span> &#123;<br>    data := a.ds.Do(<span class="hljs-string">&quot;GET&quot;</span>, <span class="hljs-string">&quot;biu_&quot;</span>+id)<br>    <span class="hljs-keyword">return</span> data<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">NewApp</span><span class="hljs-params">()</span></span> *App &#123;<br>    <span class="hljs-keyword">return</span> &amp;App&#123;ds: NewRedisClient(redisAddr)&#125;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>    app := NewApp(<span class="hljs-string">&quot;redis://ooo&quot;</span>)<br>    app.Run()<br>&#125;<br></code></pre></td></tr></table></figure>
 <p>上面基本进行了 3 处修改：</p>
@@ -641,14 +642,14 @@
 <li>get_data 里取数据时改用 run 方法，并且查询语句也换了</li>
 <li>App 实例化时传入的参数改成了 redis 地址</li>
 </ol>
-<h3 id="老板：要不，我们再换个地方存？-我们要加测试，需要-Mock​">老板：要不，我们再换个地方存？/我们要加测试，需要 Mock<a target="_blank" rel="noopener" href="https://go-kratos.dev/blog/go-project-wire/#%E8%80%81%E6%9D%BF%E8%A6%81%E4%B8%8D%E6%88%91%E4%BB%AC%E5%86%8D%E6%8D%A2%E4%B8%AA%E5%9C%B0%E6%96%B9%E5%AD%98%E6%88%91%E4%BB%AC%E8%A6%81%E5%8A%A0%E6%B5%8B%E8%AF%95%E9%9C%80%E8%A6%81-mock">​</a></h3>
+<h4 id="老板：要不，我们再换个地方存？-我们要加测试，需要-Mock">老板：要不，我们再换个地方存？/我们要加测试，需要 Mock</h4>
 <p>老板的思路总是很广的，又过了两天他又想换成 Postgres 存了；或者让你们给 App 写点测试代码，只测接口里面的逻辑，通常我们不太愿意在旁边再起一个数据库，那么就需要 mock 掉数据源这块东西，让它直接返回数据给请求的 handler 用，来进行针对性的测试。</p>
 <p>这种情况怎么办？再改里面的代码？这不科学。</p>
-<h2 id="面向接口编程">面向接口编程<a target="_blank" rel="noopener" href="https://go-kratos.dev/blog/go-project-wire/#%E9%9D%A2%E5%90%91%E6%8E%A5%E5%8F%A3%E7%BC%96%E7%A8%8B"></a></h2>
+<h3 id="面向接口编程">面向接口编程</h3>
 <p>一个很重要的思路就是要<strong>面向接口(interface)编程</strong>，而不是面向具体实现编程。</p>
 <p>什么叫面向具体实现编程呢？比如上述的例子里改动的部分：调 mysqlclient 的 exec_sql 执行一条 sql，被改成了：调 redisclient 的 do 执行一句 get 指令。由于每种 client 的接口设计不同，每换一个实现，就得改一遍。</p>
 <p>而面向接口编程的思路，则完全不同。我们不要听老板想用啥就马上写代码。首先就得预料到，这个数据源的实现很有可能被更换，因此在一开始就应该做好准备（设计）。</p>
-<h3 id="设计接口​">设计接口<a target="_blank" rel="noopener" href="https://go-kratos.dev/blog/go-project-wire/#%E8%AE%BE%E8%AE%A1%E6%8E%A5%E5%8F%A3">​</a></h3>
+<h4 id="设计接口">设计接口</h4>
 <p>Python 里面有个概念叫鸭子类型(duck-typing)，就是如果你叫起来像鸭子，走路像鸭子，游泳像鸭子，那么你就是一只鸭子。这里的叫、走路、游泳就是我们约定的鸭子接口，而你如果完整实现了这些接口，我们可以像对待一个鸭子一样对待你。</p>
 <p>在我们上面的例子中，不论是 Mysql 实现还是 Redis 实现，他们都有个共同的功能：用一个 id，查一个数据出来，那么这就是共同的接口。</p>
 <p>我们可以约定一个叫 DataSource 的接口，它必须有一个方法叫 GetById，功能是要接收一个 id，返回一个字符串</p>
@@ -656,7 +657,7 @@
 <p>然后我们就可以把各个数据源分别进行封装，按照这个 interface 定义实现接口，这样我们的 App 里处理请求的部分就可以稳定地调用 GetById 这个方法，而底层数据实现只要实现了 DataSource 这个 interface 就能花式替换，不用改 App 内部的代码了。</p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-comment">// 封装个redis</span><br><span class="hljs-keyword">type</span> redis <span class="hljs-keyword">struct</span> &#123;<br>    r *RedisClient<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">NewRedis</span><span class="hljs-params">(addr <span class="hljs-type">string</span>)</span></span> *redis &#123;<br>    <span class="hljs-keyword">return</span> &amp;redis&#123;r: NewRedisClient(addr)&#125;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(r *redis)</span></span> GetById(id <span class="hljs-type">string</span>) <span class="hljs-type">string</span> &#123;<br>    <span class="hljs-keyword">return</span> r.r.Do(<span class="hljs-string">&quot;GET&quot;</span>, <span class="hljs-string">&quot;biu_&quot;</span>+id)<br>&#125;<br><br><span class="hljs-comment">// 再封装个mysql</span><br><span class="hljs-keyword">type</span> mysql <span class="hljs-keyword">struct</span> &#123;<br>    m *MySQLClient<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">NewMySQL</span><span class="hljs-params">(addr <span class="hljs-type">string</span>)</span></span> *mysql &#123;<br>    <span class="hljs-keyword">return</span> &amp;mysql&#123;m: NewMySQLClient(addr)&#125;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(m *mysql)</span></span> GetById(id <span class="hljs-type">string</span>) <span class="hljs-type">string</span> &#123;<br>    <span class="hljs-keyword">return</span> r.m.Exec(<span class="hljs-string">&quot;select data from biu where id = ? limit 1&quot;</span>, id)<br>&#125;<br><br><span class="hljs-keyword">type</span> App <span class="hljs-keyword">struct</span> &#123;<br>    ds DataSource<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">NewApp</span><span class="hljs-params">(addr <span class="hljs-type">string</span>)</span></span> *App &#123;<br><span class="hljs-comment">//需要用Mysql的时候</span><br>    <span class="hljs-keyword">return</span> &amp;App&#123;ds: NewMySQLClient(addr)&#125;<br><br><span class="hljs-comment">//需要用Redis的时候</span><br>    <span class="hljs-keyword">return</span> &amp;App&#123;ds: NewRedisClient(addr)&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 <p>由于两种数据源都实现了 DataSource 接口，因此可以直接创建一个塞到 App 里面了，想用哪个用哪个，看着还不错？</p>
-<h3 id="等一等，好像少了些什么">等一等，好像少了些什么<a target="_blank" rel="noopener" href="https://go-kratos.dev/blog/go-project-wire/#%E7%AD%89%E4%B8%80%E7%AD%89%E5%A5%BD%E5%83%8F%E5%B0%91%E4%BA%86%E4%BA%9B%E4%BB%80%E4%B9%88"></a></h3>
+<h4 id="等一等，好像少了些什么">等一等，好像少了些什么</h4>
 <p>addr 作为参数，是不是有点简单？通常初始化一个数据库连接，可能有一堆参数，配在一个 yaml 文件里，需要解析到一个 struct 里面，然后再传给对应的 New 方法。</p>
 <p>配置文件可能是这样的：</p>
 <figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">redis:</span><br>    <span class="hljs-attr">addr:</span> <span class="hljs-number">127.0</span><span class="hljs-number">.0</span><span class="hljs-number">.1</span><span class="hljs-string">:6379</span><br>    <span class="hljs-attr">read_timeout:</span> <span class="hljs-number">0.</span><span class="hljs-string">2s</span><br>    <span class="hljs-attr">write_timeout:</span> <span class="hljs-number">0.</span><span class="hljs-string">2s</span><br></code></pre></td></tr></table></figure>
@@ -665,7 +666,7 @@
 <p>结果你的<code>NewApp</code>方法可能就变成了这个德性：</p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">NewApp</span><span class="hljs-params">()</span></span> *App &#123;<br>    <span class="hljs-keyword">var</span> conf *RedisConfig<br>    yamlFile, err := ioutil.ReadFile(<span class="hljs-string">&quot;redis_conf.yaml&quot;</span>)<br>    <span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;<br>        <span class="hljs-built_in">panic</span>(err)<br>    &#125;<br>    err = yaml.Unmarshal(yamlFile, &amp;conf)<br>    <span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;<br>        <span class="hljs-built_in">panic</span>(err)<br>    &#125;<br>    <span class="hljs-keyword">return</span> &amp;App&#123;ds: NewRedisClient(conf)&#125;<br>&#125;<br><br></code></pre></td></tr></table></figure>
 <p>NewApp 说，停停，你们年轻人不讲武德，我的责任就是创建一个 App 实例，我只需要一个 DataSource 注册进去，至于这个 DataSource 是怎么来的我不想管，这么一坨处理 conf 的代码凭什么要放在我这里，我也不想关心你这配置文件是通过网络请求拿来的还是从本地磁盘读的，我只想把 App 组装好扔出去直接下班。</p>
-<h3 id="依赖注入终于可以登场了​">依赖注入终于可以登场了<a target="_blank" rel="noopener" href="https://go-kratos.dev/blog/go-project-wire/#%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5%E7%BB%88%E4%BA%8E%E5%8F%AF%E4%BB%A5%E7%99%BB%E5%9C%BA%E4%BA%86">​</a></h3>
+<h4 id="依赖注入终于可以登场了">依赖注入终于可以登场了</h4>
 <p>还记得前面是怎么说依赖注入的吗？被依赖的模块，在创建模块时，被注入到（即当作参数传入）初始化函数里面。通过这种模式，正好可以让 NewApp 早点下班。我们在外面初始化好 NewRedis 或者 NewMysql，得到的 DataSource 直接扔给 NewApp。</p>
 <p>也就是这样</p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">NewApp</span><span class="hljs-params">(ds DataSource)</span></span> *App &#123;<br>    <span class="hljs-keyword">return</span> &amp;App&#123;ds: ds&#125;<br>&#125;<br><br></code></pre></td></tr></table></figure>
@@ -677,46 +678,46 @@
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">initApp</span><span class="hljs-params">()</span></span> *App &#123;<br>    c := GetRedisConf()<br>    r := NewRedis(c)<br>    app := NewApp(r)<br>    <span class="hljs-keyword">return</span> app<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>    app := initApp()<br>    app.Run()<br>&#125;<br></code></pre></td></tr></table></figure>
 <p>然后你可以通过实现 DataSource 的接口，更换前面的读取配置文件的方法，和更换创建 DataSource 的方法，来任意修改你的底层实现（读配置文件的实现，和用哪种 DataSource 来查数据），而不用每次都改一大堆代码。这使得你的代码层次划分得更加清楚，更容易维护了。</p>
 <p>这就是依赖注入。</p>
-<h3 id="手工依赖注入的问题">手工依赖注入的问题<a target="_blank" rel="noopener" href="https://go-kratos.dev/blog/go-project-wire/#%E6%89%8B%E5%B7%A5%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5%E7%9A%84%E9%97%AE%E9%A2%98"></a></h3>
+<h4 id="手工依赖注入的问题">手工依赖注入的问题</h4>
 <p>上文这一坨代码，把各个实例初始化好，再按照各个初始化方法的需求塞进去，最终构造出 app 的这坨代码，就是注入依赖的过程。</p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs go">c := GetRedisConf()<br>r := NewRedis(c)<br>app := NewApp(r)<br></code></pre></td></tr></table></figure>
 <p>目前只有一个 DataSource，这样手写注入过程还可以，一旦你要维护的东西多了，比如你的 NewApp 是这样的<code>NewApp(r *Redis, es *ES, us *UserSerivce, db *MySQL) *App</code>然后其中 UserService 是这样的<code>UserService(pg *Postgres, mm *Memcached)</code>，这样形成了多层次的一堆依赖需要注入，徒手去写非常麻烦。</p>
 <p>而这部分，就是 wire 这样的依赖注入工具能够起作用的地方了——他的功能只是通过生成代码<strong>帮你注入依赖</strong>，而实际的依赖实例需要你自己创建（初始化）。</p>
-<h1>怎么使用依赖注入</h1>
+<h2 id="怎么使用依赖注入">怎么使用依赖注入</h2>
 <p>通过我们刚才的推导过程，应该大概理解了为什么要用依赖注入，以及 wire 在这其中起到什么作用——通过生成代码<strong>帮你注入依赖</strong>，而实际的依赖实例需要你自己创建（初始化）。</p>
 <p>接下来就比较清楚了。</p>
 <p>首先要实现一个<code>wire.go</code>的文件，里面定义好 Injector。</p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">initApp</span><span class="hljs-params">()</span></span> (*App) &#123;<br>  <span class="hljs-built_in">panic</span>(wire.Build(GetRedisConf, NewRedis, SomeProviderSet, NewApp))<br>&#125;<br></code></pre></td></tr></table></figure>
 <p>然后分别实现好 Provider。</p>
 <p>执行<code>wire</code>命令后 他会扫描整个项目，并帮你生成一个<code>wire_gen.go</code>文件，如果你有什么没有实现好，它会报错出来。</p>
-<h3 id="谁参与编译？​">谁参与编译？<a target="_blank" rel="noopener" href="https://go-kratos.dev/blog/go-project-wire/#%E8%B0%81%E5%8F%82%E4%B8%8E%E7%BC%96%E8%AF%91">​</a></h3>
+<h3 id="谁参与编译？">谁参与编译？</h3>
 <p>上面那个<code>initApp</code>方法，官方文档叫它 Injector，由于文件里首行<code>// +build wireinject</code>这句注释，这个 wire.go 文件只会由 wire 读取，在 go 编译器在编译代码时不会去管它，实际会读的是生成的 wire_gen.go 文件。</p>
 <p>而 Provider 就是你代码的一部分，肯定会参与到编译过程。</p>
-<h3 id="Injector">Injector<a target="_blank" rel="noopener" href="https://go-kratos.dev/blog/go-project-wire/#injector-%E6%98%AF%E4%BB%80%E4%B9%88%E9%AC%BC%E4%B8%9C%E8%A5%BF"></a></h3>
+<h4 id="Injector">Injector</h4>
 <p>Injector 就是你最终想要的结果——最终的 App 对象的初始化函数，也就是前面那个例子里的<code>initApp</code>方法。它不参与编译，实际参与编译的代码是由 wire 帮你生成的。</p>
-<h3 id="Provider">Provider<a target="_blank" rel="noopener" href="https://go-kratos.dev/blog/go-project-wire/#provider-%E6%98%AF%E4%BB%80%E4%B9%88%E9%AC%BC%E4%B8%9C%E8%A5%BF"></a></h3>
+<h4 id="Provider">Provider</h4>
 <p>Provider 就是创建各个依赖的方法，比如前面例子里的 NewRedis 和 NewApp 等。</p>
 <p>wire 里面还有个 ProviderSet 的概念，就是把一组 Provider 打包。</p>
 <p>举个例子：通常你去 KFC 点单的时候很懒，不想这样点你的套餐：我要一杯可乐，一包薯条，一个汉堡；你想直接戳一下就好了，来一份单人套餐。这个套餐就是 ProviderSet，一组约定好的配方，不然你的点单列表（injector 里的 Build）就会变得超级长，这样你会麻烦。</p>
-<h3 id="wire-工具做了啥？​">wire 工具做了啥？<a target="_blank" rel="noopener" href="https://go-kratos.dev/blog/go-project-wire/#wire-%E5%B7%A5%E5%85%B7%E5%81%9A%E4%BA%86%E5%95%A5">​</a></h3>
+<h3 id="wire-工具做了啥？">wire 工具做了啥？</h3>
 <p>重要的事情说三遍，通过生成代码<strong>帮你注入依赖</strong>。</p>
 <p>在 KFC 的例子里就是，wire 就是个服务员，它按照你的订单，去叫做相应的同事把各个食物/套餐做好，然后最终按需求打包给你。这个中间协调构建的过程，就是注入依赖。</p>
 <p>这样的好处就是， 对于 KFC 来说，假设他们突然换可乐供应商了，直接把可乐替换掉就行，返回一种新的可乐，而对于顾客不需要有啥改动。 对于顾客来说，点单内容可以变换，比如我今天不想要薯条了，或者想加点别的，只要改动我的点单(只要 KFC 有)，然后通过 wire 重新去生成即可，不需要关注这个服务员是如何去做这个订单的。</p>
-<h1>总结<a target="_blank" rel="noopener" href="https://go-kratos.dev/blog/go-project-wire/#%E6%80%BB%E7%BB%93"></a></h1>
+<h2 id="总结">总结</h2>
 <p>重新总结一下用 wire 做依赖注入的过程。</p>
-<h3 id="1-定义-Injector​">1. 定义 Injector<a target="_blank" rel="noopener" href="https://go-kratos.dev/blog/go-project-wire/#1-%E5%AE%9A%E4%B9%89-injector">​</a></h3>
+<h3 id="1-定义-Injector">1. 定义 Injector</h3>
 <p>创建<code>wire.go</code>文件，定义下你最终想用的实例初始化函数例如<code>initApp</code>（即 Injector），定好它返回的东西<code>*App</code>，在方法里用<code>panic(wire.Build(NewRedis, SomeProviderSet, NewApp))</code>罗列出它依赖哪些实例的初始化方法（即 Provider）/或者哪些组初始化方法（ProviderSet）</p>
-<h3 id="2-定义-ProviderSet（如果有的话）​">2. 定义 ProviderSet（如果有的话）<a target="_blank" rel="noopener" href="https://go-kratos.dev/blog/go-project-wire/#2-%E5%AE%9A%E4%B9%89-providerset%E5%A6%82%E6%9E%9C%E6%9C%89%E7%9A%84%E8%AF%9D">​</a></h3>
+<h3 id="2-定义-ProviderSet（如果有的话）">2. 定义 ProviderSet（如果有的话）</h3>
 <p>ProviderSet 就是一组初始化函数，是为了少写一些代码，能够更清晰的组织各个模块的依赖才出现的。也可以不用，但 Injector 里面的东西就需要写一堆。 像这样 <code>var SomeProviderSet = wire.NewSet(NewES,NewDB)</code>定义 ProviderSet 里面包含哪些 Provider</p>
-<h3 id="3-实现各个-Provider​">3. 实现各个 Provider<a target="_blank" rel="noopener" href="https://go-kratos.dev/blog/go-project-wire/#3-%E5%AE%9E%E7%8E%B0%E5%90%84%E4%B8%AA-provider">​</a></h3>
+<h3 id="3-实现各个-Provider">3. 实现各个 Provider</h3>
 <p>Provider 就是初始化方法，你需要自己实现，比如 NewApp，NewRedis，NewMySQL，GetConfig 等，注意他们们各自的输入输出</p>
-<h3 id="4-生成代码​">4. 生成代码<a target="_blank" rel="noopener" href="https://go-kratos.dev/blog/go-project-wire/#4-%E7%94%9F%E6%88%90%E4%BB%A3%E7%A0%81">​</a></h3>
+<h3 id="4-生成代码">4. 生成代码</h3>
 <p>执行 wire 命令生成代码，工具会扫描你的代码，依照你的 Injector 定义来组织各个 Provider 的执行顺序，并自动按照 Provider 们的类型需求来按照顺序执行和安排参数传递，如果有哪些 Provider 的要求没有满足，会在终端报出来，持续修复执行 wire，直到成功生成<code>wire_gen.go</code>文件。接下来就可以正常使用<code>initApp</code>来写你后续的代码了。</p>
 <p>如果需要替换实现，对 Injector 进行相应的修改，实现必须的 Provider，重新生成即可。</p>
 <p>它生成的代码其实就是类似我们之前需要手写的这个</p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">initApp</span><span class="hljs-params">()</span></span> *App &#123;<span class="hljs-comment">// injector</span><br>    c := GetRedisConf()<span class="hljs-comment">// provider</span><br>    r := NewRedis(c)<span class="hljs-comment">// provider</span><br>    app := NewApp(r)<span class="hljs-comment">// provider</span><br>    <span class="hljs-keyword">return</span> app<br>&#125;<br></code></pre></td></tr></table></figure>
 <p>由于我们的例子比较简单，通过 wire 生成体现不出优势，但如果我们的软件复杂，有很多层级的依赖，使用 wire 自动生成注入逻辑，无疑更加方便和准确。</p>
-<h3 id="5-高级用法​">5. 高级用法<a target="_blank" rel="noopener" href="https://go-kratos.dev/blog/go-project-wire/#5-%E9%AB%98%E7%BA%A7%E7%94%A8%E6%B3%95">​</a></h3>
+<h3 id="5-高级用法">5. 高级用法</h3>
 <p>wire 还有更多功能，比如 cleanup, bind 等等，请参考官方文档来使用。</p>
 <p>最后，其实多折腾几次，就会使用了，希望本文能对您起到一定程度上的帮助。</p>
 <hr>

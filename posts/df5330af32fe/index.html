@@ -42,7 +42,7 @@
 <meta property="og:image" content="https://serendipity565.github.io/img/blog/golanddjs/10.png">
 <meta property="og:image" content="https://serendipity565.github.io/img/blog/golanddjs/11.png">
 <meta property="article:published_time" content="2024-09-26T15:30:34.000Z">
-<meta property="article:modified_time" content="2024-10-10T06:02:28.526Z">
+<meta property="article:modified_time" content="2024-11-06T11:17:37.786Z">
 <meta property="article:author" content="Serendipity">
 <meta property="article:tag" content="Go">
 <meta name="twitter:card" content="summary_large_image">
@@ -621,8 +621,8 @@
             
               <div class="markdown-body">
                 
-                <h1><strong>sync.Mutex</strong></h1>
-<h2 id="核心机制">核心机制</h2>
+                <h2 id="sync-Mutex"><strong>sync.Mutex</strong></h2>
+<h3 id="核心机制">核心机制</h3>
 <ul>
 <li>通过 Mutex 内一个状态值标识锁的状态，例如，取 0 表示未加锁，1 表示已加锁；
 <ul>
@@ -637,7 +637,7 @@
 <li>饥饿模式：当 Mutex 阻塞队列中存在处于饥饿态的 goroutine 时，会进入模式，将抢锁流程由非公平机制转为公平机制.这是 sync.Mutex 为拯救陷入饥荒的老 goroutine 而启用的特殊机制，饥饿模式下，锁的所有权按照阻塞队列的顺序进行依次传递. 新 goroutine 进行流程时不得抢锁，而是进入队列尾部排队.</li>
 <li>正常模式/非饥饿模式：这是 sync.Mutex 默认采用的模式. 当有 goroutine 从阻塞队列被唤醒时，会和此时先进入抢锁流程的 goroutine 进行锁资源的争夺，假如抢锁失败，会重新回到阻塞队列头部.</li>
 </ul>
-<h2 id="数据结构">数据结构</h2>
+<h3 id="数据结构">数据结构</h3>
 <p><img src="/img/blog/golanddjs/1.png" srcset="/img/loading.gif" lazyload alt="1.png"></p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">type</span> Mutex <span class="hljs-keyword">struct</span> &#123;<br>    state <span class="hljs-type">int32</span><br>    sema  <span class="hljs-type">uint32</span><br>&#125;<br></code></pre></td></tr></table></figure>
 <ul>
@@ -652,7 +652,7 @@
 <li>mutexWaiterShift = 3：右侧存在 3 个 bit 位标识特殊信息，分别为上述的 mutexLocked、mutexWoken、mutexStarving；</li>
 <li>starvationThresholdNs = 1 ms：sync.Mutex 进入饥饿模式的等待时间阈值。</li>
 </ul>
-<h2 id="Mutex-Lock"><strong>Mutex.Lock()</strong></h2>
+<h3 id="Mutex-Lock"><strong>Mutex.Lock()</strong></h3>
 <p><img src="/img/blog/golanddjs/2.png" srcset="/img/loading.gif" lazyload alt="2.png"></p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(m *Mutex)</span></span> Lock() &#123;<br>    <span class="hljs-keyword">if</span> atomic.CompareAndSwapInt32(&amp;m.state, <span class="hljs-number">0</span>, mutexLocked) &#123;<br>        <span class="hljs-keyword">return</span><br>    &#125;<br>    <span class="hljs-comment">// Slow path (outlined so that the fast path can be inlined)</span><br>    m.lockSlow()<br>&#125;<br></code></pre></td></tr></table></figure>
 <ul>
@@ -669,7 +669,7 @@
 <li><code>new</code>：要设置的新值。</li>
 <li>返回值 <code>swapped</code>：如果 <code>addr</code> 的当前值等于 <code>old</code>，则返回 <code>true</code>，并将 <code>addr</code> 的值替换为 <code>new</code>；否则返回 <code>false</code>，且不做任何更改。</li>
 </ul>
-<h2 id="Mutex-lockSlow"><strong>Mutex.lockSlow()</strong></h2>
+<h3 id="Mutex-lockSlow"><strong>Mutex.lockSlow()</strong></h3>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(m *Mutex)</span></span> lockSlow() &#123;<br>    <span class="hljs-keyword">var</span> waitStartTime <span class="hljs-type">int64</span><br>    starving := <span class="hljs-literal">false</span><br>    awoke := <span class="hljs-literal">false</span><br>    iter := <span class="hljs-number">0</span><br>    old := m.state<br>    <span class="hljs-comment">// ...</span><br>&#125;<br></code></pre></td></tr></table></figure>
 <ul>
 <li>waitStartTime：标识当前 goroutine 在抢锁过程中的等待时长，单位：ns；</li>
@@ -678,7 +678,7 @@
 <li>iter：标识当前 goroutine 参与自旋的次数；</li>
 <li>old：临时存储锁的 state 值.</li>
 </ul>
-<h3 id="自旋空转"><strong>自旋空转</strong></h3>
+<h4 id="自旋空转"><strong>自旋空转</strong></h4>
 <p><img src="/img/blog/golanddjs/3.png" srcset="/img/loading.gif" lazyload alt="3.png"></p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(m *Mutex)</span></span> lockSlow() &#123;<br>    <span class="hljs-comment">// ...</span><br>    <span class="hljs-keyword">for</span> &#123;<br>        <span class="hljs-comment">// 进入该 if 分支，说明抢锁失败，处于饥饿模式，但仍满足自旋条件</span><br>        <span class="hljs-keyword">if</span> old&amp;(mutexLocked|mutexStarving) == mutexLocked &amp;&amp; runtime_canSpin(iter) &#123;<br>            <span class="hljs-comment">// 进入该 if 分支，说明当前锁阻塞队列有协程，但还未被唤醒，因此需要将</span><br>            <span class="hljs-comment">// mutexWoken 标识置为 1，避免再有其他协程被唤醒和自己抢锁</span><br>            <span class="hljs-keyword">if</span> !awoke &amp;&amp; old&amp;mutexWoken == <span class="hljs-number">0</span> &amp;&amp; old&gt;&gt;mutexWaiterShift != <span class="hljs-number">0</span> &amp;&amp;<br>                atomic.CompareAndSwapInt32(&amp;m.state, old, old|mutexWoken) &#123;<br>                awoke = <span class="hljs-literal">true</span><br>            &#125;<br>            runtime_doSpin()<br>            iter++<br>            old = m.state<br>            <span class="hljs-keyword">continue</span><br>        &#125;<br><br>        <span class="hljs-comment">// ...</span><br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 <ul>
@@ -689,7 +689,7 @@
 <li>更新自旋次数 iter 和锁状态值 old；</li>
 <li>通过 continue 语句进入下一轮尝试.</li>
 </ul>
-<h3 id="state-新值构造">state 新值构造</h3>
+<h4 id="state-新值构造">state 新值构造</h4>
 <p><img src="/img/blog/golanddjs/4.png" srcset="/img/loading.gif" lazyload alt="4.png"></p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(m *Mutex)</span></span> lockSlow() &#123;<br>    <span class="hljs-comment">// ...</span><br>    <span class="hljs-keyword">for</span> &#123;<br>        <span class="hljs-comment">// 自旋抢锁失败后处理 ...</span><br><br>        <span class="hljs-built_in">new</span> := old<br>        <span class="hljs-keyword">if</span> old&amp;mutexStarving == <span class="hljs-number">0</span> &#123;<br>            <span class="hljs-built_in">new</span> |= mutexLocked<br>        &#125;<br>        <span class="hljs-keyword">if</span> old&amp;(mutexLocked|mutexStarving) != <span class="hljs-number">0</span> &#123;<br>            <span class="hljs-built_in">new</span> += <span class="hljs-number">1</span> &lt;&lt; mutexWaiterShift<br>        &#125;<br>        <span class="hljs-keyword">if</span> starving &amp;&amp; old&amp;mutexLocked != <span class="hljs-number">0</span> &#123;<br>            <span class="hljs-built_in">new</span> |= mutexStarving<br>        &#125;<br>        <span class="hljs-keyword">if</span> awoke &#123;<br>            <span class="hljs-built_in">new</span> &amp;^= mutexWoken<br>        &#125;<br><br>        <span class="hljs-comment">// ...</span><br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 <ul>
@@ -699,9 +699,9 @@
 <li>倘若当前进入饥饿模式且旧值已加锁，则将新值置为饥饿模式；</li>
 <li>倘若局部变量标识是已有唤醒协程抢锁，说明 Mutex.state 中的 mutexWoken 是被当前 gouroutine 置为 1 的，但由于当前 goroutine 接下来要么抢锁成功，要么被阻塞挂起，因此需要在新值中将该 mutexWoken 标识更新置 0.</li>
 </ul>
-<h4 id="补充：-是什么">补充：&amp;^ 是什么</h4>
+<h5 id="补充：-是什么">补充：&amp;^ 是什么</h5>
 <p>a &amp;^ b ：bit clear，清零a中，ab都是1的位。</p>
-<h3 id="state-新旧值替换"><strong>state 新旧值替换</strong></h3>
+<h4 id="state-新旧值替换"><strong>state 新旧值替换</strong></h4>
 <p><img src="/img/blog/golanddjs/5.png" srcset="/img/loading.gif" lazyload alt="5.png"></p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(m *Mutex)</span></span> lockSlow() &#123;<br>    <span class="hljs-comment">// ...</span><br>    <span class="hljs-keyword">for</span> &#123;<br>        <span class="hljs-comment">// 自旋抢锁失败后处理 ...</span><br><br>        <span class="hljs-comment">// new old 状态值更新 ...</span><br><br>        <span class="hljs-keyword">if</span> atomic.CompareAndSwapInt32(&amp;m.state, old, <span class="hljs-built_in">new</span>) &#123;<br>            <span class="hljs-comment">// case1 加锁成功</span><br>            <span class="hljs-comment">// case2 将当前协程挂起</span><br><br>            <span class="hljs-comment">// ...</span><br>        &#125;<span class="hljs-keyword">else</span> &#123;<br>            old = m.state<br>        &#125;<br>        <span class="hljs-comment">// ...</span><br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 <ul>
@@ -709,7 +709,7 @@
 <li>倘若失败（即旧值被其他协程介入提前修改导致不符合预期），则将旧值更新为此刻的 Mutex.State，并开启一轮新的循环；</li>
 <li>倘若 CAS 替换成功，则进入最后一轮的二择一局面：I 倘若当前 goroutine 加锁成功，则返回；II 倘若失败，则将 goroutine 挂起添加到阻塞队列.</li>
 </ul>
-<h3 id="上锁成功分支">上锁成功分支</h3>
+<h4 id="上锁成功分支">上锁成功分支</h4>
 <p><img src="/img/blog/golanddjs/6.png" srcset="/img/loading.gif" lazyload alt="6.png"></p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(m *Mutex)</span></span> lockSlow() &#123;<br>    <span class="hljs-comment">// ...</span><br>    <span class="hljs-keyword">for</span> &#123;<br>        <span class="hljs-comment">// 自旋抢锁失败后处理 ...</span><br><br>        <span class="hljs-comment">// new old 状态值更新 ...</span><br><br>        <span class="hljs-keyword">if</span> atomic.CompareAndSwapInt32(&amp;m.state, old, <span class="hljs-built_in">new</span>) &#123;<br>            <span class="hljs-keyword">if</span> old&amp;(mutexLocked|mutexStarving) == <span class="hljs-number">0</span> &#123;<br>                <span class="hljs-keyword">break</span><br>            &#125;<br><br>            <span class="hljs-comment">// ...</span><br>        &#125;<br>        <span class="hljs-comment">// ...</span><br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 <ul>
@@ -717,7 +717,7 @@
 <li>接下来进行判断，倘若旧值是未加锁状态且为正常模式，则意味着加锁标识位正是由当前 goroutine 完成的更新，说明加锁成功，返回即可；</li>
 <li>倘若旧值中锁未释放或者处于饥饿模式，则当前 goroutine 需要进入阻塞队列挂起.</li>
 </ul>
-<h3 id="阻塞挂起">阻塞挂起</h3>
+<h4 id="阻塞挂起">阻塞挂起</h4>
 <p><img src="/img/blog/golanddjs/7.png" srcset="/img/loading.gif" lazyload alt="7.png"></p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(m *Mutex)</span></span> lockSlow() &#123;<br>    <span class="hljs-comment">// ...</span><br>    <span class="hljs-keyword">for</span> &#123;<br>        <span class="hljs-comment">// 自旋抢锁失败后处理 ...</span><br><br>        <span class="hljs-comment">// new old 状态值更新 ...</span><br><br>        <span class="hljs-keyword">if</span> atomic.CompareAndSwapInt32(&amp;m.state, old, <span class="hljs-built_in">new</span>) &#123;<br>            <span class="hljs-comment">// 加锁成功后返回的逻辑分支 ...</span><br><br>            queueLifo := waitStartTime != <span class="hljs-number">0</span><br>            <span class="hljs-keyword">if</span> waitStartTime == <span class="hljs-number">0</span> &#123;<br>                waitStartTime = runtime_nanotime()<br>            &#125;<br>            runtime_SemacquireMutex(&amp;m.sema, queueLifo, <span class="hljs-number">1</span>)<br>            <span class="hljs-comment">// ...</span><br>        &#125;<br>        <span class="hljs-comment">// ...</span><br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 <p>承接上节，走到此处的情形有两种：要么是抢锁失败，要么是锁已处于饥饿模式，而当前 goroutine 不是从阻塞队列被唤起的协程. 不论处于哪种情形，当前 goroutine 都面临被阻塞挂起的命运.</p>
@@ -728,7 +728,7 @@
 <li>将当前协程添加到阻塞队列中，倘若是老客则挂入队头；倘若是新客，则挂入队尾；</li>
 <li>挂起当前协程.</li>
 </ul>
-<h3 id="从阻塞态被唤醒"><strong>从阻塞态被唤醒</strong></h3>
+<h4 id="从阻塞态被唤醒"><strong>从阻塞态被唤醒</strong></h4>
 <p><img src="/img/blog/golanddjs/8.png" srcset="/img/loading.gif" lazyload alt="8.png"></p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(m *Mutex)</span></span> lockSlow() &#123;<br>    <span class="hljs-comment">// ...</span><br>    <span class="hljs-keyword">for</span> &#123;<br>        <span class="hljs-comment">// 自旋抢锁失败后处理...</span><br><br>        <span class="hljs-comment">// new old 状态值更新 ...</span><br><br>        <span class="hljs-keyword">if</span> atomic.CompareAndSwapInt32(&amp;m.state, old, <span class="hljs-built_in">new</span>) &#123;<br>            <span class="hljs-comment">// 加锁成功后返回的逻辑分支 ...</span><br><br>            <span class="hljs-comment">// 挂起前处理 ...</span><br>            runtime_SemacquireMutex(&amp;m.sema, queueLifo, <span class="hljs-number">1</span>)<br>            <span class="hljs-comment">// 从阻塞队列被唤醒了</span><br>            starving = starving || runtime_nanotime()-waitStartTime &gt; starvationThresholdNs<br>            old = m.state<br>            <span class="hljs-keyword">if</span> old&amp;mutexStarving != <span class="hljs-number">0</span> &#123;<br>                delta := <span class="hljs-type">int32</span>(mutexLocked - <span class="hljs-number">1</span>&lt;&lt;mutexWaiterShift)<br>                <span class="hljs-keyword">if</span> !starving || old&gt;&gt;mutexWaiterShift == <span class="hljs-number">1</span> &#123;<br>                    delta -= mutexStarving<br>                &#125;<br>                atomic.AddInt32(&amp;m.state, delta)<br>                <span class="hljs-keyword">break</span><br>            &#125;<br>            awoke = <span class="hljs-literal">true</span><br>            iter = <span class="hljs-number">0</span><br>        &#125;<br>        <span class="hljs-comment">// ...</span><br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 <ul>
@@ -739,7 +739,7 @@
 <li>饥饿模式下，goroutine 获取锁前需要更新锁的状态，包含 mutexLocked、锁阻塞队列等待协程数以及 mutexStarving 三个信息；均通过 delta 变量记录差值，最终通过原子操作添加到 Mutex.state 中；</li>
 <li>mutexStarving 的更新要作前置判断，倘若当前局部变量 starving 为 false，或者当前 goroutine 就是 Mutex 阻塞队列的最后一个 goroutine，则将 Mutex.state 置为正常模式.</li>
 </ul>
-<h2 id="Unlock"><strong>Unlock</strong></h2>
+<h3 id="Unlock"><strong>Unlock</strong></h3>
 <p><img src="/img/blog/golanddjs/9.png" srcset="/img/loading.gif" lazyload alt="9.png"></p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(m *Mutex)</span></span> Unlock() &#123;<br>    <span class="hljs-built_in">new</span> := atomic.AddInt32(&amp;m.state, -mutexLocked)<br>    <span class="hljs-keyword">if</span> <span class="hljs-built_in">new</span> != <span class="hljs-number">0</span> &#123;<br>        m.unlockSlow(<span class="hljs-built_in">new</span>)<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 <ul>
@@ -757,30 +757,30 @@
 <li>Go语言提供的原子操作都是非入侵式的</li>
 <li>原子操作支持的类型包括<code>int32、int64、uint32、uint64、uintptr、unsafe.Pointer</code>。</li>
 </ul>
-<h2 id="unlockSlow"><strong>unlockSlow</strong></h2>
+<h3 id="unlockSlow"><strong>unlockSlow</strong></h3>
 <p><img src="/img/blog/golanddjs/10.png" srcset="/img/loading.gif" lazyload alt="10.png"></p>
-<h3 id="未加锁的异常情形"><strong>未加锁的异常情形</strong></h3>
+<h4 id="未加锁的异常情形"><strong>未加锁的异常情形</strong></h4>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(m *Mutex)</span></span> unlockSlow(<span class="hljs-built_in">new</span> <span class="hljs-type">int32</span>) &#123;<br>    <span class="hljs-keyword">if</span> (<span class="hljs-built_in">new</span>+mutexLocked)&amp;mutexLocked == <span class="hljs-number">0</span> &#123;<br>        fatal(<span class="hljs-string">&quot;sync: unlock of unlocked mutex&quot;</span>)<br>    &#125;<br>    <span class="hljs-comment">// ...</span><br>&#125;<br></code></pre></td></tr></table></figure>
 <p>解锁时倘若发现 Mutex 此前未加锁，直接抛出 fatal.</p>
-<h3 id="正常模式"><strong>正常模式</strong></h3>
+<h4 id="正常模式"><strong>正常模式</strong></h4>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(m *Mutex)</span></span> unlockSlow(<span class="hljs-built_in">new</span> <span class="hljs-type">int32</span>) &#123;<br>    <span class="hljs-comment">// ...</span><br>    <span class="hljs-keyword">if</span> <span class="hljs-built_in">new</span>&amp;mutexStarving == <span class="hljs-number">0</span> &#123;<br>        old := <span class="hljs-built_in">new</span><br>        <span class="hljs-keyword">for</span> &#123;<br><br>            <span class="hljs-keyword">if</span> old&gt;&gt;mutexWaiterShift == <span class="hljs-number">0</span> || old&amp;(mutexLocked|mutexWoken|mutexStarving) != <span class="hljs-number">0</span> &#123;<br>                <span class="hljs-keyword">return</span><br>            &#125;<br><br>            <span class="hljs-built_in">new</span> = (old - <span class="hljs-number">1</span>&lt;&lt;mutexWaiterShift) | mutexWoken<br>            <span class="hljs-keyword">if</span> atomic.CompareAndSwapInt32(&amp;m.state, old, <span class="hljs-built_in">new</span>) &#123;<br>                runtime_Semrelease(&amp;m.sema, <span class="hljs-literal">false</span>, <span class="hljs-number">1</span>)<br>                <span class="hljs-keyword">return</span><br>            &#125;<br>            old = m.state<br>        &#125;<br>    &#125;<br>    <span class="hljs-comment">// ...</span><br>&#125;<br></code></pre></td></tr></table></figure>
 <ul>
 <li>倘若阻塞队列内无 goroutine 或者 mutexLocked、mutexStarving、mutexWoken 标识位任一不为零，三者均说明此时有其他活跃协程已介入，自身无需关心后续流程；</li>
 <li>基于 CAS 操作将 Mutex.state 中的阻塞协程数减 1，倘若成功，则唤起阻塞队列头部的 goroutine，并退出；</li>
 <li>倘若减少阻塞协程数的 CAS 操作失败，则更新此时的 Mutex.state 为新的 old 值，开启下一轮循环.</li>
 </ul>
-<h3 id="饥饿模式"><strong>饥饿模式</strong></h3>
+<h4 id="饥饿模式"><strong>饥饿模式</strong></h4>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(m *Mutex)</span></span> unlockSlow(<span class="hljs-built_in">new</span> <span class="hljs-type">int32</span>) &#123;<br>    <span class="hljs-comment">// ...</span><br>    <span class="hljs-keyword">if</span> <span class="hljs-built_in">new</span>&amp;mutexStarving == <span class="hljs-number">0</span> &#123;<br>        <span class="hljs-comment">// ...</span><br>    &#125; <span class="hljs-keyword">else</span> &#123;<br>        runtime_Semrelease(&amp;m.sema, <span class="hljs-literal">true</span>, <span class="hljs-number">1</span>)<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 <p>饥饿模式下，直接唤醒阻塞队列头部的 goroutine 即可.</p>
-<h1><strong>Sync.RWMutex</strong></h1>
-<h2 id="核心机制-2">核心机制</h2>
+<h2 id="Sync-RWMutex"><strong>Sync.RWMutex</strong></h2>
+<h3 id="核心机制-2">核心机制</h3>
 <ul>
 <li>从逻辑上，可以把 RWMutex 理解为一把读锁加一把写锁；</li>
 <li>写锁具有严格的排他性，当其被占用，其他试图取写锁或者读锁的 goroutine 均阻塞；</li>
 <li>读锁具有有限的共享性，当其被占用，试图取写锁的 goroutine 会阻塞，试图取读锁的 goroutine 可与当前 goroutine 共享读锁；</li>
 <li>综上可见，RWMutex 适用于读多写少的场景，最理想化的情况，当所有操作均使用读锁，则可实现去无化；最悲观的情况，倘若所有操作均使用写锁，则 RWMutex 退化为普通的 Mutex.</li>
 </ul>
-<h2 id="数据结构-2"><strong>数据结构</strong></h2>
+<h3 id="数据结构-2"><strong>数据结构</strong></h3>
 <p><img src="/img/blog/golanddjs/11.png" srcset="/img/loading.gif" lazyload alt="11.png"></p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">const</span> rwmutexMaxReaders = <span class="hljs-number">1</span> &lt;&lt; <span class="hljs-number">30</span><br><br><span class="hljs-keyword">type</span> RWMutex <span class="hljs-keyword">struct</span> &#123;<br>    w           Mutex  <span class="hljs-comment">// held if there are pending writers</span><br>    writerSem   <span class="hljs-type">uint32</span> <span class="hljs-comment">// semaphore for writers to wait for completing readers</span><br>    readerSem   <span class="hljs-type">uint32</span> <span class="hljs-comment">// semaphore for readers to wait for completing writers</span><br>    readerCount <span class="hljs-type">int32</span>  <span class="hljs-comment">// number of pending readers</span><br>    readerWait  <span class="hljs-type">int32</span>  <span class="hljs-comment">// number of departing readers</span><br>&#125;<br></code></pre></td></tr></table></figure>
 <ul>
@@ -791,19 +791,19 @@
 <li>readerCount：正常情况下等于介入读锁流程的 goroutine 数量；当 goroutine 接入写锁流程时，该值为实际介入读锁流程的 goroutine 数量减 rwmutexMaxReaders.</li>
 <li>readerWait：记录在当前 goroutine 获取写锁前，还需要等待多少个 goroutine 释放读锁.</li>
 </ul>
-<h2 id="RLock"><strong>RLock</strong></h2>
+<h3 id="RLock"><strong>RLock</strong></h3>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(rw *RWMutex)</span></span> RLock() &#123;<br>    <span class="hljs-keyword">if</span> atomic.AddInt32(&amp;rw.readerCount, <span class="hljs-number">1</span>) &lt; <span class="hljs-number">0</span> &#123;<br>        runtime_SemacquireMutex(&amp;rw.readerSem, <span class="hljs-literal">false</span>, <span class="hljs-number">0</span>)<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 <ul>
 <li>基于原子操作，将 RWMutex 的 readCount 变量加一，表示占用或等待读锁的 goroutine 数加一；</li>
 <li>倘若 RWMutex.readCount 的新值仍小于 0，说明有 goroutine 未释放写锁，因此将当前 goroutine 添加到读锁的阻塞队列中并阻塞挂起.</li>
 </ul>
-<h2 id="RUnlock"><strong>RUnlock</strong></h2>
+<h3 id="RUnlock"><strong>RUnlock</strong></h3>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(rw *RWMutex)</span></span> RUnlock() &#123;<br>    <span class="hljs-keyword">if</span> r := atomic.AddInt32(&amp;rw.readerCount, <span class="hljs-number">-1</span>); r &lt; <span class="hljs-number">0</span> &#123;<br>        rw.rUnlockSlow(r)<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 <ul>
 <li>基于原子操作，将 RWMutex 的 readCount 变量加一，表示占用或等待读锁的 goroutine 数减一；</li>
 <li>倘若 RWMutex.readCount 的新值小于 0，说明有 goroutine 在等待获取写锁，则走入 RWMutex.rUnlockSlow 的流程中.</li>
 </ul>
-<h2 id="rUnlockSlow"><strong>rUnlockSlow</strong></h2>
+<h3 id="rUnlockSlow"><strong>rUnlockSlow</strong></h3>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(rw *RWMutex)</span></span> rUnlockSlow(r <span class="hljs-type">int32</span>) &#123;<br>    <span class="hljs-keyword">if</span> r+<span class="hljs-number">1</span> == <span class="hljs-number">0</span> || r+<span class="hljs-number">1</span> == -rwmutexMaxReaders &#123;<br>        fatal(<span class="hljs-string">&quot;sync: RUnlock of unlocked RWMutex&quot;</span>)<br>    &#125;<br>    <span class="hljs-keyword">if</span> atomic.AddInt32(&amp;rw.readerWait, <span class="hljs-number">-1</span>) == <span class="hljs-number">0</span> &#123;<br>        runtime_Semrelease(&amp;rw.writerSem, <span class="hljs-literal">false</span>, <span class="hljs-number">1</span>)<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 <ul>
 <li>对 RWMutex.readerCount 进行校验，倘若发现当前协程此前未抢占过读锁，或者介入读锁流程的 goroutine 数量达到上限，则抛出 fatal；</li>
@@ -812,14 +812,14 @@
 <ul>
 <li>基于原子操作，对 RWMutex.readerWait 进行减一操作，倘若其新值为 0，说明当前 goroutine 是最后一个介入读锁流程的协程，因此需要唤醒一个等待写锁的阻塞队列的 goroutine.</li>
 </ul>
-<h2 id="Lock"><strong>Lock</strong></h2>
+<h3 id="Lock"><strong>Lock</strong></h3>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(rw *RWMutex)</span></span> Lock() &#123;<br>    rw.w.Lock()<br>    r := atomic.AddInt32(&amp;rw.readerCount, -rwmutexMaxReaders) + rwmutexMaxReaders<br>    <span class="hljs-keyword">if</span> r != <span class="hljs-number">0</span> &amp;&amp; atomic.AddInt32(&amp;rw.readerWait, r) != <span class="hljs-number">0</span> &#123;<br>        runtime_SemacquireMutex(&amp;rw.writerSem, <span class="hljs-literal">false</span>, <span class="hljs-number">0</span>)<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 <ul>
 <li>对 RWMutex 内置的互斥锁进行加锁操作；</li>
 <li>基于原子操作，对 RWMutex.readerCount 进行减少 -rwmutexMaxReaders 的操作；</li>
 <li>倘若此时存在未释放读锁的 gouroutine，则基于原子操作在 RWMutex.readerWait 的基础上加上介入读锁流程的 goroutine 数量，并将当前 goroutine 添加到写锁的阻塞队列中挂起.</li>
 </ul>
-<h2 id="Unlock-2"><strong>Unlock</strong></h2>
+<h3 id="Unlock-2"><strong>Unlock</strong></h3>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(rw *RWMutex)</span></span> Unlock() &#123;<br>    r := atomic.AddInt32(&amp;rw.readerCount, rwmutexMaxReaders)<br>    <span class="hljs-keyword">if</span> r &gt;= rwmutexMaxReaders &#123;<br>        fatal(<span class="hljs-string">&quot;sync: Unlock of unlocked RWMutex&quot;</span>)<br>    &#125;<br>    <span class="hljs-keyword">for</span> i := <span class="hljs-number">0</span>; i &lt; <span class="hljs-type">int</span>(r); i++ &#123;<br>        runtime_Semrelease(&amp;rw.readerSem, <span class="hljs-literal">false</span>, <span class="hljs-number">0</span>)<br>    &#125;<br>    rw.w.Unlock()<br>&#125;<br></code></pre></td></tr></table></figure>
 <ul>
 <li>基于原子操作，将 RWMutex.readerCount 的值加上 rwmutexMaxReaders；</li>

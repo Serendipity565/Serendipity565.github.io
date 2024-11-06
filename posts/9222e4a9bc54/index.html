@@ -37,7 +37,7 @@
 <meta property="og:image" content="https://serendipity565.github.io/img/blog/bcj/5.png">
 <meta property="og:image" content="https://serendipity565.github.io/img/blog/bcj/6.png">
 <meta property="article:published_time" content="2024-03-11T15:23:39.000Z">
-<meta property="article:modified_time" content="2024-10-10T06:02:28.552Z">
+<meta property="article:modified_time" content="2024-11-06T09:36:58.329Z">
 <meta property="article:author" content="Serendipity">
 <meta property="article:tag" content="算法">
 <meta name="twitter:card" content="summary_large_image">
@@ -634,7 +634,7 @@
             
               <div class="markdown-body">
                 
-                <h1>什么是并查集</h1>
+                <h2 id="什么是并查集">什么是并查集</h2>
 <p>并查集是一种树型的数据结构，用于处理一些不相交集合的合并及查询问题。</p>
 <p>并查集的思想是用一个数组表示了整片森林（parent），树的根节点唯一标识了一个集合，我们只要找到了某个元素的的树根，就能确定它在哪个集合里。</p>
 <p>并查集支持两种操作：</p>
@@ -642,15 +642,15 @@
 <li><strong>合并</strong>（Union）：把两个不相交的集合合并为一个集合。</li>
 <li><strong>查询</strong>（Find）：查询两个元素是否在同一个集合中。</li>
 </ul>
-<h1>适用条件</h1>
+<h2 id="适用条件">适用条件</h2>
 <p>并查集用在一些有<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">n</span></span></span></span>个元素的集合应用问题中，我们通常是在开始时让每个元素构成一个单元素的集合，然后按一定顺序将属于同一组的元素所在的集合合并，其间要反复查找一个元素在哪个集合中。这个过程看似并不复杂，但数据量极大，若用其他的数据结构来描述的话，往往在空间上过大，计算机无法承受，也无法在短时间内计算出结果，所以只能用并查集来处理。</p>
-<h1>初始化</h1>
+<h2 id="初始化">初始化</h2>
 <p>每一个祖先都是自己。</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-type">int</span> fa[MAXN];<br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">init</span><span class="hljs-params">(<span class="hljs-type">int</span> n)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; ++i)<br>    &#123;<br>        fa[i] = i;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-<h1>查询操作</h1>
+<h2 id="查询操作">查询操作</h2>
 <p>我们用递归的写法实现对代表元素的查询：一层一层的访问父节点，直至根节点（根节点的标志就是父节点是本身）。要判断两个元素是否属于同一个集合，只需要看它们的根节点是否相同即可。</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">find</span><span class="hljs-params">(<span class="hljs-type">int</span> x)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">if</span>(fa[x] == x)<br>        <span class="hljs-keyword">return</span> x;<br>    <span class="hljs-keyword">else</span><br>        <span class="hljs-keyword">return</span> <span class="hljs-built_in">find</span>(fa[x]);<br>&#125;<br></code></pre></td></tr></table></figure>
-<h1>合并操作</h1>
+<h2 id="合并操作">合并操作</h2>
 <p>先找到两个集合的根节点，然后将前者的父节点设为后者即可。当然也可以将后者的父节点设为前者。</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">merge</span><span class="hljs-params">(<span class="hljs-type">int</span> i, <span class="hljs-type">int</span> j)</span></span><br><span class="hljs-function"></span>&#123;<br>    i=<span class="hljs-built_in">find</span>(i);<br>    j=<span class="hljs-built_in">find</span>(j);<br>    <span class="hljs-keyword">if</span> (i!=j)<br>    &#123;<br>        fa[i]=j;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 <p>下面我们举个例子来具体说明这些操作:</p>
@@ -662,17 +662,17 @@
 <p><img src="/img/blog/bcj/3.png" srcset="/img/loading.gif" lazyload alt="图三"></p>
 <p>同理，将3号的父节点设为1号，如图四。</p>
 <p><img src="/img/blog/bcj/4.png" srcset="/img/loading.gif" lazyload alt="图四"></p>
-<h1>路径压缩</h1>
+<h2 id="路径压缩">路径压缩</h2>
 <p>随着元素的不断加入，集合会变得越来越大，链子也会越来越长，这会对我们的查询操作产生影响，查询的效率降低。我们可以在每次查询的时候将每个经过的结点的父节点设为根节点，下次在查询时就可以节省很多时间。</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">find</span><span class="hljs-params">(<span class="hljs-type">int</span> x)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">if</span> (x==fa[x])<br>    &#123;<br>        <span class="hljs-keyword">return</span> x;<br>    &#125;<br>    <span class="hljs-keyword">else</span><br>    &#123;<br>        fa[x]=<span class="hljs-built_in">find</span>(fa[x]);<br>        <span class="hljs-keyword">return</span> fa[x];<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 <p><img src="/img/blog/bcj/5.png" srcset="/img/loading.gif" lazyload alt="图五"></p>
-<h1>按秩合并</h1>
+<h2 id="按秩合并">按秩合并</h2>
 <p>针对合并函数merge()，往往有两种合并方式，即把<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>a</mi></mrow><annotation encoding="application/x-tex">a</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">a</span></span></span></span>节点的父节点设为<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>b</mi></mrow><annotation encoding="application/x-tex">b</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal">b</span></span></span></span>和把<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>b</mi></mrow><annotation encoding="application/x-tex">b</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal">b</span></span></span></span>节点的父节点设为<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>a</mi></mrow><annotation encoding="application/x-tex">a</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">a</span></span></span></span>，很显然，两种合并方式的结果并不同，合并后整体的查询效率也不同。如图六，绿色和黄色对应两棵树，图中的第一种合并方式下只有8号的查询需要多一步，而第二种方式下除了8号的所有元素查询都要增加一步。</p>
 <p><img src="/img/blog/bcj/6.png" srcset="/img/loading.gif" lazyload alt="图六"></p>
 <p>因此，我们需要定义一个判断条件：秩。秩可以是很多因素，比如树高，节点个数，等等。不管选择什么作为秩，合并时都最好要遵循启发式合并的原则，即将小的集合合并到大的集合中。下面以秩为树高来举例。</p>
-<h2 id="初始化">初始化</h2>
+<h3 id="初始化-2">初始化</h3>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-type">int</span> rank[<span class="hljs-number">2000</span>]=&#123;<span class="hljs-number">0</span>&#125;;<br><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">init</span><span class="hljs-params">(<span class="hljs-type">int</span> n)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; ++i)<br>    &#123;<br>        fa[i] = i;<br>        rank[i]=<span class="hljs-number">1</span>;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-<h2 id="按秩合并">按秩合并</h2>
+<h3 id="按秩合并-2">按秩合并</h3>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">merge</span><span class="hljs-params">(<span class="hljs-type">int</span> i, <span class="hljs-type">int</span> j)</span></span><br><span class="hljs-function"></span>&#123;<br>    i=<span class="hljs-built_in">find</span>(i);<br>    j=<span class="hljs-built_in">find</span>(j);<br>    <span class="hljs-keyword">if</span> (i!=j)<br>    &#123;<br>        <span class="hljs-keyword">if</span> (ra[i]&lt;=ra[j])<br>        &#123;<br>            fa[i]=j;<br>        &#125;<br>        <span class="hljs-keyword">else</span><br>        &#123;<br>            fa[j]=i;<br>        &#125;<br>        <span class="hljs-keyword">if</span> (ra[i]==ra[j])<br>        &#123;<br>            ra[j]++;<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 
                 
