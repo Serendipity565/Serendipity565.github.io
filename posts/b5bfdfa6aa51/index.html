@@ -34,7 +34,7 @@
 <meta property="og:image" content="https://serendipity565.github.io/img/blog/HowToUseGit/2.png">
 <meta property="og:image" content="https://serendipity565.github.io/img/blog/HowToUseGit/3.jpg">
 <meta property="article:published_time" content="2024-03-13T10:23:51.000Z">
-<meta property="article:modified_time" content="2024-11-06T10:55:07.996Z">
+<meta property="article:modified_time" content="2024-11-12T13:11:53.119Z">
 <meta property="article:author" content="Serendipity">
 <meta property="article:tag" content="Git">
 <meta name="twitter:card" content="summary_large_image">
@@ -274,7 +274,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.3k 字
+          1.7k 字
         
       </span>
     
@@ -285,7 +285,7 @@
         
         
         
-          17 分钟
+          22 分钟
         
       </span>
     
@@ -732,6 +732,16 @@
 <figure class="highlight plaintext"><figcaption><span>text</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs Plain">git fetch    //从远程获取代码库<br>git pull     //下载远程代码并合并，通常在多人合作别人改完项目并上传后<br>git push     //上传远程代码并合并<br></code></pre></td></tr></table></figure>
 <h2 id="总结">总结</h2>
 <p><img src="/img/blog/HowToUseGit/3.jpg" srcset="/img/loading.gif" lazyload alt=""></p>
+<h2 id="个人感受">个人感受</h2>
+<p>作为一个刚开始学习 Git 的初学者，起初我觉得它有点复杂，尤其是各种命令和概念，比如工作区、暂存区和版本库，让人有些摸不着头脑。不过使用的增加，git其实很有用，甚至可以说是开发中不可缺少的工具。</p>
+<h3 id="为什么要用-Git？">为什么要用 Git？</h3>
+<p>在写代码的时候，经常会遇到改了半天发现不如原来的好，甚至不小心把重要的代码删了。这时候如果没有备份，就只能重写，真的是一件让人崩溃的事。而有了 Git，就相当于给每次改动都存了备份，随时可以回到过去的某个版本。这种感觉只能用爽来形容。</p>
+<h3 id="分支的作用">分支的作用</h3>
+<p>在原有代码的基础上开发新功能时，可以开一个新的分支去尝试，这样担心会影响到主分支的稳定代码。等新功能完成并测试好，再把它合并到主分支上。</p>
+<h3 id="怎么减少-git-冲突">怎么减少 git 冲突</h3>
+<p>当不同的人在同一个文件的同一行做了修改时，Git 会让你手动选择保留哪一部分，其实 git 也不知道以谁的为准，所以需要手动来解决这个问题。<br>
+关于这个问题，其实可以多进行 git pull ，这是一个减少冲突发生概率的操作。当你要对一行代码进行改动时，先拉取，如果对方改了，是对的就不用改了；如果是错的，改了在退上去也不会触发冲突。<br>
+我觉得还有一个其他的解决方案就是提 pr，通过合并分支来解决这个问题。</p>
 <hr>
 <p><strong>参考文献</strong></p>
 <p><a target="_blank" rel="noopener" href="https://www.runoob.com/manual/git-guide/">git 简明指南</a></p>
