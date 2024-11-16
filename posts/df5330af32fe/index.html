@@ -26,7 +26,7 @@
     <meta name="description" content="sync.Mutex 核心机制  通过 Mutex 内一个状态值标识锁的状态，例如，取 0 表示未加锁，1 表示已加锁；  上锁：把 0 改为 1； 解锁：把 1 置为 0. 上锁时，假若已经是 1，则上锁失败，需要等他人解锁，将状态改为 0.    下面首先拎清两个概念：  饥饿模式：当 Mutex 阻塞队列中存在处于饥饿态的 goroutine 时，会进入模式，将抢锁流程由非公平机制转为公平机">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Golang单机锁">
-<meta property="og:url" content="https://serendipity565.github.io/posts/df5330af32fe/">
+<meta property="og:url" content="https://serendipity565.github.io/posts/df5330af32fe/index.html">
 <meta property="og:site_name" content="Serendipity&#39;s Blog">
 <meta property="og:description" content="sync.Mutex 核心机制  通过 Mutex 内一个状态值标识锁的状态，例如，取 0 表示未加锁，1 表示已加锁；  上锁：把 0 改为 1； 解锁：把 1 置为 0. 上锁时，假若已经是 1，则上锁失败，需要等他人解锁，将状态改为 0.    下面首先拎清两个概念：  饥饿模式：当 Mutex 阻塞队列中存在处于饥饿态的 goroutine 时，会进入模式，将抢锁流程由非公平机制转为公平机">
 <meta property="og:locale" content="zh_CN">
