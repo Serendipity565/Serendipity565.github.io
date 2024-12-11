@@ -14,7 +14,7 @@
   <link rel="apple-touch-icon" sizes="76x76" href="/img/kenan.png">
   <link rel="icon" href="/img/kenan.png">
   
-    <link rel="canonical" href="https://serendipity565.github.io/posts/33f50be21ce6/"/>
+    <link rel="canonical" href="https://serendipity565.github.io/posts/1339170a7232/"/>
   
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
@@ -26,22 +26,22 @@
   <meta name="author" content="Serendipity">
   <meta name="keywords" content="Serendipity,Blog">
   
-    <meta name="description" content="在实际中我们遇到的场景往往会比较复杂，无论我们的代码是作为server端对外提供服务或者还是我们依赖别人提供的网络服务（调用别人提供的API接口）的场景，我们通常都不想在测试过程中真正的建立网络连接。接下来就专门介绍如何在上述两种场景下mock网络测试。 httptest 在Web开发场景下的单元测试，如果涉及到HTTP请求推荐大家使用Go标准库 net&#x2F;http&#x2F;httptest 进行测试，能够">
+    <meta name="description" content="git commit 规范 1. Commit 信息的基本格式 1234&lt;type&gt;(&lt;scope&gt;): &lt;subject&gt;&lt;body&gt;  # 可选&lt;footer&gt;  # 可选  2. 详细说明 2.1. type（类型） 描述本次提交的性质，通常包括以下几类：    类型 描述     feat 新功能（feature）   fix 修">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Go单元测试—网络测试">
-<meta property="og:url" content="https://serendipity565.github.io/posts/33f50be21ce6/index.html">
+<meta property="og:title" content="Git Commit 规范">
+<meta property="og:url" content="https://serendipity565.github.io/posts/1339170a7232/index.html">
 <meta property="og:site_name" content="Serendipity&#39;s Blog">
-<meta property="og:description" content="在实际中我们遇到的场景往往会比较复杂，无论我们的代码是作为server端对外提供服务或者还是我们依赖别人提供的网络服务（调用别人提供的API接口）的场景，我们通常都不想在测试过程中真正的建立网络连接。接下来就专门介绍如何在上述两种场景下mock网络测试。 httptest 在Web开发场景下的单元测试，如果涉及到HTTP请求推荐大家使用Go标准库 net&#x2F;http&#x2F;httptest 进行测试，能够">
+<meta property="og:description" content="git commit 规范 1. Commit 信息的基本格式 1234&lt;type&gt;(&lt;scope&gt;): &lt;subject&gt;&lt;body&gt;  # 可选&lt;footer&gt;  # 可选  2. 详细说明 2.1. type（类型） 描述本次提交的性质，通常包括以下几类：    类型 描述     feat 新功能（feature）   fix 修">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2024-04-15T04:32:34.000Z">
-<meta property="article:modified_time" content="2024-11-06T10:56:16.733Z">
+<meta property="article:published_time" content="2024-12-11T07:57:32.000Z">
+<meta property="article:modified_time" content="2024-12-11T08:02:39.466Z">
 <meta property="article:author" content="Serendipity">
-<meta property="article:tag" content="Go">
+<meta property="article:tag" content="Git">
 <meta name="twitter:card" content="summary_large_image">
   
   
   
-  <title>Go单元测试—网络测试 - Serendipity&#39;s Blog</title>
+  <title>Git Commit 规范 - Serendipity&#39;s Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -243,7 +243,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="Go单元测试—网络测试"></span>
+            <span id="subtitle" data-typed-text="Git Commit 规范"></span>
           
         </div>
 
@@ -259,8 +259,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2024-04-15 12:32" pubdate>
-          2024年4月15日 下午
+        <time datetime="2024-12-11 15:57" pubdate>
+          2024年12月11日 下午
         </time>
       </span>
     
@@ -271,7 +271,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.4k 字
+          380 字
         
       </span>
     
@@ -282,7 +282,7 @@
         
         
         
-          18 分钟
+          5 分钟
         
       </span>
     
@@ -357,7 +357,7 @@
       
         <a href="/posts/1339170a7232/" title="Git Commit 规范"
            class="list-group-item list-group-item-action
-           ">
+           active">
           <span class="category-post">Git Commit 规范</span>
         </a>
       
@@ -465,7 +465,7 @@
       
         <a href="/posts/33f50be21ce6/" title="Go单元测试—网络测试"
            class="list-group-item list-group-item-action
-           active">
+           ">
           <span class="category-post">Go单元测试—网络测试</span>
         </a>
       
@@ -614,37 +614,123 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">Go单元测试—网络测试</h1>
+            <h1 id="seo-header">Git Commit 规范</h1>
             
             
               <div class="markdown-body">
                 
-                <p>在实际中我们遇到的场景往往会比较复杂，无论我们的代码是作为server端对外提供服务或者还是我们依赖别人提供的网络服务（调用别人提供的API接口）的场景，我们通常都不想在测试过程中真正的建立网络连接。接下来就专门介绍如何在上述两种场景下mock网络测试。</p>
-<h2 id="httptest">httptest</h2>
-<p>在Web开发场景下的单元测试，如果涉及到HTTP请求推荐大家使用Go标准库 <code>net/http/httptest</code> 进行测试，能够显著提高测试效率。</p>
-<p>在这一小节，我们以常见的gin框架为例，演示如何为http server编写单元测试。</p>
-<p>假设我们的业务逻辑是搭建一个http server端，对外提供HTTP服务。我们编写了一个<code>helloHandler</code>函数，用来处理用户请求。</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">package</span> httptest<br><br><span class="hljs-keyword">import</span> (<br>    <span class="hljs-string">&quot;fmt&quot;</span><br>    <span class="hljs-string">&quot;net/http&quot;</span><br><br>    <span class="hljs-string">&quot;github.com/gin-gonic/gin&quot;</span><br>)<br><br><span class="hljs-keyword">type</span> Person <span class="hljs-keyword">struct</span> &#123;<br>    Name <span class="hljs-type">string</span> <span class="hljs-string">`json:&quot;name&quot;`</span><br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">helloHandler</span><span class="hljs-params">(c *gin.Context)</span></span> &#123;<br>    <span class="hljs-keyword">var</span> p Person<br>    <span class="hljs-keyword">if</span> err := c.ShouldBindJSON(&amp;p); err != <span class="hljs-literal">nil</span> &#123;<br>        c.JSON(http.StatusOK, gin.H&#123;<br>            <span class="hljs-string">&quot;msg&quot;</span>: <span class="hljs-string">&quot;we need a name&quot;</span>,<br>        &#125;)<br>        <span class="hljs-keyword">return</span><br>    &#125;<br>    c.JSON(http.StatusOK, gin.H&#123;<br>        <span class="hljs-string">&quot;msg&quot;</span>: fmt.Sprintf(<span class="hljs-string">&quot;hello %s&quot;</span>, p.Name),<br>    &#125;)<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">SetupRouter</span><span class="hljs-params">()</span></span> *gin.Engine &#123;<br>    router := gin.Default()<br>    router.POST(<span class="hljs-string">&quot;/hello&quot;</span>, helloHandler)<br>    <span class="hljs-keyword">return</span> router<br>&#125;<br></code></pre></td></tr></table></figure>
-<p>现在我们需要为<code>helloHandler</code>函数编写单元测试，这种情况下我们就可以使用<code>httptest</code>这个工具mock一个HTTP请求和响应记录器，让我们的server端接收并处理我们mock的HTTP请求，同时使用响应记录器来记录server端返回的响应内容。</p>
-<p>单元测试的示例代码如下：</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">package</span> httptest<br><br><span class="hljs-keyword">import</span> (<br>    <span class="hljs-string">&quot;encoding/json&quot;</span><br>    <span class="hljs-string">&quot;net/http&quot;</span><br>    <span class="hljs-string">&quot;net/http/httptest&quot;</span><br>    <span class="hljs-string">&quot;strings&quot;</span><br>    <span class="hljs-string">&quot;testing&quot;</span><br><br>    <span class="hljs-string">&quot;github.com/stretchr/testify/assert&quot;</span><br>)<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">Test_helloHandler</span><span class="hljs-params">(t *testing.T)</span></span> &#123;<br> <span class="hljs-comment">// 定义两个测试用例</span><br>    tests := []<span class="hljs-keyword">struct</span> &#123;<br>        name   <span class="hljs-type">string</span><br>        person <span class="hljs-type">string</span><br>        expect <span class="hljs-type">string</span><br>    &#125;&#123;<br>        &#123;<span class="hljs-string">&quot;base case&quot;</span>, <span class="hljs-string">`&#123;&quot;name&quot;: &quot;serendipity&quot;&#125;`</span>, <span class="hljs-string">&quot;hello serendipity&quot;</span>&#125;,<br>        &#123;<span class="hljs-string">&quot;bad case&quot;</span>, <span class="hljs-string">&quot;&quot;</span>, <span class="hljs-string">&quot;we need a name&quot;</span>&#125;,<br>    &#125;<br><br>    r := SetupRouter()<br><br>    <span class="hljs-keyword">for</span> _, tt := <span class="hljs-keyword">range</span> tests &#123;<br>        t.Run(tt.name, <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(t *testing.T)</span></span> &#123;<br>            <span class="hljs-comment">// mock一个HTTP请求</span><br>            req := httptest.NewRequest(<br>                <span class="hljs-string">&quot;POST&quot;</span>,                       <span class="hljs-comment">// 请求方法</span><br>                <span class="hljs-string">&quot;/hello&quot;</span>,                     <span class="hljs-comment">// 请求URL</span><br>                strings.NewReader(tt.person), <span class="hljs-comment">// 请求参数</span><br>            )<br><br>            <span class="hljs-comment">// mock一个响应记录器</span><br>            w := httptest.NewRecorder()<br><br>            <span class="hljs-comment">// 让server端处理mock请求并记录返回的响应内容</span><br>            r.ServeHTTP(w, req)<br><br>            <span class="hljs-comment">// 校验状态码是否符合预期</span><br>            assert.Equal(t, http.StatusOK, w.Code)<br><br>            <span class="hljs-comment">// 解析并检验响应内容是否复合预期</span><br>            <span class="hljs-keyword">var</span> resp <span class="hljs-keyword">map</span>[<span class="hljs-type">string</span>]<span class="hljs-type">string</span><br>            err := json.Unmarshal([]<span class="hljs-type">byte</span>(w.Body.String()), &amp;resp)<br>            assert.Nil(t, err)                      <span class="hljs-comment">//断言 err 变量是否为 nil</span><br>            assert.Equal(t, tt.expect, resp[<span class="hljs-string">&quot;msg&quot;</span>]) <span class="hljs-comment">//断言 resp[&quot;msg&quot;] 的值是否等于 tt.expect。</span><br>        &#125;)<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-<p>终端运行<code>go test ./httptest -v</code>执行单元测试，查看测试结果。</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs go">=== RUN   Test_helloHandler<br>[GIN-debug] [WARNING] Creating an Engine instance with the Logger and Recovery middleware already attached.<br><br>[GIN-debug] [WARNING] Running in <span class="hljs-string">&quot;debug&quot;</span> mode. Switch to <span class="hljs-string">&quot;release&quot;</span> mode in production.<br> - using env:   export GIN_MODE=release<br> - using code:  gin.SetMode(gin.ReleaseMode)<br><br>[GIN-debug] POST   /hello                    --&gt; gin/httptest.helloHandler (<span class="hljs-number">3</span> handlers)<br>=== RUN   Test_helloHandler/base_case<br>[GIN] <span class="hljs-number">2024</span>/<span class="hljs-number">04</span>/<span class="hljs-number">15</span> - <span class="hljs-number">14</span>:<span class="hljs-number">30</span>:<span class="hljs-number">08</span> | <span class="hljs-number">200</span> |            <span class="hljs-number">0</span>s |       <span class="hljs-number">192.0</span><span class="hljs-number">.2</span><span class="hljs-number">.1</span> | POST     <span class="hljs-string">&quot;/hello&quot;</span><br>=== RUN   Test_helloHandler/bad_case<br>[GIN] <span class="hljs-number">2024</span>/<span class="hljs-number">04</span>/<span class="hljs-number">15</span> - <span class="hljs-number">14</span>:<span class="hljs-number">30</span>:<span class="hljs-number">08</span> | <span class="hljs-number">200</span> |            <span class="hljs-number">0</span>s |       <span class="hljs-number">192.0</span><span class="hljs-number">.2</span><span class="hljs-number">.1</span> | POST     <span class="hljs-string">&quot;/hello&quot;</span><br>--- PASS: Test_helloHandler (<span class="hljs-number">0.01</span>s)<br>    --- PASS: Test_helloHandler/base_case (<span class="hljs-number">0.01</span>s)<br>    --- PASS: Test_helloHandler/bad_case (<span class="hljs-number">0.00</span>s)<br>PASS<br>ok      gin/httptest    <span class="hljs-number">0.124</span>s<br></code></pre></td></tr></table></figure>
-<p>通过这个示例我们就掌握了如何使用httptest在HTTP Server服务中为请求处理函数编写单元测试了。</p>
-<h2 id="gock">gock</h2>
-<p>上面的示例介绍了如何在HTTP Server服务类场景下为请求处理函数编写单元测试，那么如果我们是在代码中请求外部API的场景（比如通过API调用其他服务获取返回值）又该怎么编写单元测试呢？</p>
-<p>例如，我们有以下业务逻辑代码，依赖外部API：<code>http://your-api.com/post</code> 提供的数据。</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">package</span> api<br><br><span class="hljs-keyword">import</span> (<br>    <span class="hljs-string">&quot;bytes&quot;</span><br>    <span class="hljs-string">&quot;encoding/json&quot;</span><br>    <span class="hljs-string">&quot;io/ioutil&quot;</span><br>    <span class="hljs-string">&quot;net/http&quot;</span><br>)<br><br><span class="hljs-comment">// ReqParam API请求参数</span><br><span class="hljs-keyword">type</span> ReqParam <span class="hljs-keyword">struct</span> &#123;<br>    X <span class="hljs-type">int</span> <span class="hljs-string">`json:&quot;x&quot;`</span><br>&#125;<br><br><span class="hljs-comment">// Result API返回结果</span><br><span class="hljs-keyword">type</span> Result <span class="hljs-keyword">struct</span> &#123;<br>    Value <span class="hljs-type">int</span> <span class="hljs-string">`json:&quot;value&quot;`</span><br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">GetResultByAPI</span><span class="hljs-params">(x, y <span class="hljs-type">int</span>)</span></span> <span class="hljs-type">int</span> &#123;<br>    p := &amp;ReqParam&#123;X: x&#125;<br>    b, _ := json.Marshal(p)<br><br>    <span class="hljs-comment">// 调用其他服务的API</span><br>    resp, err := http.Post(<br>        <span class="hljs-string">&quot;http://your-api.com/post&quot;</span>,<br>        <span class="hljs-string">&quot;application/json&quot;</span>,<br>        bytes.NewBuffer(b),<br>    )<br>    <span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-number">-1</span><br>    &#125;<br>    body, _ := ioutil.ReadAll(resp.Body)<br>    <span class="hljs-keyword">var</span> ret Result<br>    <span class="hljs-keyword">if</span> err := json.Unmarshal(body, &amp;ret); err != <span class="hljs-literal">nil</span> &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-number">-1</span><br>    &#125;<br>    <span class="hljs-comment">// 对API返回的数据做一些逻辑处理</span><br>    <span class="hljs-keyword">return</span> ret.Value + y<br>&#125;<br></code></pre></td></tr></table></figure>
-<p>在对类似上述这类业务代码编写单元测试的时候，如果不想在测试过程中真正去发送请求或者依赖的外部接口还没有开发完成时，我们可以在单元测试中对依赖的API进行mock。</p>
-<p>这里推荐使用<a target="_blank" rel="noopener" href="https://github.com/h2non/gock">gock</a>这个库。</p>
-<h3 id="安装">安装</h3>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">go</span> get -u gopkg.in/h2non/gock<br></code></pre></td></tr></table></figure>
-<h3 id="使用">使用</h3>
-<p>使用<code>gock</code>对外部API进行mock，即mock指定参数返回约定好的响应内容。 下面的代码中mock了两组数据，组成了两个测试用例。</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">package</span> api<br><br><span class="hljs-keyword">import</span> (<br>    <span class="hljs-string">&quot;github.com/h2non/gock&quot;</span><br>    <span class="hljs-string">&quot;github.com/stretchr/testify/assert&quot;</span><br>    <span class="hljs-string">&quot;testing&quot;</span><br>)<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">TestGetResultByAPI</span><span class="hljs-params">(t *testing.T)</span></span> &#123;<br>    <span class="hljs-keyword">defer</span> gock.Off() <span class="hljs-comment">// 测试执行后刷新挂起的mock</span><br>    <span class="hljs-comment">// mock 请求外部api时传参x=1返回100</span><br>    gock.New(<span class="hljs-string">&quot;http://your-api.com&quot;</span>).<br>        Post(<span class="hljs-string">&quot;/post&quot;</span>).<br>        MatchType(<span class="hljs-string">&quot;json&quot;</span>).<br>        JSON(<span class="hljs-keyword">map</span>[<span class="hljs-type">string</span>]<span class="hljs-type">int</span>&#123;<span class="hljs-string">&quot;x&quot;</span>: <span class="hljs-number">1</span>&#125;).<br>        Reply(<span class="hljs-number">200</span>).<br>        JSON(<span class="hljs-keyword">map</span>[<span class="hljs-type">string</span>]<span class="hljs-type">int</span>&#123;<span class="hljs-string">&quot;value&quot;</span>: <span class="hljs-number">100</span>&#125;)<br>    <br>    res := GetResultByAPI(<span class="hljs-number">1</span>, <span class="hljs-number">1</span>)<br>    <span class="hljs-comment">// 校验返回结果是否符合预期</span><br>    assert.Equal(t, res, <span class="hljs-number">101</span>)<br><br>    <span class="hljs-comment">// mock 请求外部api时传参x=2返回200</span><br>    gock.New(<span class="hljs-string">&quot;http://your-api.com&quot;</span>).<br>        Post(<span class="hljs-string">&quot;/post&quot;</span>).<br>        MatchType(<span class="hljs-string">&quot;json&quot;</span>).<br>        JSON(<span class="hljs-keyword">map</span>[<span class="hljs-type">string</span>]<span class="hljs-type">int</span>&#123;<span class="hljs-string">&quot;x&quot;</span>: <span class="hljs-number">2</span>&#125;).<br>        Reply(<span class="hljs-number">200</span>).<br>        JSON(<span class="hljs-keyword">map</span>[<span class="hljs-type">string</span>]<span class="hljs-type">int</span>&#123;<span class="hljs-string">&quot;value&quot;</span>: <span class="hljs-number">200</span>&#125;)<br>    <br>    res = GetResultByAPI(<span class="hljs-number">2</span>, <span class="hljs-number">2</span>)<br>    <span class="hljs-comment">// 校验返回结果是否符合预期</span><br>    assert.Equal(t, res, <span class="hljs-number">202</span>)<br><br>    assert.True(t, gock.IsDone()) <span class="hljs-comment">// 断言mock被触发</span><br>&#125;<br></code></pre></td></tr></table></figure>
-<p>执行上面写好的单元测试，看一下测试结果。</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs go">=== RUN   TestGetResultByAPI<br>--- PASS: TestGetResultByAPI (<span class="hljs-number">0.00</span>s)<br>PASS<br>ok      gin/api <span class="hljs-number">0.123</span>s<br></code></pre></td></tr></table></figure>
-<p>测试结果和预期的完全一致。</p>
+                <h2 id="git-commit-规范">git commit 规范</h2>
+<h3 id="1-Commit-信息的基本格式"><strong>1. Commit 信息的基本格式</strong></h3>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs git">&lt;type&gt;(&lt;scope&gt;): &lt;subject&gt;<br><br>&lt;body&gt;  # 可选<br>&lt;footer&gt;  # 可选<br></code></pre></td></tr></table></figure>
+<hr>
+<h3 id="2-详细说明"><strong>2. 详细说明</strong></h3>
+<h4 id="2-1-type（类型）"><strong>2.1. <code>type</code>（类型）</strong></h4>
+<p>描述本次提交的性质，通常包括以下几类：</p>
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>feat</code></td>
+<td>新功能（feature）</td>
+</tr>
+<tr>
+<td><code>fix</code></td>
+<td>修复 Bug</td>
+</tr>
+<tr>
+<td><code>docs</code></td>
+<td>文档（documentation）修改</td>
+</tr>
+<tr>
+<td><code>style</code></td>
+<td>不影响代码逻辑的修改（如格式化、漏掉分号等）</td>
+</tr>
+<tr>
+<td><code>refactor</code></td>
+<td>代码重构（既不是新增功能也不是修复 Bug 的代码改动）</td>
+</tr>
+<tr>
+<td><code>test</code></td>
+<td>添加或修改测试</td>
+</tr>
+<tr>
+<td><code>chore</code></td>
+<td>其他不修改源代码或测试的事务性更改（如构建脚本）</td>
+</tr>
+<tr>
+<td><code>perf</code></td>
+<td>提升性能</td>
+</tr>
+<tr>
+<td><code>revert</code></td>
+<td>回滚某次提交</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h4 id="2-2-scope（范围）"><strong>2.2. <code>scope</code>（范围）</strong></h4>
+<ul>
+<li>表明提交代码的影响范围，例如模块、功能或文件夹。</li>
+<li>可选项，但在大型项目中建议加上。</li>
+</ul>
+<p><strong>示例：</strong></p>
+<ul>
+<li><code>feat(auth): add JWT authentication</code></li>
+<li><code>fix(ui): correct button alignment</code></li>
+</ul>
+<hr>
+<h4 id="2-3-subject（主题）"><strong>2.3. <code>subject</code>（主题）</strong></h4>
+<ul>
+<li><strong>简明扼要</strong>地描述提交的改动。</li>
+<li>建议使用 <strong>动词原形</strong> 开头（如 add、fix、update 等）。</li>
+<li>避免句号结尾，保持风格简洁。</li>
+</ul>
+<hr>
+<h4 id="2-4-body（正文，选填）"><strong>2.4. <code>body</code>（正文，选填）</strong></h4>
+<ul>
+<li>提供更详细的修改原因和实现细节。</li>
+<li>解释代码修改的上下文，描述该改动的意义。</li>
+</ul>
+<p><strong>示例：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs git">feat(cache): add Redis-based caching for user sessions<br><br>The new cache layer improves performance by reducing database queries.<br>Sessions are now stored in Redis, which supports high availability.<br></code></pre></td></tr></table></figure>
+<hr>
+<h4 id="2-5-footer（页脚，选填）"><strong>2.5. <code>footer</code>（页脚，选填）</strong></h4>
+<p>页脚通常用于：</p>
+<ul>
+<li>关闭相关问题（例如 <code>Closes #123</code>）。</li>
+<li>影响的重大变更说明（如 BREAKING CHANGES）。</li>
+</ul>
+<p><strong>示例：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs git">BREAKING CHANGE: The &#x27;auth&#x27; module API has been updated. Please update your code accordingly.<br></code></pre></td></tr></table></figure>
+<hr>
+<h3 id="3-实践中的示例"><strong>3. 实践中的示例</strong></h3>
+<ol>
+<li>
+<p><strong>新功能：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs git">feat(auth): add OAuth2.0 support<br></code></pre></td></tr></table></figure>
+</li>
+<li>
+<p><strong>修复 Bug：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs git">fix(db): handle null pointer exceptions in queries<br></code></pre></td></tr></table></figure>
+</li>
+<li>
+<p><strong>文档更新：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs git">docs(readme): update deployment instructions<br></code></pre></td></tr></table></figure>
+</li>
+<li>
+<p><strong>性能优化：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs git">perf(cache): reduce response time by implementing in-memory caching<br></code></pre></td></tr></table></figure>
+</li>
+<li>
+<p><strong>回滚提交：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs git">revert: fix(ui): correct button alignment<br><br>This reverts commit a1b2c3d4e5.<br></code></pre></td></tr></table></figure>
+</li>
+</ol>
 
                 
               </div>
@@ -678,7 +764,7 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/Go/" class="print-no-link">#Go</a>
+        <a href="/tags/Git/" class="print-no-link">#Git</a>
       
     </div>
   
@@ -690,8 +776,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>Go单元测试—网络测试</div>
-      <div>https://serendipity565.github.io/posts/33f50be21ce6/</div>
+      <div>Git Commit 规范</div>
+      <div>https://serendipity565.github.io/posts/1339170a7232/</div>
     </div>
     <div class="license-meta">
       
@@ -703,7 +789,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2024年4月15日</div>
+          <div>2024年12月11日</div>
         </div>
       
       
@@ -728,18 +814,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/posts/e687b6bd04e0/" title="Go语言操作Redis">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Go语言操作Redis</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/posts/4ed0fa7f9aed/" title="Go单元测试基础">
-                        <span class="hidden-mobile">Go单元测试基础</span>
+                      <a href="/posts/0c921f3052e9/" title="数据结构">
+                        <span class="hidden-mobile">数据结构</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
