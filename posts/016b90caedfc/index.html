@@ -40,7 +40,7 @@
 <meta property="og:image" content="https://serendipity565.github.io/img/blog/GoSendEmail/5.png">
 <meta property="og:image" content="https://serendipity565.github.io/img/blog/GoSendEmail/6.png">
 <meta property="article:published_time" content="2025-01-12T11:29:13.000Z">
-<meta property="article:modified_time" content="2025-01-12T11:33:46.054Z">
+<meta property="article:modified_time" content="2025-01-12T11:47:46.535Z">
 <meta property="article:author" content="Serendipity">
 <meta property="article:tag" content="Go">
 <meta name="twitter:card" content="summary_large_image">
@@ -676,7 +676,7 @@
 <p> <code>cid</code>是<code>Content-ID</code>的缩写，用于标识 MIME 消息(Multipurpose Internet Mail Extensions，多用途互联网邮件扩展 是一种互联网标准，最初设计用于扩展电子邮件的功能，使其支持不仅仅是纯文本内容，还可以包含多种格式的内容)中的资源。</p>
 <p> 它是一个唯一的标识符，通常通过 HTML 中的 <code>&lt;img&gt;</code> 或其他标签引用。例如：表示邮件正文中的图片资源，其 <code>Content-ID</code> 为 <code>image001</code>。</p>
 </li>
-<li><p>为什么需要<code>cid</code>？</p>
+<li><p>为什么需要<code>cid</code>?</p>
 <p> 邮件客户端默认会阻止外部图片（<code>&lt;img src=&quot;https://...&quot;&gt;</code>）的加载，除非用户明确允许。而使用 <code>cid</code> 将图片嵌入到邮件中，可以避免外部图片的加载限制，确保图片能够直接显示。</p>
 </li>
 </ol>
