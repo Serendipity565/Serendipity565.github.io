@@ -41,7 +41,7 @@
 <meta property="og:image" content="https://serendipity565.github.io/img/blog/viper/6.png">
 <meta property="og:image" content="https://serendipity565.github.io/img/blog/viper/7.png">
 <meta property="article:published_time" content="2025-02-20T11:57:43.000Z">
-<meta property="article:modified_time" content="2025-02-24T12:18:16.205Z">
+<meta property="article:modified_time" content="2025-02-28T02:34:43.179Z">
 <meta property="article:author" content="Serendipity">
 <meta property="article:tag" content="Go">
 <meta name="twitter:card" content="summary_large_image">
@@ -279,7 +279,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          2.8k 字
+          3.2k 字
         
       </span>
     
@@ -290,7 +290,7 @@
         
         
         
-          35 分钟
+          41 分钟
         
       </span>
     
@@ -727,10 +727,24 @@
 <p>换成多个协程不同时运看看效果</p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">var</span> wg sync.WaitGroupwg.Add(<span class="hljs-number">2</span>)<br><span class="hljs-keyword">go</span> process3(&amp;wg, <span class="hljs-number">1</span>)<br>time.Sleep(<span class="hljs-number">5</span> * time.Second)<br><span class="hljs-keyword">go</span> process3(&amp;wg, <span class="hljs-number">2</span>)<br></code></pre></td></tr></table></figure>
 <p><img src="/img/blog/viper/7.png" srcset="/img/loading.gif" lazyload alt=""></p>
+<h2 id="第三个问题：AddConfigPath-路径究竟怎写？">第三个问题：AddConfigPath()路径究竟怎写？</h2>
+<h3 id="问题引入-3">问题引入</h3>
+<p>正常启动项目，main 函数，都使用同位置可以正常读取配置，但是在单元测试调用初始化函数时，出现了无法找到配置文件的问题。</p>
+<h4 id="复现-3">复现</h4>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">Init</span><span class="hljs-params">()</span></span> <span class="hljs-type">error</span> &#123;  <br>    v := viper.New()  <br>    v.AddConfigPath(<span class="hljs-string">&quot;./config&quot;</span>)  <span class="hljs-comment">// 设置配置文件目录</span><br>    v.SetConfigName(<span class="hljs-string">&quot;config&quot;</span>)  <span class="hljs-comment">// 设置配置文件名</span><br>    v.SetConfigType(<span class="hljs-string">&quot;yaml&quot;</span>)  <span class="hljs-comment">// 设置配置文件后缀</span><br>    v.WatchConfig()  <br>    err := v.ReadInConfig()  <br>    <span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;  <br>        <span class="hljs-built_in">panic</span>(fmt.Errorf(<span class="hljs-string">&quot;read config failed, %v&quot;</span>, err))  <br>    &#125;  <br>    <span class="hljs-keyword">if</span> err := v.Unmarshal(&amp;Conf); err != <span class="hljs-literal">nil</span> &#123;  <br>        <span class="hljs-built_in">panic</span>(fmt.Errorf(<span class="hljs-string">&quot;unmarshal to Conf failed, %v&quot;</span>, err))  <br>    &#125;  <br>    <span class="hljs-keyword">return</span> err  <br>&#125;<br></code></pre></td></tr></table></figure>
+<h3 id="分析-3">分析</h3>
+<p>列出当前关键目录</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs vim">@MacBook-Air Muxi-Micro-Layout % tree<br>.<br>├── <span class="hljs-keyword">conf</span><br>│	├── config.<span class="hljs-keyword">go</span><br>│	├── config.yaml<br>│	├── config_model.<span class="hljs-keyword">go</span><br>│	└── config_test.<span class="hljs-keyword">go</span><br>├── <span class="hljs-keyword">go</span>.<span class="hljs-keyword">mod</span><br>├── <span class="hljs-keyword">go</span>.sum<br>├── main.<span class="hljs-keyword">go</span><br>├── wire.<span class="hljs-keyword">go</span><br>└── wire_gen.<span class="hljs-keyword">go</span><br></code></pre></td></tr></table></figure>
+<p>尝试在测试测试函数中输出当前路径，发现输出结果为 <code>Muxi-Micro-Layout/conf/conf</code> ，这显然不符合我们的预期。</p>
+<p>主要原因是对 <code>./</code> 有误解，我一直以为 <code>./</code> 的意思是当前项目的根目录，<strong>在 go 中 <code>./</code> 是基于执行命令的目录的</strong>，也就是说在不同的目录下调用 <code>Init()</code>，<code>./</code> 所代表的意义不同。</p>
+<h3 id="解决方案-3">解决方案</h3>
+<p>因为是直接获取的 <code>config.go</code> 文件的绝对目录，所以无论在哪里调用配置初始化函数，都不会出现找不到文件的问题了</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">Init</span><span class="hljs-params">()</span></span> <span class="hljs-type">error</span> &#123;  <br>    v := viper.New()<br>    _, filename, _, _ := runtime.Caller(<span class="hljs-number">0</span>) <span class="hljs-comment">// 获取当前文件（config.go）路径</span><br>	  confPath := path.Dir(filename)         <span class="hljs-comment">// 获取当前文件目录</span><br>	  viper.AddConfigPath(confPath)          <span class="hljs-comment">// 设置配置文件目录</span><br>    v.SetConfigName(<span class="hljs-string">&quot;config&quot;</span>)  <br>    v.SetConfigType(<span class="hljs-string">&quot;yaml&quot;</span>)  <br>    v.WatchConfig()  <br>    err := v.ReadInConfig()  <br>    <span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;  <br>        <span class="hljs-built_in">panic</span>(fmt.Errorf(<span class="hljs-string">&quot;read config failed, %v&quot;</span>, err))  <br>    &#125;  <br>    <span class="hljs-keyword">if</span> err := v.Unmarshal(&amp;Conf); err != <span class="hljs-literal">nil</span> &#123;  <br>        <span class="hljs-built_in">panic</span>(fmt.Errorf(<span class="hljs-string">&quot;unmarshal to Conf failed, %v&quot;</span>, err))  <br>    &#125;  <br>    <span class="hljs-keyword">return</span> err  <br>&#125;<br></code></pre></td></tr></table></figure>
 <hr>
 <p>参考链接：<br>
 官网：<a target="_blank" rel="noopener" href="https://github.com/spf13/viper">https://github.com/spf13/viper</a></p>
 <p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/23237101950">https://zhuanlan.zhihu.com/p/23237101950</a></p>
+<p><a target="_blank" rel="noopener" href="https://juejin.cn/post/7259715675475558437">https://juejin.cn/post/7259715675475558437</a></p>
 
                 
               </div>
