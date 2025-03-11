@@ -52,7 +52,7 @@ date: 2025-01-12 17:23:04
 ```go
 func sendEmailBYQQEmailTest(to string) error {
 	from := "2493325754@qq.com"
-	password := "kfpjhmkeiykmebec" // 邮箱授权码
+	password := "xxx" // 邮箱授权码
 	smtpServer := "smtp.qq.com:465"
 	// 邮件内容
 	msg := []byte("From: Sender Name <" + from + ">\r\n" +
@@ -140,7 +140,7 @@ func sendEmailBYQQEmailTest(to string) error {
 ```go
 func sendEmailBYQQEmailAndFormat(to string) error {
 	from := "2493325754@qq.com"
-	password := "kfpjhmkeiykmebec" // 邮箱授权码
+	password := "xxx" // 邮箱授权码
 	smtpServer := "smtp.qq.com:465"
 	// 读取图片
 	imgPath := "./image.webp"
@@ -270,7 +270,7 @@ func sendEmailBYQQEmailAndFormat(to string) error {
 ```go
 func sendEmailByQQEmailAndAppendix(to string) error {
 	from := "2493325754@qq.com"
-	password := "kfpjhmkeiykmebec" // 邮箱授权码
+	password := "xxx" // 邮箱授权码
 	smtpServer := "smtp.qq.com:465"
 	code := fmt.Sprintf("%06d", rand.Intn(900000)+100000) // 生成6位随机验证码
 	attachmentPath := "test.txt"                          // 附件路径
