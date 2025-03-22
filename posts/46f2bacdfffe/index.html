@@ -14,7 +14,7 @@
   <link rel="apple-touch-icon" sizes="76x76" href="/img/kenan.png">
   <link rel="icon" href="/img/kenan.png">
   
-    <link rel="canonical" href="https://serendipity565.github.io/posts/d3de8634e6f0/"/>
+    <link rel="canonical" href="https://serendipity565.github.io/posts/46f2bacdfffe/"/>
   
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
@@ -26,30 +26,22 @@
   <meta name="author" content="Serendipity">
   <meta name="keywords" content="Serendipity,Blog">
   
-    <meta name="description" content="SQL (Structured Query Language:结构化查询语言) 是用于管理关系数据库管理系统（RDBMS）。 SQL 的范围包括数据插入、查询、更新和删除，数据库模式创建和修改，以及数据访问控制。 注意：MySQL 在Windows和MacOS系统下不区分大小写，但在Linux 系统下默认区分大小写。但是为了方便使用，我们一般会将关键字全部大写。 创建 创建数据库：CREATE D">
+    <meta name="description" content="引言 Go 语言因其强大的并发特性和自动垃圾回收（GC）机制，受到广泛欢迎。然而，内存泄漏 依然是 Go 语言开发者需要关注的问题。虽然 Go 的 GC 可以自动管理内存，但如果代码中存在 不必要的引用、Goroutine 泄漏、资源未释放等问题，内存泄漏仍然可能发生，导致 程序性能下降 甚至 崩溃。  1. Go 语言的内存管理机制 在 Go 语言中，变量的内存主要分配在 栈（Stack） 和">
 <meta property="og:type" content="article">
-<meta property="og:title" content="MySql使用教程">
-<meta property="og:url" content="https://serendipity565.github.io/posts/d3de8634e6f0/index.html">
+<meta property="og:title" content="Go内存泄漏问题">
+<meta property="og:url" content="https://serendipity565.github.io/posts/46f2bacdfffe/index.html">
 <meta property="og:site_name" content="Serendipity&#39;s Blog">
-<meta property="og:description" content="SQL (Structured Query Language:结构化查询语言) 是用于管理关系数据库管理系统（RDBMS）。 SQL 的范围包括数据插入、查询、更新和删除，数据库模式创建和修改，以及数据访问控制。 注意：MySQL 在Windows和MacOS系统下不区分大小写，但在Linux 系统下默认区分大小写。但是为了方便使用，我们一般会将关键字全部大写。 创建 创建数据库：CREATE D">
+<meta property="og:description" content="引言 Go 语言因其强大的并发特性和自动垃圾回收（GC）机制，受到广泛欢迎。然而，内存泄漏 依然是 Go 语言开发者需要关注的问题。虽然 Go 的 GC 可以自动管理内存，但如果代码中存在 不必要的引用、Goroutine 泄漏、资源未释放等问题，内存泄漏仍然可能发生，导致 程序性能下降 甚至 崩溃。  1. Go 语言的内存管理机制 在 Go 语言中，变量的内存主要分配在 栈（Stack） 和">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://serendipity565.github.io/img/blog/SQL/1.png">
-<meta property="og:image" content="https://serendipity565.github.io/img/blog/SQL/2.png">
-<meta property="og:image" content="https://serendipity565.github.io/img/blog/SQL/3.png">
-<meta property="og:image" content="https://serendipity565.github.io/img/blog/SQL/4.png">
-<meta property="og:image" content="https://serendipity565.github.io/img/blog/SQL/5.png">
-<meta property="og:image" content="https://serendipity565.github.io/img/blog/SQL/6.png">
-<meta property="og:image" content="https://serendipity565.github.io/img/blog/SQL/7.png">
-<meta property="article:published_time" content="2024-03-20T13:23:03.000Z">
-<meta property="article:modified_time" content="2024-11-06T11:26:38.000Z">
+<meta property="article:published_time" content="2025-03-22T06:53:54.000Z">
+<meta property="article:modified_time" content="2025-03-22T06:57:52.693Z">
 <meta property="article:author" content="Serendipity">
-<meta property="article:tag" content="MySql">
+<meta property="article:tag" content="Go">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://serendipity565.github.io/img/blog/SQL/1.png">
   
   
   
-  <title>MySql使用教程 - Serendipity&#39;s Blog</title>
+  <title>Go内存泄漏问题 - Serendipity&#39;s Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -251,7 +243,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="MySql使用教程"></span>
+            <span id="subtitle" data-typed-text="Go内存泄漏问题"></span>
           
         </div>
 
@@ -267,8 +259,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2024-03-20 21:23" pubdate>
-          2024年3月20日 晚上
+        <time datetime="2025-03-22 14:53" pubdate>
+          2025年3月22日 下午
         </time>
       </span>
     
@@ -279,7 +271,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.1k 字
+          1.2k 字
         
       </span>
     
@@ -290,7 +282,7 @@
         
         
         
-          14 分钟
+          16 分钟
         
       </span>
     
@@ -365,7 +357,7 @@
       
         <a href="/posts/46f2bacdfffe/" title="Go内存泄漏问题"
            class="list-group-item list-group-item-action
-           ">
+           active">
           <span class="category-post">Go内存泄漏问题</span>
         </a>
       
@@ -563,7 +555,7 @@
       
         <a href="/posts/d3de8634e6f0/" title="MySql使用教程"
            class="list-group-item list-group-item-action
-           active">
+           ">
           <span class="category-post">MySql使用教程</span>
         </a>
       
@@ -649,210 +641,121 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">MySql使用教程</h1>
+            <h1 id="seo-header">Go内存泄漏问题</h1>
             
             
               <div class="markdown-body">
                 
-                <p><strong>SQL</strong> (Structured Query Language:结构化查询语言) 是用于管理关系数据库管理系统（RDBMS）。 SQL 的范围包括数据插入、查询、更新和删除，数据库模式创建和修改，以及数据访问控制。</p>
-<p>注意：<strong>MySQL 在Windows和MacOS系统下不区分大小写</strong>，但在Linux 系统下默认区分大小写。但是为了方便使用，我们一般会将关键字全部大写。</p>
-<h2 id="创建">创建</h2>
-<p>创建数据库：<code>CREATE DATABASE 数据库名称;</code></p>
-<p>创建数据库下的表格：<code>CREATE TABLE 数据表名称(列名1 数据类型,列名2 数据类型,...,列名n,数据类型);</code></p>
-<p>创建数据库：<code>CREATE DATABASE 数据库名称;</code> 创建数据库下的shu<code>CREATE TABLE 数据表名称;</code></p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">CREATE</span>  DATABASE library;<br><br>USE library;<br><br><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> books(<br>    id <span class="hljs-type">INT</span> AUTO_INCREMENT <span class="hljs-keyword">PRIMARY</span> KEY,<br>    book_name <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">20</span>) <span class="hljs-keyword">NOT</span> <span class="hljs-keyword">NULL</span>,<br>    author <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">20</span>) <span class="hljs-keyword">NULL</span>,<br>    d <span class="hljs-type">DATE</span> <span class="hljs-keyword">NULL</span><br>);<br></code></pre></td></tr></table></figure>
-<p>USE library; 这一命令表示使用library这一数据库，适用于有多个数据库的情况。</p>
-<p><img src="/img/blog/SQL/1.png" srcset="/img/loading.gif" lazyload alt=""></p>
-<p>下面是一些常见的数据类型：</p>
+                <h2 id="引言"><strong>引言</strong></h2>
+<p>Go 语言因其强大的并发特性和自动垃圾回收（GC）机制，受到广泛欢迎。然而，<strong>内存泄漏</strong> 依然是 Go 语言开发者需要关注的问题。虽然 Go 的 GC 可以自动管理内存，但如果代码中存在 <strong>不必要的引用、Goroutine 泄漏、资源未释放等问题</strong>，内存泄漏仍然可能发生，导致 <strong>程序性能下降</strong> 甚至 <strong>崩溃</strong>。</p>
+<hr>
+<h2 id="1-Go-语言的内存管理机制"><strong>1. Go 语言的内存管理机制</strong></h2>
+<p>在 Go 语言中，变量的内存主要分配在 <strong>栈（Stack）</strong> 和 <strong>堆（Heap）</strong>：</p>
+<ul>
+<li><strong>栈内存</strong>：用于存储 <strong>局部变量</strong>，函数调用结束后，栈上的内存会自动释放，<strong>不会导致内存泄漏</strong>。</li>
+<li><strong>堆内存</strong>：用于存储 <strong>长生命周期变量</strong>，GC 负责回收不再使用的对象。<strong>如果对象仍被引用，GC 不会释放它，可能导致内存泄漏</strong>。</li>
+</ul>
+<p>Go 编译器使用 <strong>逃逸分析（Escape Analysis）</strong> 来决定变量是分配在 <strong>栈</strong> 还是 <strong>堆</strong> 上：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">escape</span><span class="hljs-params">()</span></span> *<span class="hljs-type">int</span> &#123;<br>	x := <span class="hljs-number">10</span><br>	<span class="hljs-keyword">return</span> &amp;x <span class="hljs-comment">// 变量 x 逃逸到堆</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<p>这里 <code>x</code> 被返回，生命周期超出函数作用域，因此 Go 会将 <code>x</code> <strong>分配到堆上</strong>，防止 <code>x</code> 在函数返回后被销毁。</p>
+<hr>
+<h2 id="2-常见的-Go-内存泄漏场景"><strong>2. 常见的 Go 内存泄漏场景</strong></h2>
+<h3 id="1-Goroutine-泄漏"><strong>(1) Goroutine 泄漏</strong></h3>
+<h4 id="问题："><strong>问题</strong>：</h4>
+<ul>
+<li>Goroutine <strong>不会自动退出</strong>，如果没有正确管理，可能会一直占用内存和 CPU 资源。</li>
+<li>典型的 Goroutine 泄漏发生在 <strong>阻塞的 Goroutine</strong> 或 <strong>没有正确关闭的通道</strong>。</li>
+</ul>
+<h4 id="示例代码（存在泄漏）："><strong>示例代码（存在泄漏）：</strong></h4>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">package</span> main<br><br><span class="hljs-keyword">import</span> (<br>	<span class="hljs-string">&quot;fmt&quot;</span><br>	<span class="hljs-string">&quot;time&quot;</span><br>)<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">leakyGoroutine</span><span class="hljs-params">()</span></span> &#123;<br>	ch := <span class="hljs-built_in">make</span>(<span class="hljs-keyword">chan</span> <span class="hljs-type">int</span>)<br>	<span class="hljs-keyword">go</span> <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">()</span></span> &#123;<br>		<span class="hljs-keyword">for</span> &#123;<br>			<span class="hljs-keyword">select</span> &#123;<br>			<span class="hljs-keyword">case</span> data := &lt;-ch:<br>				fmt.Println(<span class="hljs-string">&quot;Received:&quot;</span>, data)<br>			&#125;<br>		&#125;<br>	&#125;()<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>	<span class="hljs-keyword">for</span> i := <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">100</span>; i++ &#123;<br>		leakyGoroutine() <span class="hljs-comment">// 启动 Goroutine 但从未关闭</span><br>	&#125;<br>	time.Sleep(<span class="hljs-number">10</span> * time.Second)<br>&#125;<br></code></pre></td></tr></table></figure>
+<h4 id="问题分析："><strong>问题分析</strong>：</h4>
+<ul>
+<li><code>ch</code> 没有数据传输，也没有关闭，导致 Goroutine <strong>永远阻塞</strong>。</li>
+<li><strong>每次调用 <code>leakyGoroutine()</code> 都会创建新的 Goroutine，最终导致泄漏。</strong></li>
+</ul>
+<h4 id="解决方案："><strong>解决方案</strong>：</h4>
+<p>使用 <code>context.Context</code> 控制 Goroutine 生命周期：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">package</span> main<br><br><span class="hljs-keyword">import</span> (<br>	<span class="hljs-string">&quot;context&quot;</span><br>	<span class="hljs-string">&quot;fmt&quot;</span><br>	<span class="hljs-string">&quot;time&quot;</span><br>)<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">safeGoroutine</span><span class="hljs-params">(ctx context.Context)</span></span> &#123;<br>	ch := <span class="hljs-built_in">make</span>(<span class="hljs-keyword">chan</span> <span class="hljs-type">int</span>)<br>	<span class="hljs-keyword">go</span> <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">()</span></span> &#123;<br>		<span class="hljs-keyword">for</span> &#123;<br>			<span class="hljs-keyword">select</span> &#123;<br>			<span class="hljs-keyword">case</span> &lt;-ctx.Done(): <span class="hljs-comment">// 监听退出信号</span><br>				fmt.Println(<span class="hljs-string">&quot;Goroutine exited&quot;</span>)<br>				<span class="hljs-keyword">return</span><br>			<span class="hljs-keyword">case</span> data := &lt;-ch:<br>				fmt.Println(<span class="hljs-string">&quot;Received:&quot;</span>, data)<br>			&#125;<br>		&#125;<br>	&#125;()<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>	ctx, cancel := context.WithCancel(context.Background())<br><br>	<span class="hljs-keyword">for</span> i := <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">100</span>; i++ &#123;<br>		safeGoroutine(ctx)<br>	&#125;<br><br>	time.Sleep(<span class="hljs-number">2</span> * time.Second)<br>	cancel() <span class="hljs-comment">// 取消所有 Goroutine</span><br>	time.Sleep(<span class="hljs-number">1</span> * time.Second)<br>&#125;<br></code></pre></td></tr></table></figure>
+<hr>
+<h3 id="2-切片导致的内存泄漏"><strong>(2) 切片导致的内存泄漏</strong></h3>
+<h4 id="问题：-2"><strong>问题</strong>：</h4>
+<ul>
+<li>切片（slice）底层<strong>共享同一块数组</strong>，即使切片本身很小，但如果它指向一个 <strong>大的底层数组</strong>，整个数组不会被 GC 释放，导致内存泄漏。</li>
+</ul>
+<h4 id="示例代码（存在泄漏）：-2"><strong>示例代码（存在泄漏）：</strong></h4>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">package</span> main<br><br><span class="hljs-keyword">import</span> <span class="hljs-string">&quot;fmt&quot;</span><br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">leakSlice</span><span class="hljs-params">()</span></span> []<span class="hljs-type">int</span> &#123;<br>	largeArray := <span class="hljs-built_in">make</span>([]<span class="hljs-type">int</span>, <span class="hljs-number">1000000</span>) <span class="hljs-comment">// 分配 100 万个元素的数组</span><br>	slice := largeArray[:<span class="hljs-number">10</span>]           <span class="hljs-comment">// 只取前 10 个元素</span><br>	<span class="hljs-keyword">return</span> slice<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>	s := leakSlice()<br>	fmt.Println(<span class="hljs-built_in">len</span>(s)) <span class="hljs-comment">// 10</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<h4 id="问题分析：-2"><strong>问题分析</strong>：</h4>
+<ul>
+<li><code>slice</code> 只引用了 <code>largeArray</code> 的一部分，但 <code>largeArray</code> <strong>无法被 GC 释放</strong>，导致 <strong>大量无用内存占用</strong>。</li>
+</ul>
+<h4 id="解决方案：-2"><strong>解决方案</strong>：</h4>
+<p>使用 <code>copy()</code> 只保留所需数据：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">fixedSlice</span><span class="hljs-params">()</span></span> []<span class="hljs-type">int</span> &#123;<br>	largeArray := <span class="hljs-built_in">make</span>([]<span class="hljs-type">int</span>, <span class="hljs-number">1000000</span>)<br>	slice := <span class="hljs-built_in">make</span>([]<span class="hljs-type">int</span>, <span class="hljs-number">10</span>)<br>	<span class="hljs-built_in">copy</span>(slice, largeArray[:<span class="hljs-number">10</span>]) <span class="hljs-comment">// 只复制所需部分</span><br>	<span class="hljs-keyword">return</span> slice<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>这样 <code>largeArray</code> 在 <code>fixedSlice</code> 结束后就可以被 GC 释放。</p>
+<hr>
+<h3 id="3-全局变量-长生命周期对象"><strong>(3) 全局变量 &amp; 长生命周期对象</strong></h3>
+<h4 id="问题：-3"><strong>问题</strong>：</h4>
+<ul>
+<li><strong>全局变量</strong> 持有的对象<strong>不会被 GC 释放</strong>，容易导致内存泄漏。</li>
+<li><strong>长生命周期对象（如缓存）</strong> 如果没有正确管理，也可能引发泄漏。</li>
+</ul>
+<h4 id="示例代码（存在泄漏）：-3"><strong>示例代码（存在泄漏）：</strong></h4>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">package</span> main<br><br><span class="hljs-keyword">var</span> globalSlice = <span class="hljs-built_in">make</span>([]<span class="hljs-type">int</span>, <span class="hljs-number">0</span>) <span class="hljs-comment">// 全局变量</span><br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">appendToGlobal</span><span class="hljs-params">()</span></span> &#123;<br>	<span class="hljs-keyword">for</span> i := <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">100000</span>; i++ &#123;<br>		globalSlice = <span class="hljs-built_in">append</span>(globalSlice, i) <span class="hljs-comment">// 持续增长，无法回收</span><br>	&#125;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>	appendToGlobal()<br>&#125;<br></code></pre></td></tr></table></figure>
+<h4 id="解决方案：-3"><strong>解决方案</strong>：</h4>
+<ul>
+<li><strong>定期清理全局变量</strong> 或 <strong>使用 <code>sync.Pool</code> 复用对象</strong>：</li>
+</ul>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">clearGlobalSlice</span><span class="hljs-params">()</span></span> &#123;<br>	globalSlice = <span class="hljs-literal">nil</span> <span class="hljs-comment">// 让 GC 释放内存</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<hr>
+<h3 id="4-资源未关闭"><strong>(4) 资源未关闭</strong></h3>
+<h4 id="问题：-4"><strong>问题</strong>：</h4>
+<ul>
+<li>在 Go 语言中，<strong>未关闭的文件、数据库连接、网络连接</strong> 可能导致资源泄漏。</li>
+</ul>
+<h4 id="示例代码（存在泄漏）：-4"><strong>示例代码（存在泄漏）：</strong></h4>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">package</span> main<br><br><span class="hljs-keyword">import</span> (<br>	<span class="hljs-string">&quot;fmt&quot;</span><br>	<span class="hljs-string">&quot;os&quot;</span><br>)<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">leakFile</span><span class="hljs-params">()</span></span> &#123;<br>	file, _ := os.Open(<span class="hljs-string">&quot;example.txt&quot;</span>) <span class="hljs-comment">// 打开文件但未关闭</span><br>	fmt.Println(file.Name())<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>	leakFile() <span class="hljs-comment">// 多次调用会导致文件描述符泄漏</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<h4 id="解决方案：-4"><strong>解决方案</strong>：</h4>
+<ul>
+<li>使用 <code>defer file.Close()</code> 确保文件关闭：</li>
+</ul>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">safeFile</span><span class="hljs-params">()</span></span> &#123;<br>	file, _ := os.Open(<span class="hljs-string">&quot;example.txt&quot;</span>)<br>	<span class="hljs-keyword">defer</span> file.Close() <span class="hljs-comment">// 确保关闭</span><br>	fmt.Println(file.Name())<br>&#125;<br></code></pre></td></tr></table></figure>
+<hr>
+<h2 id="3-如何检测-Go-内存泄漏"><strong>3. 如何检测 Go 内存泄漏</strong></h2>
+<h3 id="1-使用-pprof-监控内存"><strong>(1) 使用 <code>pprof</code> 监控内存</strong></h3>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs vim"><span class="hljs-keyword">go</span> run main.<span class="hljs-keyword">go</span><br><span class="hljs-keyword">go</span> tool pprof http://localhos<span class="hljs-variable">t:6060</span>/<span class="hljs-keyword">debug</span>/pprof/heap<br></code></pre></td></tr></table></figure>
+<p>可以分析 <strong>堆内存占用情况</strong>。</p>
+<h3 id="2-使用-runtime-ReadMemStats"><strong>(2) 使用 <code>runtime.ReadMemStats</code></strong></h3>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">var</span> m runtime.MemStats<br>runtime.ReadMemStats(&amp;m)<br>fmt.Printf(<span class="hljs-string">&quot;Alloc = %v MiB&quot;</span>, m.Alloc/<span class="hljs-number">1024</span>/<span class="hljs-number">1024</span>)<br></code></pre></td></tr></table></figure>
+<p>获取当前 <strong>内存分配情况</strong>。</p>
+<hr>
+<h2 id="4-总结"><strong>4. 总结</strong></h2>
 <table>
 <thead>
 <tr>
-<th>数据类型</th>
-<th>说明</th>
+<th><strong>问题</strong></th>
+<th><strong>解决方案</strong></th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>varchar(最长255)</td>
-<td>可变长度的字符串，varchar(10)，10表示最大可分配空间，会根据传过来的数据动态分配。节省空间，但是需要动态分配空间，速度慢。</td>
+<td>Goroutine 不退出</td>
+<td>使用 <code>context.Context</code> 控制生命周期</td>
 </tr>
 <tr>
-<td>char(最长255)</td>
-<td>定长字符串，可能会导致空间的浪费</td>
+<td>切片共享大数组</td>
+<td><code>copy()</code> 复制所需数据</td>
 </tr>
 <tr>
-<td>int(最长11)</td>
-<td>数字中的长整型</td>
+<td>全局变量 &amp; 长生命周期对象</td>
+<td>定期清理变量或使用 <code>sync.Pool</code></td>
 </tr>
 <tr>
-<td>bigint</td>
-<td>数字中的长整型</td>
-</tr>
-<tr>
-<td>float</td>
-<td>单精度浮点型数据</td>
-</tr>
-<tr>
-<td>double</td>
-<td>双精度浮点型数据</td>
-</tr>
-<tr>
-<td>date</td>
-<td>短日期类型</td>
-</tr>
-<tr>
-<td>datetime</td>
-<td>长日期类型</td>
+<td>资源未关闭</td>
+<td><code>defer Close()</code> 释放资源</td>
 </tr>
 </tbody>
 </table>
-<p>对与创建列名的时候，可以设置一些相应的默认格式。比如：</p>
-<table>
-<thead>
-<tr>
-<th>格式</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>NOT NULL</td>
-<td>这一列不能为空</td>
-</tr>
-<tr>
-<td>NULL</td>
-<td>这一列可以为空</td>
-</tr>
-<tr>
-<td>PRIMARY KEY</td>
-<td>主键</td>
-</tr>
-<tr>
-<td>AUTO_INCREMENT</td>
-<td>自动增加数字</td>
-</tr>
-<tr>
-<td>UNIQUE</td>
-<td>不允许重复</td>
-</tr>
-</tbody>
-</table>
-<h2 id="插入">插入</h2>
-<p><code>INSERT INTO 数据库名.表格名 (列名1,列名2,…,列名n) VALUES (数值1,数值2,…,数值n)</code></p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">INSERT</span> <span class="hljs-keyword">INTO</span> library.books(id,book_name,author,d) <span class="hljs-keyword">VALUES</span> (<span class="hljs-number">1</span>,<span class="hljs-string">&#x27;红楼梦&#x27;</span>,<span class="hljs-string">&#x27;曹雪芹&#x27;</span>,<span class="hljs-keyword">null</span>);<br><span class="hljs-keyword">INSERT</span> <span class="hljs-keyword">INTO</span> library.books(id,book_name,author,d) <span class="hljs-keyword">VALUES</span> (<span class="hljs-number">2</span>,<span class="hljs-string">&#x27;水浒传&#x27;</span>,<span class="hljs-string">&#x27;施耐庵&#x27;</span>,<span class="hljs-string">&#x27;2024-03-20&#x27;</span>);<br><span class="hljs-keyword">INSERT</span> <span class="hljs-keyword">INTO</span> library.books(id,book_name,author,d) <span class="hljs-keyword">VALUES</span> (<span class="hljs-number">3</span>,<span class="hljs-string">&#x27;三国演义&#x27;</span>,<span class="hljs-string">&#x27;曹雪芹&#x27;</span>,<span class="hljs-string">&#x27;2024-03-20&#x27;</span>);<br><span class="hljs-keyword">INSERT</span> <span class="hljs-keyword">INTO</span> library.books(id,book_name,author,d) <span class="hljs-keyword">VALUES</span> (<span class="hljs-keyword">DEFAULT</span>,<span class="hljs-string">&#x27;百年孤独&#x27;</span>,<span class="hljs-string">&#x27;加西亚·马尔克斯&#x27;</span>,<span class="hljs-string">&#x27;2020-05-06&#x27;</span>);<br><span class="hljs-keyword">INSERT</span> <span class="hljs-keyword">INTO</span> library.books(id,book_name,author,d) <span class="hljs-keyword">VALUES</span> (<span class="hljs-number">5</span>,<span class="hljs-string">&#x27;月亮与六便士&#x27;</span>,<span class="hljs-keyword">NULL</span>,<span class="hljs-string">&#x27;2020-05-06&#x27;</span>);<br><span class="hljs-keyword">INSERT</span> <span class="hljs-keyword">INTO</span> library.books(id,book_name,author,d) <span class="hljs-keyword">VALUES</span> (<span class="hljs-keyword">DEFAULT</span>,<span class="hljs-string">&#x27;局外人&#x27;</span>,<span class="hljs-keyword">NULL</span>,<span class="hljs-string">&#x27;2020-05-06&#x27;</span>);<br><span class="hljs-keyword">INSERT</span> <span class="hljs-keyword">INTO</span> library.books(id,book_name,author,d) <span class="hljs-keyword">VALUES</span> (<span class="hljs-keyword">DEFAULT</span>,<span class="hljs-string">&#x27;史记&#x27;</span>,<span class="hljs-keyword">NULL</span>,<span class="hljs-string">&#x27;2020-05-06&#x27;</span>);<br><span class="hljs-keyword">INSERT</span> <span class="hljs-keyword">INTO</span> library.books(id,book_name,author,d) <span class="hljs-keyword">VALUES</span> (<span class="hljs-keyword">DEFAULT</span>,<span class="hljs-string">&#x27;中国通史&#x27;</span>,<span class="hljs-keyword">NULL</span>,<span class="hljs-string">&#x27;2020-05-06&#x27;</span>);<br></code></pre></td></tr></table></figure>
-<p>这样我们就插入了一些数据</p>
-<p><img src="/img/blog/SQL/2.png" srcset="/img/loading.gif" lazyload alt=""></p>
-<p>其中，DEFAULT表示默认格式。</p>
-<h2 id="更新">更新</h2>
-<p>我们也可以再增加一个列名：<code>ALTER TABLE 数据库名.表格名 ADD 列名 数据类型 默认条件</code></p>
-<p>更新具体数据：<code>UPDATE 数据库名.表格名 SET 值 WHERE 条件</code></p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">ALTER</span> <span class="hljs-keyword">TABLE</span> library.books <span class="hljs-keyword">ADD</span> sold <span class="hljs-type">FLOAT</span> <span class="hljs-keyword">NULL</span>;<br><span class="hljs-keyword">UPDATE</span> library.books <span class="hljs-keyword">SET</span> sold<span class="hljs-operator">=</span><span class="hljs-number">20.2</span> <span class="hljs-keyword">WHERE</span> id<span class="hljs-operator">=</span><span class="hljs-number">1</span>;<br></code></pre></td></tr></table></figure>
-<p><img src="/img/blog/SQL/3.png" srcset="/img/loading.gif" lazyload alt=""></p>
-<h2 id="删除">删除</h2>
-<p>删除某条数据：<code>DELETE FROM 数据库名.表格名 WHERE 条件</code></p>
-<p>删除表格：<code>DROP TABLE 数据库名.表格名</code></p>
-<p>删除数据库：<code>DROP DATABASE 数据库名</code></p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">DELETE</span> <span class="hljs-keyword">FROM</span> library.books <span class="hljs-keyword">WHERE</span> id<span class="hljs-operator">=</span><span class="hljs-number">2</span>;<br></code></pre></td></tr></table></figure>
-<p><img src="/img/blog/SQL/4.png" srcset="/img/loading.gif" lazyload alt=""></p>
-<h2 id="查找">查找</h2>
-<p>查找全部内容：<code>SELECT * FROM 数据库名.表格名</code></p>
-<p>查找某一列内容：<code>SELECT 列名1，列名2 FROM 数据库名.表格名</code></p>
-<p>查找不同的内容（即去除重复内容）：<code>SELECT DISTINCT 列名1 FROM 数据库名.表格名</code></p>
-<p>查看时排序（默认ASC，即ascending，升序；DESC，descending，降序）：<br>
-<code>SELECT * FROM 数据库名.表格名 ORDER BY 列名 ASC/DESC</code></p>
-<p>要过滤掉某些信息：<code>SELECT * FROM 数据库名.表格名 WHERE 条件 ORDER BY 列名 ASC/DESC</code></p>
-<table>
-<thead>
-<tr>
-<th>运算符</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>=</td>
-<td>等于</td>
-</tr>
-<tr>
-<td>! = 或 &lt;&gt;</td>
-<td>不等于</td>
-</tr>
-<tr>
-<td>&gt;</td>
-<td>大于</td>
-</tr>
-<tr>
-<td>&lt;</td>
-<td>小于</td>
-</tr>
-<tr>
-<td>&gt; =</td>
-<td>大于等于</td>
-</tr>
-<tr>
-<td>&lt; =</td>
-<td>小于等于</td>
-</tr>
-<tr>
-<td>BETWEEN</td>
-<td>介于两者之间</td>
-</tr>
-<tr>
-<td>IN</td>
-<td>在一组值内</td>
-</tr>
-<tr>
-<td>LIKE</td>
-<td>相似匹配</td>
-</tr>
-<tr>
-<td>AND</td>
-<td>与</td>
-</tr>
-<tr>
-<td>OR</td>
-<td>或</td>
-</tr>
-<tr>
-<td>NOT 或 !</td>
-<td>非</td>
-</tr>
-</tbody>
-</table>
-<p>比如想知道这些书分别在哪几天入库：</p>
-<p><img src="/img/blog/SQL/5.png" srcset="/img/loading.gif" lazyload alt=""></p>
-<p>去重后：</p>
-<p><img src="/img/blog/SQL/6.png" srcset="/img/loading.gif" lazyload alt=""></p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">SELECT</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">FROM</span> library.books <span class="hljs-keyword">WHERE</span> author <span class="hljs-keyword">IN</span> (<span class="hljs-string">&#x27;曹雪芹&#x27;</span>,<span class="hljs-string">&#x27;施耐庵&#x27;</span>);<br></code></pre></td></tr></table></figure>
-<p><img src="/img/blog/SQL/7.png" srcset="/img/loading.gif" lazyload alt=""></p>
-<p>在 SQL 中，通配符与 SQL LIKE 操作符一起使用，下面具体说说LIKE的用法：</p>
-<table>
-<thead>
-<tr>
-<th>通配符</th>
-<th>描述</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>%</td>
-<td>替代 0 个或多个字符</td>
-</tr>
-<tr>
-<td>_</td>
-<td>替代一个字符</td>
-</tr>
-<tr>
-<td>[<em>charlist</em>]</td>
-<td>字符列中的任何单一字符</td>
-</tr>
-<tr>
-<td>[^<em>charlist</em>]或[!<em>charlist</em>]</td>
-<td>不在字符列中的任何单一字符</td>
-</tr>
-</tbody>
-</table>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">SELECT</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">FROM</span> library.books <span class="hljs-keyword">WHERE</span> author <span class="hljs-keyword">LIKE</span> <span class="hljs-string">&#x27;B%&#x27;</span>;   <span class="hljs-comment">--查找名字以B开头的作者</span><br><span class="hljs-keyword">SELECT</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">FROM</span> library.books <span class="hljs-keyword">WHERE</span> author <span class="hljs-keyword">LIKE</span> <span class="hljs-string">&#x27;%b&#x27;</span>;   <span class="hljs-comment">--查找名字以b开头的作者</span><br><span class="hljs-keyword">SELECT</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">FROM</span> library.books <span class="hljs-keyword">WHERE</span> author <span class="hljs-keyword">LIKE</span> <span class="hljs-string">&#x27;__b%&#x27;</span>;   <span class="hljs-comment">--查找名字第三个字符是b的作者</span><br><span class="hljs-keyword">SELECT</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">FROM</span> library.books <span class="hljs-keyword">WHERE</span> author <span class="hljs-keyword">LIKE</span> <span class="hljs-string">&#x27;^[AB]&#x27;</span>;   <span class="hljs-comment">--查找名字以A或B开头的作者</span><br><span class="hljs-keyword">SELECT</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">FROM</span> library.books <span class="hljs-keyword">WHERE</span> author <span class="hljs-keyword">LIKE</span> <span class="hljs-string">&#x27;^[A-H]&#x27;</span>;   <span class="hljs-comment">--查找名字以A到H开头的作者</span><br></code></pre></td></tr></table></figure>
+<p>Go 语言的 GC <strong>不能解决所有内存泄漏问题</strong>，仍需 <strong>合理管理 Goroutine、切片、资源释放</strong>，以避免不必要的内存占用。</p>
 
                 
               </div>
@@ -886,7 +789,7 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/MySql/" class="print-no-link">#MySql</a>
+        <a href="/tags/Go/" class="print-no-link">#Go</a>
       
     </div>
   
@@ -898,8 +801,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>MySql使用教程</div>
-      <div>https://serendipity565.github.io/posts/d3de8634e6f0/</div>
+      <div>Go内存泄漏问题</div>
+      <div>https://serendipity565.github.io/posts/46f2bacdfffe/</div>
     </div>
     <div class="license-meta">
       
@@ -911,7 +814,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2024年3月20日</div>
+          <div>2025年3月22日</div>
         </div>
       
       
@@ -936,18 +839,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/posts/b7e1fe555133/" title="Go语言实战数据库">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Go语言实战数据库</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/posts/a36bf7c764d1/" title="Go语言net/http">
-                        <span class="hidden-mobile">Go语言net/http</span>
+                      <a href="/posts/a118364bcedf/" title="viper的“陷阱”">
+                        <span class="hidden-mobile">viper的“陷阱”</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
