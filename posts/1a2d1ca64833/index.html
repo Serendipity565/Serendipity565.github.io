@@ -1,0 +1,1209 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <!-- Google Site Verification -->
+  <meta name="google-site-verification" content="9xWrChT2kQoJRUZVUqRA8m7yN2r9uDuONIVYE6HrTjA" />
+
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/kenan.png">
+  <link rel="icon" href="/img/kenan.png">
+  
+    <link rel="canonical" href="https://serendipity565.github.io/posts/1a2d1ca64833/"/>
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  
+  <meta name="theme-color" content="#bebebe">
+  <meta name="author" content="Serendipity">
+  <meta name="keywords" content="Serendipity,Blog">
+  
+    <meta name="description" content="什么是内存对齐？ 内存对齐是一个源于CPU访问内存方式的概念。现代CPU优化为在对齐的地址上访问内存——即地址是数据大小的倍数。 例如：  int64（8字节）理想情况下应该从8的倍数的内存地址开始 int32（4字节）应该从4的倍数地址开始  如果变量未对齐，CPU可能需要执行多次内存读取才能获取完整数据。这会降低速度。此外，如果变量跨越两个缓存行，你将受到性能惩罚，因为CPU必须加载两个缓存行">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Go语言内存对齐">
+<meta property="og:url" content="https://serendipity565.github.io/posts/1a2d1ca64833/index.html">
+<meta property="og:site_name" content="Serendipity&#39;s Blog">
+<meta property="og:description" content="什么是内存对齐？ 内存对齐是一个源于CPU访问内存方式的概念。现代CPU优化为在对齐的地址上访问内存——即地址是数据大小的倍数。 例如：  int64（8字节）理想情况下应该从8的倍数的内存地址开始 int32（4字节）应该从4的倍数地址开始  如果变量未对齐，CPU可能需要执行多次内存读取才能获取完整数据。这会降低速度。此外，如果变量跨越两个缓存行，你将受到性能惩罚，因为CPU必须加载两个缓存行">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://serendipity565.github.io/img/blog/ncdq/3.png">
+<meta property="og:image" content="https://serendipity565.github.io/img/blog/ncdq/4.png">
+<meta property="og:image" content="https://serendipity565.github.io/img/blog/ncdq/1.png">
+<meta property="og:image" content="https://serendipity565.github.io/img/blog/ncdq/2.png">
+<meta property="article:published_time" content="2025-05-09T09:02:34.000Z">
+<meta property="article:modified_time" content="2025-05-09T09:09:01.044Z">
+<meta property="article:author" content="Serendipity">
+<meta property="article:tag" content="Go">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://serendipity565.github.io/img/blog/ncdq/3.png">
+  
+  
+  
+  <title>Go语言内存对齐 - Serendipity&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/KaTeX/0.16.2/katex.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="//cdn.jsdelivr.net/gh/EmoryHuang/BlogBeautify@1.1/scroll.css">
+<link rel="stylesheet" href="/css/test.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"serendipity565.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":7},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":"GG1JTYKMXXAVk1svwXcwLDlE-gzGzoHsz","app_key":"eaWuEy5vj3kI6J1Ut2fFjeUz","server_url":"https://gg1jtykm.lc-cn-n1-shared.com","path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+  
+
+
+
+  
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Serendipity&#39;Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/" target="_self">
+                <i class="iconfont icon-link-fill"></i>
+                <span>友链</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/defbj.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Go语言内存对齐"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-author" aria-hidden="true"></i>
+        Serendipity
+      </span>
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-05-09 17:02" pubdate>
+          2025年5月9日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          2k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          26 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="leancloud-page-views-container" class="post-meta" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="leancloud-page-views"></span> 次
+        </span>
+        
+      
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar category-bar" style="margin-right: -1rem">
+    
+
+
+
+
+
+<div class="category-list">
+  
+  
+    
+    
+    
+    <div class="category row nomargin-x">
+      <a class="category-item 
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="开发"
+        id="heading-3ff3c3e26a68112c11c3e80f2a26896e" role="tab" data-toggle="collapse" href="#collapse-3ff3c3e26a68112c11c3e80f2a26896e"
+        aria-expanded="true"
+      >
+        开发
+        <span class="list-group-count">(31)</span>
+        <i class="iconfont icon-arrowright"></i>
+      </a>
+      
+      <div class="category-collapse collapse show" id="collapse-3ff3c3e26a68112c11c3e80f2a26896e"
+           role="tabpanel" aria-labelledby="heading-3ff3c3e26a68112c11c3e80f2a26896e">
+        
+        
+          
+  <div class="category-post-list">
+    
+    
+      
+      
+        <a href="/posts/1a2d1ca64833/" title="Go语言内存对齐"
+           class="list-group-item list-group-item-action
+           active">
+          <span class="category-post">Go语言内存对齐</span>
+        </a>
+      
+    
+      
+      
+        <a href="/posts/46f2bacdfffe/" title="Go内存泄漏问题"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Go内存泄漏问题</span>
+        </a>
+      
+    
+      
+      
+        <a href="/posts/a118364bcedf/" title="viper的“陷阱”"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">viper的“陷阱”</span>
+        </a>
+      
+    
+      
+      
+        <a href="/posts/b4af08979f13/" title="Go语言发送邮件"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Go语言发送邮件</span>
+        </a>
+      
+    
+      
+      
+        <a href="/posts/7d4c01e01246/" title="Git Commit 规范"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Git Commit 规范</span>
+        </a>
+      
+    
+      
+      
+        <a href="/posts/8e94af8f2488/" title="MySql事务"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">MySql事务</span>
+        </a>
+      
+    
+      
+      
+        <a href="/posts/c7dfacbd3eb3/" title="依赖注入"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">依赖注入</span>
+        </a>
+      
+    
+      
+      
+        <a href="/posts/df5330af32fe/" title="Golang单机锁"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Golang单机锁</span>
+        </a>
+      
+    
+      
+      
+        <a href="/posts/b77d55501ef5/" title="Kratos-Realworld"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Kratos-Realworld</span>
+        </a>
+      
+    
+      
+      
+        <a href="/posts/8751d1c09fb5/" title="深入理解C语言指针"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">深入理解C语言指针</span>
+        </a>
+      
+    
+      
+      
+        <a href="/posts/606e7ceb23d6/" title="怎么理解CAP理论"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">怎么理解CAP理论</span>
+        </a>
+      
+    
+      
+      
+        <a href="/posts/c80046f0aa89/" title="注册中心"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">注册中心</span>
+        </a>
+      
+    
+      
+      
+        <a href="/posts/ed736206f663/" title="怎么样实现微服务"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">怎么样实现微服务</span>
+        </a>
+      
+    
+      
+      
+        <a href="/posts/6a9379e0fa8c/" title="微服务"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">微服务</span>
+        </a>
+      
+    
+      
+      
+        <a href="/posts/5b80996f595f/" title="Go操作Kafka"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Go操作Kafka</span>
+        </a>
+      
+    
+      
+      
+        <a href="/posts/e687b6bd04e0/" title="Go语言操作Redis"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Go语言操作Redis</span>
+        </a>
+      
+    
+      
+      
+        <a href="/posts/33f50be21ce6/" title="Go单元测试—网络测试"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Go单元测试—网络测试</span>
+        </a>
+      
+    
+      
+      
+        <a href="/posts/4ed0fa7f9aed/" title="Go单元测试基础"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Go单元测试基础</span>
+        </a>
+      
+    
+      
+      
+        <a href="/posts/de25b4b5540f/" title="在gin框架中使用JWT"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">在gin框架中使用JWT</span>
+        </a>
+      
+    
+      
+      
+        <a href="/posts/a8f09b2b7142/" title="GORM入门指南"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">GORM入门指南</span>
+        </a>
+      
+    
+      
+      
+        <a href="/posts/b835ed5d636b/" title="Gin框架介绍及使用"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Gin框架介绍及使用</span>
+        </a>
+      
+    
+      
+      
+        <a href="/posts/fa8e18e8a03b/" title="Go语言并发"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Go语言并发</span>
+        </a>
+      
+    
+      
+      
+        <a href="/posts/b7e1fe555133/" title="Go语言实战数据库"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Go语言实战数据库</span>
+        </a>
+      
+    
+      
+      
+        <a href="/posts/d3de8634e6f0/" title="MySql使用教程"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">MySql使用教程</span>
+        </a>
+      
+    
+      
+      
+        <a href="/posts/a36bf7c764d1/" title="Go语言net/http"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Go语言net/http</span>
+        </a>
+      
+    
+      
+      
+        <a href="/posts/64e658c2bbeb/" title="Go语言中结构体与json映射"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Go语言中结构体与json映射</span>
+        </a>
+      
+    
+      
+      
+        <a href="/posts/0bd4f52299ae/" title="Go接口断言"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Go接口断言</span>
+        </a>
+      
+    
+      
+      
+        <a href="/posts/19f5700394bf/" title="Go接口"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Go接口</span>
+        </a>
+      
+    
+      
+      
+        <a href="/posts/b5bfdfa6aa51/" title="Git使用教程"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Git使用教程</span>
+        </a>
+      
+    
+      
+      
+        <a href="/posts/226f1493c53f/" title="Go语言教程"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Go语言教程</span>
+        </a>
+      
+    
+      
+      
+        <a href="/posts/f661c78e1ce2/" title="Python爬虫入门"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Python爬虫入门</span>
+        </a>
+      
+    
+  </div>
+
+        
+      </div>
+    </div>
+  
+</div>
+
+
+  </aside>
+
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">Go语言内存对齐</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="什么是内存对齐？"><strong>什么是内存对齐？</strong></h2>
+<p>内存对齐是一个源于CPU访问内存方式的概念。现代CPU优化为在对齐的地址上访问内存——即地址是数据大小的倍数。</p>
+<p>例如：</p>
+<ul>
+<li><code>int64</code>（8字节）理想情况下应该从8的倍数的内存地址开始</li>
+<li><code>int32</code>（4字节）应该从4的倍数地址开始</li>
+</ul>
+<p>如果变量未对齐，CPU可能需要执行多次内存读取才能获取完整数据。这会降低速度。此外，如果变量跨越两个缓存行，你将受到性能惩罚，因为CPU必须加载两个缓存行。</p>
+<p>这就如同阅读一个分散在书中两页的句子。你翻一次页，然后再翻一次，仅仅为了获取完整信息。对齐可以让你的&quot;句子&quot;保持在同一页上。</p>
+<p>简而言之：</p>
+<ul>
+<li>对齐的数据 = 快速内存访问</li>
+<li>未对齐的数据 = 慢速，可能需要多次读取</li>
+</ul>
+<h2 id="问题引出">问题引出</h2>
+<p>思考下面这段代码的输出</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">type</span> S1 <span class="hljs-keyword">struct</span> &#123;<br>	num2 <span class="hljs-type">int8</span><br>	num1 <span class="hljs-type">int16</span><br>	flag <span class="hljs-type">bool</span><br>&#125;<br><br><span class="hljs-keyword">type</span> S2 <span class="hljs-keyword">struct</span> &#123;<br>	num1 <span class="hljs-type">int8</span><br>	flag <span class="hljs-type">bool</span><br>	num2 <span class="hljs-type">int16</span><br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>	fmt.Println(unsafe.Sizeof(S1&#123;&#125;))<br>	fmt.Println(unsafe.Sizeof(S2&#123;&#125;))<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>输出结果：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-number">6</span><br><span class="hljs-number">4</span><br></code></pre></td></tr></table></figure>
+<p>为什么仅是字段顺序不同，<code>S1&#123;&#125;</code> 和 <code>S2&#123;&#125;</code> 的大小就不一样了？</p>
+<p>根据理论<code>s1</code>的内存结构如下：</p>
+<p><img src="/img/blog/ncdq/3.png" srcset="/img/loading.gif" lazyload alt=""></p>
+<p>如果没有内存对齐呢？<code>s1</code>的结构可能如下：</p>
+<p><img src="/img/blog/ncdq/4.png" srcset="/img/loading.gif" lazyload alt=""></p>
+<p>如果是 16 位系统的话，那么没有内存对齐的情况下，要访问 <code>s1.num2</code> 字段，就需要跨过 2 个系统字长的内存，效率就低了。具体来说，内存对齐是计算机内存分配的一种优化方式，用于确保数据结构的存储按照特定的字节边界对齐。这种对齐是为了提高计算机处理数据的效率。</p>
+<h2 id="对齐系数"><strong>对齐系数</strong></h2>
+<ul>
+<li>对齐系数：变量的内存地址必须被对齐系数整除。</li>
+<li><code>unsafe.Alignof()</code>: 可以查看值在内存中的对齐系数。</li>
+</ul>
+<h3 id="基本类型对齐"><strong>基本类型对齐</strong></h3>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs go">fmt.Printf(<span class="hljs-string">&quot;bool size: %d, align: %d\n&quot;</span>, unsafe.Sizeof(<span class="hljs-type">bool</span>(<span class="hljs-literal">true</span>)), unsafe.Alignof(<span class="hljs-type">bool</span>(<span class="hljs-literal">true</span>)))<br>fmt.Printf(<span class="hljs-string">&quot;byte size: %d, align: %d\n&quot;</span>, unsafe.Sizeof(<span class="hljs-type">byte</span>(<span class="hljs-number">0</span>)), unsafe.Alignof(<span class="hljs-type">byte</span>(<span class="hljs-number">0</span>)))<br>fmt.Printf(<span class="hljs-string">&quot;int8 size: %d, align: %d\n&quot;</span>, unsafe.Sizeof(<span class="hljs-type">int8</span>(<span class="hljs-number">0</span>)), unsafe.Alignof(<span class="hljs-type">int8</span>(<span class="hljs-number">0</span>)))<br>fmt.Printf(<span class="hljs-string">&quot;int16 size: %d, align: %d\n&quot;</span>, unsafe.Sizeof(<span class="hljs-type">int16</span>(<span class="hljs-number">0</span>)), unsafe.Alignof(<span class="hljs-type">int16</span>(<span class="hljs-number">0</span>)))<br>fmt.Printf(<span class="hljs-string">&quot;int32 size: %d, align: %d\n&quot;</span>, unsafe.Sizeof(<span class="hljs-type">int32</span>(<span class="hljs-number">0</span>)), unsafe.Alignof(<span class="hljs-type">int32</span>(<span class="hljs-number">0</span>)))<br>fmt.Printf(<span class="hljs-string">&quot;int64 size: %d, align: %d\n&quot;</span>, unsafe.Sizeof(<span class="hljs-type">int64</span>(<span class="hljs-number">0</span>)), unsafe.Alignof(<span class="hljs-type">int64</span>(<span class="hljs-number">0</span>)))<br></code></pre></td></tr></table></figure>
+<p>输出：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-type">bool</span> size: <span class="hljs-number">1</span>, align: <span class="hljs-number">1</span><br><span class="hljs-type">byte</span> size: <span class="hljs-number">1</span>, align: <span class="hljs-number">1</span><br><span class="hljs-type">int8</span> size: <span class="hljs-number">1</span>, align: <span class="hljs-number">1</span><br><span class="hljs-type">int16</span> size: <span class="hljs-number">2</span>, align: <span class="hljs-number">2</span><br><span class="hljs-type">int32</span> size: <span class="hljs-number">4</span>, align: <span class="hljs-number">4</span><br><span class="hljs-type">int64</span> size: <span class="hljs-number">8</span>, align: <span class="hljs-number">8</span><br></code></pre></td></tr></table></figure>
+<p>结论：基本类型的对齐系数跟它的长度一致。</p>
+<p><img src="/img/blog/ncdq/1.png" srcset="/img/loading.gif" lazyload alt=""></p>
+<h2 id="结构体内部对齐"><strong>结构体内部对齐</strong></h2>
+<p>结构体内存对齐分为内部对齐和结构体之间对齐。</p>
+<p>我们先来看结构体内部对齐：</p>
+<ul>
+<li>指的是结构体内部成员的相对位置（偏移量）；</li>
+<li>每个成员的偏移量是 <strong>自身大小</strong> 和 <strong>对齐系数</strong> 的较小值的倍数</li>
+</ul>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">type</span> Demo <span class="hljs-keyword">struct</span> &#123;<br>  a <span class="hljs-type">bool</span><br>  b <span class="hljs-type">string</span><br>  c <span class="hljs-type">int16</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<p>假如我们定义了上面的结构体 <code>Demo</code>，如果在 64 位系统上（字长为 8 字节）通过上面的规则，可以判断出：（单位为字节）</p>
+<ul>
+<li>a: size=1, align=1</li>
+<li>b: size=16, align=8</li>
+<li>c: size=2, align=2</li>
+</ul>
+<p><img src="/img/blog/ncdq/2.png" srcset="/img/loading.gif" lazyload alt=""></p>
+<h3 id="结构体长度填充"><strong>结构体长度填充</strong></h3>
+<p>上面 Demo 结构体最后还填了 6 个字节的 0，这就是结构体长度填充：</p>
+<ul>
+<li>结构体通过填充长度，来对齐系统字长。</li>
+<li>结构体长度是 <strong>最大成员长度</strong> 和 <strong>系统字长</strong> 较小值的整数倍。</li>
+</ul>
+<h2 id="结构体之间对齐"><strong>结构体之间对齐</strong></h2>
+<ul>
+<li>结构体之间对齐，是为了确定结构体的第一个成员变量的内存地址，以让后面的成员地址都合法。</li>
+<li>结构体的对齐系数是 <strong>其成员的最大对齐系数</strong>；</li>
+</ul>
+<h2 id="空结构体对齐"><strong>空结构体对齐</strong></h2>
+<p>空结构体 <code>struct&#123;&#125;</code>，它们的内存地址统一指向 <code>zerobase</code>，而且内存长度为 0。这也导致了它的内存对齐规则，有一些不同。具体可以分为以下 4 个情况。</p>
+<h3 id="空结构体单独存在"><strong>空结构体单独存在</strong></h3>
+<p>空结构体单独存在时，其内存地址为 <code>zerobase</code>，不额外分配内存。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">package</span> main<br><br><span class="hljs-keyword">import</span> (<br>	<span class="hljs-string">&quot;fmt&quot;</span><br>	<span class="hljs-string">&quot;unsafe&quot;</span><br>)<br><br><span class="hljs-keyword">type</span> TestEmpty <span class="hljs-keyword">struct</span> &#123;<br>	empty <span class="hljs-keyword">struct</span>&#123;&#125;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>	te := TestEmpty&#123;&#125;<br>	fmt.Println(<span class="hljs-string">&quot;size of TestEmpty:&quot;</span>, unsafe.Sizeof(te))<br>	fmt.Printf(<span class="hljs-string">&quot;address of te: %p\n&quot;</span>, &amp;te)<br>	fmt.Printf(<span class="hljs-string">&quot;address of te.empty: %p\n&quot;</span>, &amp;(te.empty))<br>	fmt.Printf(<span class="hljs-string">&quot;empty: size=%d, align=%d\n&quot;</span>, unsafe.Sizeof(te.empty), unsafe.Alignof(te.empty))<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>输出：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs go">size of TestEmpty: <span class="hljs-number">0</span><br>address of te: <span class="hljs-number">0x102750360</span><br>address of te.empty: <span class="hljs-number">0x102750360</span><br>empty: size=<span class="hljs-number">0</span>, align=<span class="hljs-number">1</span><br></code></pre></td></tr></table></figure>
+<h3 id="空结构体在结构体最前"><strong>空结构体在结构体最前</strong></h3>
+<p>空结构体是结构体第一个字段时，它的地址跟结构体本身及结构体第 2 个字段一样，不占据内存空间。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">package</span> main<br><br><span class="hljs-keyword">import</span> (<br>	<span class="hljs-string">&quot;fmt&quot;</span><br>	<span class="hljs-string">&quot;unsafe&quot;</span><br>)<br><br><span class="hljs-keyword">type</span> TestEmpty <span class="hljs-keyword">struct</span> &#123;<br>	empty <span class="hljs-keyword">struct</span>&#123;&#125;<br>	a     <span class="hljs-type">bool</span><br>	b     <span class="hljs-type">string</span><br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>	te := TestEmpty&#123;&#125;<br>	fmt.Println(<span class="hljs-string">&quot;size of TestEmpty:&quot;</span>, unsafe.Sizeof(te))<br>	fmt.Printf(<span class="hljs-string">&quot;address of te: %p\n&quot;</span>, &amp;te)<br>	fmt.Printf(<span class="hljs-string">&quot;address of te.empty: %p\n&quot;</span>, &amp;(te.empty))<br>	fmt.Printf(<span class="hljs-string">&quot;address of te.a: %p\n&quot;</span>, &amp;(te.a))<br>	fmt.Printf(<span class="hljs-string">&quot;address of te.b: %p\n&quot;</span>, &amp;(te.b))<br>	fmt.Printf(<span class="hljs-string">&quot;empty: size=%d, align=%d\n&quot;</span>, unsafe.Sizeof(te.empty), unsafe.Alignof(te.empty))<br>	fmt.Printf(<span class="hljs-string">&quot;a: size=%d, align=%d\n&quot;</span>, unsafe.Sizeof(te.a), unsafe.Alignof(te.a))<br>	fmt.Printf(<span class="hljs-string">&quot;b: size=%d, align=%d\n&quot;</span>, unsafe.Sizeof(te.b), unsafe.Alignof(te.b))<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>输出：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs go">size of TestEmpty: <span class="hljs-number">24</span><br>address of te: <span class="hljs-number">0x14000136000</span><br>address of te.empty: <span class="hljs-number">0x14000136000</span><br>address of te.a: <span class="hljs-number">0x14000136000</span><br>address of te.b: <span class="hljs-number">0x14000136008</span><br>empty: size=<span class="hljs-number">0</span>, align=<span class="hljs-number">1</span><br>a: size=<span class="hljs-number">1</span>, align=<span class="hljs-number">1</span><br>b: size=<span class="hljs-number">16</span>, align=<span class="hljs-number">8</span><br></code></pre></td></tr></table></figure>
+<h3 id="空结构体在结构体中间"><strong>空结构体在结构体中间</strong></h3>
+<p>空结构体出现在结构体中时，地址跟随前一个变量。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">package</span> main<br><br><span class="hljs-keyword">import</span> (<br>	<span class="hljs-string">&quot;fmt&quot;</span><br>	<span class="hljs-string">&quot;unsafe&quot;</span><br>)<br><br><span class="hljs-keyword">type</span> TestEmpty <span class="hljs-keyword">struct</span> &#123;<br>	a     <span class="hljs-type">bool</span><br>	empty <span class="hljs-keyword">struct</span>&#123;&#125;<br>	b     <span class="hljs-type">string</span><br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>	te := TestEmpty&#123;&#125;<br>	fmt.Println(<span class="hljs-string">&quot;size of TestEmpty:&quot;</span>, unsafe.Sizeof(te))<br>	fmt.Printf(<span class="hljs-string">&quot;address of te: %p\n&quot;</span>, &amp;te)<br>	fmt.Printf(<span class="hljs-string">&quot;address of te.a: %p\n&quot;</span>, &amp;(te.a))<br>	fmt.Printf(<span class="hljs-string">&quot;address of te.empty: %p\n&quot;</span>, &amp;(te.empty))<br>	fmt.Printf(<span class="hljs-string">&quot;address of te.b: %p\n&quot;</span>, &amp;(te.b))<br>	fmt.Printf(<span class="hljs-string">&quot;empty: size=%d, align=%d\n&quot;</span>, unsafe.Sizeof(te.empty), unsafe.Alignof(te.empty))<br>	fmt.Printf(<span class="hljs-string">&quot;a: size=%d, align=%d\n&quot;</span>, unsafe.Sizeof(te.a), unsafe.Alignof(te.a))<br>	fmt.Printf(<span class="hljs-string">&quot;b: size=%d, align=%d\n&quot;</span>, unsafe.Sizeof(te.b), unsafe.Alignof(te.b))<br>&#125;<br><br></code></pre></td></tr></table></figure>
+<p>输出：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs go">size of TestEmpty: <span class="hljs-number">24</span><br>address of te: <span class="hljs-number">0x1400012a000</span><br>address of te.a: <span class="hljs-number">0x1400012a000</span><br>address of te.empty: <span class="hljs-number">0x1400012a001</span><br>address of te.b: <span class="hljs-number">0x1400012a008</span><br>empty: size=<span class="hljs-number">0</span>, align=<span class="hljs-number">1</span><br>a: size=<span class="hljs-number">1</span>, align=<span class="hljs-number">1</span><br>b: size=<span class="hljs-number">16</span>, align=<span class="hljs-number">8</span><br><br></code></pre></td></tr></table></figure>
+<h3 id="空结构体在结构体最后"><strong>空结构体在结构体最后</strong></h3>
+<p>空结构体出现在结构体最后，如果开启了一个新的系统字长，则需要补零，防止与其他结构体混用地址。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">package</span> main<br><br><span class="hljs-keyword">import</span> (<br>	<span class="hljs-string">&quot;fmt&quot;</span><br>	<span class="hljs-string">&quot;unsafe&quot;</span><br>)<br><br><span class="hljs-keyword">type</span> TestEmpty <span class="hljs-keyword">struct</span> &#123;<br>	a     <span class="hljs-type">bool</span><br>	b     <span class="hljs-type">string</span><br>	empty <span class="hljs-keyword">struct</span>&#123;&#125;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>	te := TestEmpty&#123;&#125;<br>	fmt.Println(<span class="hljs-string">&quot;size of TestEmpty:&quot;</span>, unsafe.Sizeof(te))<br>	fmt.Printf(<span class="hljs-string">&quot;address of te: %p\n&quot;</span>, &amp;te)<br>	fmt.Printf(<span class="hljs-string">&quot;address of te.a: %p\n&quot;</span>, &amp;(te.a))<br>	fmt.Printf(<span class="hljs-string">&quot;address of te.b: %p\n&quot;</span>, &amp;(te.b))<br>	fmt.Printf(<span class="hljs-string">&quot;address of te.empty: %p\n&quot;</span>, &amp;(te.empty))<br>	fmt.Printf(<span class="hljs-string">&quot;empty: size=%d, align=%d\n&quot;</span>, unsafe.Sizeof(te.empty), unsafe.Alignof(te.empty))<br>	fmt.Printf(<span class="hljs-string">&quot;a: size=%d, align=%d\n&quot;</span>, unsafe.Sizeof(te.a), unsafe.Alignof(te.a))<br>	fmt.Printf(<span class="hljs-string">&quot;b: size=%d, align=%d\n&quot;</span>, unsafe.Sizeof(te.b), unsafe.Alignof(te.b))<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>输出：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs go">size of TestEmpty: <span class="hljs-number">32</span><br>address of te: <span class="hljs-number">0x14000120040</span><br>address of te.a: <span class="hljs-number">0x14000120040</span><br>address of te.b: <span class="hljs-number">0x14000120048</span><br>address of te.empty: <span class="hljs-number">0x14000120058</span><br>empty: size=<span class="hljs-number">0</span>, align=<span class="hljs-number">1</span><br>a: size=<span class="hljs-number">1</span>, align=<span class="hljs-number">1</span><br>b: size=<span class="hljs-number">16</span>, align=<span class="hljs-number">8</span><br></code></pre></td></tr></table></figure>
+<h2 id="使用-fieldalignment-fix-工具优化结构体内存对齐"><strong>使用 fieldalignment -fix 工具优化结构体内存对齐</strong></h2>
+<p>还记得我们最开始提出的问题吗？</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">type</span> S1 <span class="hljs-keyword">struct</span> &#123;<br>	num2 <span class="hljs-type">int8</span><br>	num1 <span class="hljs-type">int16</span><br>	flag <span class="hljs-type">bool</span><br>&#125;<br><br><span class="hljs-keyword">type</span> S2 <span class="hljs-keyword">struct</span> &#123;<br>	num1 <span class="hljs-type">int8</span><br>	flag <span class="hljs-type">bool</span><br>	num2 <span class="hljs-type">int16</span><br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>	fmt.Println(unsafe.Sizeof(S1&#123;&#125;))<br>	fmt.Println(unsafe.Sizeof(S2&#123;&#125;))<br>&#125;<br></code></pre></td></tr></table></figure>
+<p><code>S1</code> 和 <code>S2</code> 提供的程序功能是一样的，但是 <code>S1</code> 却比 <code>S2</code> 花费了更多的内存空间。所以有时候我们可以通过仅仅调整结构体内部字段的顺序就减少不少的内存空间消耗。在这个时候 <code>fieldalignment</code> 可以帮助我们自动检测并优化。</p>
+<p>你可以运行下面命令安装 <code>fieldalignment</code> 命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">go install golang.org/x/tools/go/analysis/passes/fieldalignment/cmd/fieldalignment@latest<br></code></pre></td></tr></table></figure>
+<p>然后在项目根目录下运行下面命令，对我们的代码进行检查：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">go vet -vettool=$(<span class="hljs-built_in">which</span> fieldalignment) ./...<br></code></pre></td></tr></table></figure>
+<p>这里会输出：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">./main.go:9:9: struct of size 6 could be 4<br></code></pre></td></tr></table></figure>
+<p>这个时候可以执行 <code>fieldalignment -fix 目录|文件</code> ，它会自动帮我们的代码进行修复，但是<strong>强烈建议你在运行之前，备份你的代码，因为注释会被删除！</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">fieldalignment -fix ./...<br></code></pre></td></tr></table></figure>
+<p>这个时候 <code>S1</code> 已经被优化好了：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">type</span> S1 <span class="hljs-keyword">struct</span> &#123;<br>	num1 <span class="hljs-type">int16</span><br>	num2 <span class="hljs-type">int8</span><br>	flag <span class="hljs-type">bool</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<h2 id="Go结构体布局的最佳实践"><strong>Go结构体布局的最佳实践</strong></h2>
+<ol>
+<li>按从最大到最小的对齐顺序排列字段</li>
+<li>将相同大小的字段分组在一起</li>
+<li>在定义高容量或性能关键的结构体时考虑内存布局</li>
+<li>使用<code>go vet -fieldalignment</code>自动建议</li>
+</ol>
+<hr>
+<p><strong>参考资料</strong></p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://goperf.dev/01-common-patterns/fields-alignment"><strong>Go优化指南</strong></a></li>
+</ul>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E5%BC%80%E5%8F%91/" class="category-chain-item">开发</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Go/" class="print-no-link">#Go</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Go语言内存对齐</div>
+      <div>https://serendipity565.github.io/posts/1a2d1ca64833/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Serendipity</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2025年5月9日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              BY-SERENDIPITY565
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/posts/46f2bacdfffe/" title="Go内存泄漏问题">
+                        <span class="hidden-mobile">Go内存泄漏问题</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+    <div id="giscus" class="giscus"></div>
+    <script type="text/javascript">
+      Fluid.utils.loadComments('#giscus', function() {
+        var options = {"repo":"Serendipity565/BlogComment","repo-id":"R_kgDOMwk0XQ","category":"Announcements","category-id":"DIC_kwDOMwk0Xc4CiZ44","theme-light":"light","theme-dark":"dark","mapping":"pathname","reactions-enabled":1,"emit-metadata":0,"input-position":"top","lang":"zh-CN"};
+        var attributes = {};
+        for (let option in options) {
+          if (!option.startsWith('theme-')) {
+            var key = option.startsWith('data-') ? option : 'data-' + option;
+            attributes[key] = options[option];
+          }
+        }
+        var light = 'light';
+        var dark = 'dark';
+        window.GiscusThemeLight = light;
+        window.GiscusThemeDark = dark;
+        attributes['data-theme'] = document.documentElement.getAttribute('data-user-color-scheme') === 'dark' ? dark : light;
+        for (let attribute in attributes) {
+          var value = attributes[attribute];
+          if (value === undefined || value === null || value === '') {
+            delete attributes[attribute];
+          }
+        }
+        var s = document.createElement('script');
+        s.setAttribute('src', 'https://giscus.app/client.js');
+        s.setAttribute('crossorigin', 'anonymous');
+        for (let attribute in attributes) {
+          s.setAttribute(attribute, attributes[attribute]);
+        }
+        var ss = document.getElementsByTagName('script');
+        var e = ss.length > 0 ? ss[ss.length - 1] : document.head || document.documentElement;
+        e.parentNode.insertBefore(s, e.nextSibling);
+      });
+    </script>
+    <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> content: <div> <span id="timeDate">载入天数...</span> <span id="times">载入时分秒...</span> <script src="/js/duration.js"></script> </div> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="leancloud-site-pv-container" style="display: none">
+        总访问量 
+        <span id="leancloud-site-pv"></span>
+         次
+      </span>
+    
+    
+      <span id="leancloud-site-uv-container" style="display: none">
+        总访客数 
+        <span id="leancloud-site-uv"></span>
+         人
+      </span>
+    
+    
+
+  
+
+</div>
+
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script defer src="/js/leancloud.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+  
+<script src="//cdn.jsdelivr.net/gh/EmoryHuang/BlogBeautify@1.1/DynamicLine.js"></script>
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/wanko.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"react":{"opacity":0.7},"log":false});</script></body>
+</html>
